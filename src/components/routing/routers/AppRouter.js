@@ -1,8 +1,18 @@
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
-import {GameGuard} from "components/routing/routeProtectors/GameGuard";
-import GameRouter from "components/routing/routers/GameRouter";
-import {LoginGuard} from "components/routing/routeProtectors/LoginGuard";
+import {PlatformGuard} from "components/routing/routeProtectors/PlatformGuard";
+import Platform from "components/views/Platform";
+import PlatformRouter from "components/routing/routers/PlatformRouter";
 import Login from "components/views/Login";
+import {RegisterGuard} from "components/routing/routeProtectors/RegisterGuard";
+import Register from "components/views/Register";
+import {ResetPasswordGuard} from "components/routing/routeProtectors/ResetPasswordGuard";
+import ResetPassword from "components/views/ResetPassword";
+import {ProfileGuard} from "components/routing/routeProtectors/ProfileGuard";
+import Profile from "components/views/Profile";
+import ProfileRouter from "components/routing/routers/ProfileRouter";
+import {ProfileEditGuard} from "components/routing/routeProtectors/ProfileEditGuard";
+import ProfileEdit from "components/views/ProfileEdit";
+import ProfileEditRouter from "components/routing/routers/ProfileEditRouter";
 
 /**
  * Main router of your application.
@@ -17,18 +27,33 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/game">
-          <GameGuard>
-            <GameRouter base="/game"/>
-          </GameGuard>
+        <Route path="/platform">
+          <PlatformGuard>
+            <PlatformRouter base="/platform"/>
+          </PlatformGuard>
         </Route>
-        <Route exact path="/login">
-          <LoginGuard>
-            <Login/>
-          </LoginGuard>
+        <Route path="/profile">
+          <ProfileGuard>
+            <ProfileRouter base="/profile"/>
+          </ProfileGuard>
+        </Route>
+        <Route path="/profile-edit">
+          <ProfileEditGuard>
+            <ProfileEditRouter base="/profile-edit"/>
+          </ProfileEditGuard>
+        </Route>
+        <Route exact path="/register">
+          <RegisterGuard>
+            <Register/>
+          </RegisterGuard>
+        </Route>
+        <Route exact path="/resetpassword">
+          <ResetPasswordGuard>
+            <ResetPassword/>
+          </ResetPasswordGuard>
         </Route>
         <Route exact path="/">
-          <Redirect to="/game"/>
+          <Redirect to="/register"/>
         </Route>
       </Switch>
     </BrowserRouter>
