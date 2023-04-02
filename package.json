@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "ajv": "^8.12.0",
     "asn1": "^0.2.6",
     "assert-plus": "^1.0.0",
     "aws-sign2": "^0.7.0",
