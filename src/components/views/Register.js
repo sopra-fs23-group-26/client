@@ -53,6 +53,7 @@ const Register = props => {
       const user = new User(response.data);
 
       localStorage.setItem('token', user.token);
+      localStorage.setItem('id', user.id)
       localStorage.setItem('userinfo', JSON.stringify(user));
 
       history.push(`/platform`);
