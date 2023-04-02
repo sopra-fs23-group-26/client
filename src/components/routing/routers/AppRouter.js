@@ -28,9 +28,9 @@ const AppRouter = () => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/platform">
-          {/*<PlatformGuard>*/}
+          <PlatformGuard>
           <Platform/>
-      {/*</PlatformGuard>*/}
+      </PlatformGuard>
         </Route>
         <Route path="/profile">
           <ProfileGuard>

@@ -14,19 +14,25 @@ const Platform = () => {
   const [user, setUser] = useState(null);
 
   const logout = () => {
-    let userinfo = JSON.parse(localStorage.getItem('userinfo'))
-    api.post('/logout/' + userinfo.username);
+    // let userinfo = JSON.parse(localStorage.getItem('userinfo'))
+    // api.post('/logout/' + userinfo.username);
+      // ToDo 这里还没确定logout的时候是否要修改数据库中的信息。
     localStorage.removeItem('token');
-    history.push('/');
+    localStorage.removeItem('id');
+    localStorage.removeItem('status')
+
+    history.push('/login');
   }
 
-  const gotoProfile = async () => {
+  const gotoProfile = () => {
     try {
-      const userinfo = JSON.parse(localStorage.getItem('userinfo'))
-      const response = await api.get('/user/' + userinfo.username);
-      await new Promise(resolve => setTimeout(resolve, 500));
-      setUser(response.data);
-      history.push(`/profile?username=${response.data.username}`); // modified line
+      // const userinfo = JSON.parse(localStorage.getItem('userinfo'))
+      // const response = await api.get('/user/' + userinfo.username);
+      // await new Promise(resolve => setTimeout(resolve, 500));
+      // setUser(response.data);
+
+        // 注意 从platform到profile不需要再请求，再login的时候就已经拿到这个用户的基本信息。然后存在了本地。
+      history.push(`/profile`); // modified line
     } catch (error) {
       history.push('/');
     }
@@ -100,7 +106,9 @@ const Platform = () => {
                 "text-transform": "uppercase",
                 "background-color": "rgb(214, 222, 235)",
                 "box-shadow": "0px 3px 0px rgba(0, 0, 0, 0.2), 0px 5px 10px rgba(0, 0, 0, 0.2)",
-                "position": "absolute", "top": "32%", "left": "50%", "transform": "translate(-50%, -50%)"}}>
+                "position": "absolute", "top": "32%", "left": "50%", "transform": "translate(-50%, -50%)"}}
+                    onClick={() => gotoProfile()}
+            >
                 Profile
             </Button>
             <Button style={{"width": "140px", "height": "40px", "border-radius": "10px",
@@ -132,7 +140,9 @@ const Platform = () => {
                 "text-transform": "uppercase",
                 "background-color": "rgb(19, 40, 67)",
                 "box-shadow": "0px 3px 0px rgba(0, 0, 0, 0.2), 0px 5px 10px rgba(0, 0, 0, 0.2)",
-                "position": "absolute", "top": "92%", "left": "50%", "transform": "translate(-50%, -50%)"}}>
+                "position": "absolute", "top": "92%", "left": "50%", "transform": "translate(-50%, -50%)"}}
+                    onClick={() => logout()}
+            >
                 logout
             </Button>
         </PlatformContainer>

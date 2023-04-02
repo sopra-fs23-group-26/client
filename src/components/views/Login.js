@@ -45,7 +45,9 @@ const Login = props => {
       if(response.data){
         const user = new User(response.data);
         localStorage.setItem('token', user.token);
-        localStorage.setItem('userinfo', JSON.stringify(user));
+        localStorage.setItem('id', user.id)
+        localStorage.setItem('status', user.status)
+        // localStorage.setItem('userinfo', JSON.stringify(user));
         history.push(`/platform`);
       }else{
         alert("Error: Wrong user name or password");
@@ -87,11 +89,11 @@ const Login = props => {
             {/*  Register*/}
             {/*</Button>*/}
           </div>
-          <div className="Reset password" style={{textAlign: 'center', cursor: 'pointer'}} onClick={() => history.push("/")}>
+          <div className="Reset password" style={{textAlign: 'center', cursor: 'pointer'}} onClick={() => history.push("/resetpassword")}>
             <p >Reset password</p>
 
           </div>
-          <div className="Create a new account" style={{textAlign: 'center', cursor: 'pointer'}} onClick={() => history.push("/")}>
+          <div className="Create a new account" style={{textAlign: 'center', cursor: 'pointer'}} onClick={() => history.push("/register")}>
             <p >    <span style={{color: 'black'}}>No account?</span>
               <span > Create one</span></p>
           </div>
