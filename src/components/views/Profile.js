@@ -40,18 +40,18 @@ const Profile = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await api.get('/user/' + username);
+        const response = await api.get('/users/' + localStorage.getItem("id"));
         await new Promise(resolve => setTimeout(resolve, 500));
         setUser(response.data);
-        const response2 = await api.get('/score/' + username);
-        await new Promise(resolve => setTimeout(resolve, 500));
-        setScore(response2.data);
-        const response3 = await api.get('/communityranking/' + username);
-        await new Promise(resolve => setTimeout(resolve, 500));
-        setCommunityranking(response3.data);
-        const response4 = await api.get('/globalranking/' + username);
-        await new Promise(resolve => setTimeout(resolve, 500));
-        setGlobalranking(response4.data);
+        // const response2 = await api.get('/score/' + username);
+        // await new Promise(resolve => setTimeout(resolve, 500));
+        // setScore(response2.data);
+        // const response3 = await api.get('/communityranking/' + username);
+        // await new Promise(resolve => setTimeout(resolve, 500));
+        // // setCommunityranking(response3.data);
+        // const response4 = await api.get('/globalranking/' + username);
+        // await new Promise(resolve => setTimeout(resolve, 500));
+        // setGlobalranking(response4.data);
       } catch (error) {
         history.push('/');
       }

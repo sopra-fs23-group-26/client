@@ -47,7 +47,7 @@ const Login = props => {
         localStorage.setItem('token', user.token);
         localStorage.setItem('id', user.id)
         localStorage.setItem('status', user.status)
-        // localStorage.setItem('userinfo', JSON.stringify(user));
+        localStorage.setItem('userinfo', JSON.stringify(user));
         history.push(`/platform`);
       }else{
         alert("Error: Wrong user name or password");
