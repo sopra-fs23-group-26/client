@@ -2,22 +2,23 @@ import React, {useState} from 'react';
 import {api, handleError} from 'helpers/api';
 import User from 'models/User';
 import {useHistory} from 'react-router-dom';
-import {Button} from 'components/ui/Button';
-import 'styles/views/Register.scss';
-import BaseContainer from "components/ui/BaseContainer";
+import {LoginButton} from 'components/ui/LoginButton';
+import 'styles/views/Login.scss';
+import LoginContainer from "components/ui/LoginContainer";
 import PropTypes from "prop-types";
+
 
 const FormField = props => {
   return (
-    <div className="register field">
-      <label className="register label">
+    <div className="login field">
+      <label className="login label">
         {props.label}
       </label>
       <input
-        className="register input"
+        className="login input"
         placeholder={props.placeholder}
         value={props.value}
-        type={props.type}
+        type={props.type?props.type:'text'}
         onChange={e => props.onChange(e.target.value)}
       />
     </div>
@@ -62,10 +63,10 @@ const Register = props => {
   };
 
   return (
-    <BaseContainer>
-      <div className="register container">
-        <h1 className="register title">Register</h1>
-        <div className="register form">
+    <LoginContainer>
+      <div className="login container">
+        <h1 className="login title">Sign up to WeGame</h1>
+        <div className="login form">
           <FormField
             value={username}
             onChange={un => setUsername(un)}
@@ -85,18 +86,18 @@ const Register = props => {
             type="password"
           />
 
-          <div className="register button-container">
-            <Button
+          <div className="login button-container">
+            <LoginButton
               disabled={!username || !password || !repeatPassword}
               width="100%"
               onClick={() => doRegister()}
             >
               Submit
-            </Button>
+            </LoginButton>
           </div>
         </div>
       </div>
-    </BaseContainer>
+    </LoginContainer>
   );
 };
 

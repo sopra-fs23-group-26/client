@@ -93,7 +93,6 @@ const Login = props => {
             <p >    <span style={{color: 'black'}}>No account?</span>
               <span > Create one</span></p>
           </div>
-
         </div>
       </div>
     </LoginContainer>
