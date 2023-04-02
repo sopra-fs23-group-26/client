@@ -34,7 +34,6 @@ FormField.propTypes = {
 
 const Register = props => {
   const history = useHistory();
-  const [email, setEmail] = useState(null);
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [repeatPassword, setRepeatPassword] = useState(null);
@@ -42,7 +41,7 @@ const Register = props => {
 
   const doRegister = async () => {
     try {
-      const requestBody = JSON.stringify({email, username, password, repeatPassword});
+      const requestBody = JSON.stringify({username, password, repeatPassword});
       const response = await api.post('/users', requestBody);
 
       // heqing: there is another case: the password and repeatPassword are not equal
@@ -68,12 +67,6 @@ const Register = props => {
         <h1 className="register title">Register</h1>
         <div className="register form">
           <FormField
-            value={email}
-            onChange={un => setEmail(un)}
-            placeholder="Email"
-            type="text"
-          />
-          <FormField
             value={username}
             onChange={un => setUsername(un)}
             placeholder="Username"
@@ -94,7 +87,7 @@ const Register = props => {
 
           <div className="register button-container">
             <Button
-              disabled={!email || !username || !password || !repeatPassword}
+              disabled={!username || !password || !repeatPassword}
               width="100%"
               onClick={() => doRegister()}
             >

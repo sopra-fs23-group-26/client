@@ -30,10 +30,6 @@ const Profile = () => {
     history.push('/globalranking')
   }
 
-  const ResetPassword = () => {
-    history.push('/resetpassword')
-  }
-
   let username = history.location.search
   username = username.slice(username.indexOf('=') + 1)
 
@@ -43,15 +39,6 @@ const Profile = () => {
         const response = await api.get('/users/' + localStorage.getItem("id"));
         await new Promise(resolve => setTimeout(resolve, 500));
         setUser(response.data);
-        // const response2 = await api.get('/score/' + username);
-        // await new Promise(resolve => setTimeout(resolve, 500));
-        // setScore(response2.data);
-        // const response3 = await api.get('/communityranking/' + username);
-        // await new Promise(resolve => setTimeout(resolve, 500));
-        // // setCommunityranking(response3.data);
-        // const response4 = await api.get('/globalranking/' + username);
-        // await new Promise(resolve => setTimeout(resolve, 500));
-        // setGlobalranking(response4.data);
       } catch (error) {
         history.push('/');
       }
@@ -67,16 +54,7 @@ const Profile = () => {
         <ul className="game user-list" style={{color: 'white'}}>
           USERNAME: {user.username}
         </ul>
-        <ul className="game user-list" style={{color: 'white'}}>
-          EMAIL: {user.email}
-        </ul>
         {(user&&user.id==userinfo.id)?<Button width="40%" onClick={() => edit()} style={{color: 'darkblue'}}>Edit</Button>:null}
-        <Button width={(user&&user.id==userinfo.id)?'80%':'100%'}
-          onClick={() => ResetPassword()}
-          style={{ marginTop: "20px", color: 'darkblue'}}
-        >
-          RESET PASSWORD
-        </Button>
       </div>
     );
   }

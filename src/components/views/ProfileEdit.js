@@ -22,13 +22,11 @@ const ProfileEdit = () => {
 
   const [user, setUser] = useState(userObj);
   const [username, setUsername] = useState(user.username);
-  const [email, setEmail] = useState(user.email);
 
 
   const doEdit = async () => {
     try {
       user.username = username
-      user.email = email
       const requestBody = JSON.stringify(user);
       const response = await api.post('/user', requestBody);
       if(response.data.code == 200){
@@ -57,20 +55,6 @@ const ProfileEdit = () => {
               value={username}
               type={'text'}
               onChange={e => setUsername(e.target.value)}
-            />
-          </div>
-        </div>
-        <div>
-          <label style={{color: 'white'}}>
-            EMAIL:
-          </label>
-          <div>
-            <input
-              className="login input"
-              placeholder="enter here..."
-              value={email}
-              type={'text'}
-              onChange={e => setEmail(e.target.value)}
             />
           </div>
         </div>

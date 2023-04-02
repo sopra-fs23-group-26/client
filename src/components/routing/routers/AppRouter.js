@@ -5,8 +5,6 @@ import PlatformRouter from "components/routing/routers/PlatformRouter";
 import Login from "components/views/Login";
 import {RegisterGuard} from "components/routing/routeProtectors/RegisterGuard";
 import Register from "components/views/Register";
-import {ResetPasswordGuard} from "components/routing/routeProtectors/ResetPasswordGuard";
-import ResetPassword from "components/views/ResetPassword";
 import {ProfileGuard} from "components/routing/routeProtectors/ProfileGuard";
 import Profile from "components/views/Profile";
 import ProfileRouter from "components/routing/routers/ProfileRouter";
@@ -46,11 +44,6 @@ const AppRouter = () => {
           <RegisterGuard>
             <Register/>
           </RegisterGuard>
-        </Route>
-        <Route exact path="/resetpassword">
-          <ResetPasswordGuard>
-            <ResetPassword/>
-          </ResetPasswordGuard>
         </Route>
         <Route exact path="/">
           <Redirect to="/login"/>
