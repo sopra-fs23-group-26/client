@@ -1,0 +1,14 @@
+@import 'styles/theme';
+
+.login-container {
+  margin-left: auto;
+  padding-left: 15px;
+  margin-right: auto;
+  padding-right: 15px;
+  max-width: $DESKTOP_WIDTH;
+  color: $loginTextbox;
+}
+
+.login-container h1 {
+  font-size: 58px;
+}

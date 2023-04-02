@@ -2,11 +2,10 @@ import React, {useState} from 'react';
 import {api, handleError} from 'helpers/api';
 import User from 'models/User';
 import {useHistory} from 'react-router-dom';
-import {Button} from 'components/ui/Button';
+import {LoginButton} from 'components/ui/LoginButton';
 import 'styles/views/Login.scss';
-import BaseContainer from "components/ui/BaseContainer";
+import LoginContainer from "components/ui/LoginContainer";
 import PropTypes from "prop-types";
-
 
 const FormField = props => {
   return (
@@ -16,7 +15,7 @@ const FormField = props => {
       </label>
       <input
         className="login input"
-        placeholder="enter here to log in..."
+        placeholder={props.placeholder}
         value={props.value}
         type={props.type?props.type:'text'}
         onChange={e => props.onChange(e.target.value)}
@@ -28,7 +27,9 @@ const FormField = props => {
 FormField.propTypes = {
   label: PropTypes.string,
   value: PropTypes.string,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  placeholder: PropTypes.string,
+  type: PropTypes.string.isRequired
 };
 
 const Login = props => {
@@ -55,39 +56,49 @@ const Login = props => {
   };
 
   return (
-    <BaseContainer>
+    <LoginContainer>
       <div className="login container">
-        <h2>Login</h2>
+        <h1 className="login title">Sign in to WeGame</h1>
         <div className="login form">
           <FormField
-            label="username"
             value={username}
             onChange={un => setUsername(un)}
+            placeholder="username"
+            type="text"
           />
           <FormField
-            label="password"
             value={password}
-            type="password"
             onChange={n => setPassword(n)}
+            placeholder="password"
+            type="text"
           />
+
           <div className="login button-container">
-            <Button
+            <LoginButton
               disabled={!username || !password}
-              width="40%"
               onClick={() => doLogin()}
             >
-              Login
-            </Button>
-            <Button
-              width="40%"
-              onClick={() => history.push(`/Register`)}
-            >
-              Register
-            </Button>
+              Log In
+            </LoginButton>
+            {/*<Button*/}
+            {/*  width="40%"*/}
+            {/*  onClick={() => history.push(`/Register`)}*/}
+            {/*>*/}
+            {/*  Register*/}
+            {/*</Button>*/}
           </div>
+          <div className="Reset password" style={{textAlign: 'center', cursor: 'pointer'}} onClick={() => history.push("/")}>
+            <p >Reset password</p>
+
+          </div>
+          <div className="Create a new account" style={{textAlign: 'center', cursor: 'pointer'}} onClick={() => history.push("/")}>
+            <p >    <span style={{color: 'black'}}>No account?</span>
+              <span > Create one</span></p>
+          </div>
+
         </div>
       </div>
-    </BaseContainer>
+    </LoginContainer>
   );
 };
 

@@ -1,0 +1,18 @@
+@import 'styles/theme';
+
+$container-top: 300px;
+$container-left: 1100px;
+$container-width: 400px;
+$container-height: 450px;
+$container-bg-color: red;
+
+.platform-container {
+  position: absolute;
+  border-radius: 10px;
+  top: $container-top;
+  left: $container-left;
+  width: $container-width;
+  height: $container-height;
+  background-color: $container-bg-color;
+}
+

@@ -27,10 +27,10 @@ const AppRouter = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/platform">
-          <PlatformGuard>
-            <PlatformRouter base="/platform"/>
-          </PlatformGuard>
+        <Route exact path="/platform">
+          {/*<PlatformGuard>*/}
+          <Platform/>
+      {/*</PlatformGuard>*/}
         </Route>
         <Route path="/profile">
           <ProfileGuard>
@@ -54,6 +54,9 @@ const AppRouter = () => {
         </Route>
         <Route exact path="/">
           <Redirect to="/register"/>
+        </Route>
+        <Route exact path="/login">
+          <Login/>
         </Route>
       </Switch>
     </BrowserRouter>

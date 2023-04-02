@@ -1,0 +1,31 @@
+@import 'styles/theme';
+
+.primary-button {
+  align-items: center;
+  &:hover {
+    transform: translateY(-2px);
+}
+  &:disabled {
+    cursor: default;
+    opacity: 0.4;
+    &:hover {
+      transform: none;
+  }
+}
+
+  height: 40px;
+  width: 120%;
+  padding-left: 15px;
+  margin-left: -4px;
+  font-weight: 700;
+  text-transform: capitalize;
+  font-size: 17px;
+  text-align: center;
+  border: none;
+  border-radius: 0.5em;
+  cursor: pointer;
+  opacity: 1;
+  color: white;
+  background-color: $loginTextbox;
+  transition: all 0.3s ease;
+}
