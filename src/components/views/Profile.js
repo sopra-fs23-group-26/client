@@ -11,8 +11,8 @@ const Profile = () => {
   const history = useHistory();
   const [user, setUser] = useState(null);
   const [score, setScore] = useState(null);
-  const [communityranking, setCommunityranking] = useState(null);
-  const [globalranking, setGlobalranking] = useState(null);
+  const [communityRanking, setCommunityRanking] = useState(null);
+  const [globalRanking, setGlobalRanking] = useState(null);
   const [imageFile, setImageFile] = useState(null);
 
   const back = () => {
@@ -51,10 +51,10 @@ const Profile = () => {
   if (user) {
     content = (
       <div className="game">
-        <ul className="game user-list" style={{color: 'white'}}>
+        <ul className="game user-list" style={{color: 'white', fontWeight: 'bold'}}>
           USERNAME: {user.username}
         </ul>
-        {(user&&user.id==userinfo.id)?<Button width="40%" onClick={() => edit()} style={{color: 'darkblue'}}>Edit</Button>:null}
+        {(user&&user.id==userinfo.id)?<Button width="55%" onClick={() => edit()} style={{color: "rgb(57, 115, 175)", backgroundColor: "white"}}>EDIT</Button>:null}
       </div>
     );
   }
@@ -65,23 +65,23 @@ const Profile = () => {
     content2 = (
       <div className="game" style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
         <div style={{display: 'flex'}}>
-          <Button width="40%" style={{ marginRight: '10px', backgroundColor: 'lightblue', border:'none', color: 'darkblue', fontWeight: 'bold'}}
+          <Button width="50%" style={{ marginRight: '10px', backgroundColor: "rgb(218, 227, 238)", border:'none', color: 'darkblue', fontWeight: 'bold'}}
             onClick={() => gotoCommunityRanking()}
           >
             COMMUNITY RANKING
           </Button>
-          <Button width="40%" style={{  backgroundColor: 'lightblue', border:'none', color: 'darkblue', fontWeight: 'bold'}}
+          <Button width="40%" style={{  backgroundColor: "rgb(218, 227, 238)", border:'none', color: 'darkblue', fontWeight: 'bold'}}
             onClick={() => gotoGlobalRanking()}
           >
             GLOBAL RANKING
           </Button>
         </div>
         <div style={{display: 'flex'}}>
-          <ul className="game user-list" style={{color: 'darkblue', margin: '0', marginRight: "45px",marginTop: "20px"}}>
-            {communityranking}
+          <ul className="game user-list" style={{color: "rgb(16, 46, 78)", fontWeight: 'bold', position: 'absolute', top:'105px', left:'140px'}}>
+            {user.communityRanking}
           </ul>
-          <ul className="game user-list" style={{color: 'darkblue', margin: '0 0 0 70px', padding: '0', marginTop: "20px"}}>
-            {globalranking}
+          <ul className="game user-list" style={{color: "rgb(16, 46, 78)", margin: '0 0 0 70', fontWeight: 'bold', position: 'absolute', top:'105px', left:'320px'}}>
+            {user.globalRanking}
           </ul>
         </div>
       </div>
@@ -92,25 +92,31 @@ const Profile = () => {
 
   return (
     <div className="game">
-      <div className="game container" style={{backgroundColor: 'blue', position: 'absolute', top: '35%', left: '30%', transform: 'translate(-50%, -50%)', width: '380px', height: '500px'}}>
-        <div className="game-content" style={{position: 'absolute', top: '20%', left: '55%', transform: 'translate(-50%, -50%)'}}>
+      <div className="game container" style={{backgroundColor: "rgb(57, 115, 175)", position: 'absolute', top: '420px', left: '530px', transform: 'translate(-50%, -50%)', width: '450px', height: '600px'}}>
+        <Button style={{"width": "80px", "height": "80px", "border-radius": "50px",
+          "background-color": "rgb(214, 222, 235)",
+          "box-shadow": "0px 3px 0px rgba(0, 0, 0, 0.2), 0px 5px 10px rgba(0, 0, 0, 0.2)",
+          "position": "absolute", "top": "65px", "left": "80px", "transform": "translate(-50%, -50%)"}}>
+          Image
+        </Button>
+        <div className="game-content" style={{position: 'absolute', top: '60px', left: '250px', transform: 'translate(-50%, -50%)'}}>
             {content}
         </div>
-        <div style={{ backgroundColor: 'white', width: '300px', height: '2px', position: 'absolute', top: '200px', left: '50px' }}></div>
-        <div style={{ backgroundColor: 'white', width: '300px', height: '2px', position: 'absolute', top: '400px', left: '50px' }}></div>
-        <ul className="game user-list" style={{color: 'white', position: 'absolute', top: '420px', left: '50px' }}>
-          SCORE: {score}
+        <div style={{ backgroundColor: 'white', width: '410px', height: '2px', position: 'absolute', top: '140px', left: '20px' }}></div>
+        <div style={{ backgroundColor: 'white', width: '410px', height: '2px', position: 'absolute', top: '510px', left: '20px' }}></div>
+        <ul className="game user-list" style={{color: 'white', position: 'absolute', top: '530px', left: '30px', fontWeight: 'bold'}}>
+           SCORE: 0
         </ul>
       </div>
 
-      <div className="game container" style={{ backgroundColor: 'lightblue', position: 'absolute', top: '25%', left: '60%', transform: 'translate(-50%, -50%)' }}>
+      <div className="game container" style={{ backgroundColor: "rgb(218, 227, 238)", position: 'absolute', top: '330px', left: '1100px', transform: 'translate(-50%, -50%)', width: '450px', height: '200px'}}>
         <div className="button-container">
           {content2}
         </div>
       </div>
 
-      <div className="button-container" style={{ position: 'absolute', top: '50%', left: '60%', transform: 'translate(-50%, -50%)' }}>
-        <Button style={{ marginRight: '10px', backgroundColor: 'darkblue', color: 'white',fontWeight: 'bold', width: '100px' }}
+      <div className="button-container" style={{ position: 'absolute', top: '550px', left: '1120px', transform: 'translate(-50%, -50%)' }}>
+        <Button style={{ marginRight: '10px', backgroundColor: "rgb(16, 46, 78)", color: 'white',fontWeight: 'bold', width: '100px' }}
           onClick={() => history.push(`/platform`)}
         >
           BACK

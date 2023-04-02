@@ -45,7 +45,7 @@ const ProfileEdit = () => {
     content = (
       <div className="game">
         <div>
-          <label style={{color: 'white'}}>
+          <label style={{color: 'white', fontWeight: 'bold'}}>
             USERNAME:
           </label>
           <div>
@@ -71,8 +71,14 @@ const ProfileEdit = () => {
 
   return (
     <div className="game">
-      <div className="game container" style={{backgroundColor: 'blue', position: 'absolute', top: '35%', left: '30%', transform: 'translate(-50%, -50%)', width: '380px', height: '500px'}}>
-        <div className="game-content" style={{position: 'absolute', top: '20%', left: '55%', transform: 'translate(-50%, -50%)'}}>
+      <div className="game container" style={{backgroundColor: "rgb(57, 115, 175)", position: 'absolute', top: '420px', left: '530px', transform: 'translate(-50%, -50%)', width: '450px', height: '600px'}}>
+        <Button style={{"width": "80px", "height": "80px", "border-radius": "50px",
+          "background-color": "rgb(214, 222, 235)",
+          "box-shadow": "0px 3px 0px rgba(0, 0, 0, 0.2), 0px 5px 10px rgba(0, 0, 0, 0.2)",
+          "position": "absolute", "top": "65px", "left": "80px", "transform": "translate(-50%, -50%)"}}>
+          Image
+        </Button>
+        <div className="game-content" style={{position: 'absolute', top: '80px', left: '250px', transform: 'translate(-50%, -50%)'}}>
             {content}
         </div>
       </div>
