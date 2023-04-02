@@ -53,7 +53,7 @@ const AppRouter = () => {
           </ResetPasswordGuard>
         </Route>
         <Route exact path="/">
-          <Redirect to="/register"/>
+          <Redirect to="/login"/>
         </Route>
         <Route exact path="/login">
           <Login/>
