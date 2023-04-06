@@ -2,24 +2,23 @@ import { useEffect, useState } from 'react';
 import { api } from 'helpers/api';
 import { Spinner } from 'components/ui/Spinner';
 import { Button } from 'components/ui/Button';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Game.scss";
 
 const Profile = () => {
+  let id;
+  id = localStorage.getItem('id')
   let userinfo = JSON.parse(localStorage.getItem('userinfo'))
   const history = useHistory();
   const [user, setUser] = useState(null);
-  const [score, setScore] = useState(null);
-  const [communityRanking, setCommunityRanking] = useState(null);
-  const [globalRanking, setGlobalRanking] = useState(null);
   const [imageFile, setImageFile] = useState(null);
 
   const back = () => {
     history.push('/platform');
   }
   const edit = () => {
-    history.push('/profile-edit?userinfo=' + JSON.stringify(user));
+    history.push(`/profile-edit/${id}`);
   }
 
   const gotoCommunityRanking = () => {
@@ -30,13 +29,10 @@ const Profile = () => {
     history.push('/globalranking')
   }
 
-  let username = history.location.search
-  username = username.slice(username.indexOf('=') + 1)
-
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await api.get('/users/' + localStorage.getItem("id"));
+        const response = await api.get('/users/' + id);
         await new Promise(resolve => setTimeout(resolve, 500));
         setUser(response.data);
       } catch (error) {
@@ -44,7 +40,7 @@ const Profile = () => {
       }
     }
     fetchData();
-  }, []);
+  }, [id]);
 
   let content = <Spinner />;
 

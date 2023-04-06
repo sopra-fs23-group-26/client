@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {api, handleError} from 'helpers/api';
 import {Spinner} from 'components/ui/Spinner';
 import {Button} from 'components/ui/Button';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 import PlatformContainer from "components/ui/PlatformContainer";
 import PropTypes from "prop-types";
 import "styles/views/Platform.scss";
@@ -10,7 +10,6 @@ import "styles/views/Platform.scss";
 const Platform = () => {
   // use react-router-dom's hook to access the history
   const history = useHistory();
-
   const [user, setUser] = useState(null);
 
   const logout = () => {
@@ -26,13 +25,9 @@ const Platform = () => {
 
   const gotoProfile = () => {
     try {
-      // const userinfo = JSON.parse(localStorage.getItem('userinfo'))
-      // const response = await api.get('/user/' + userinfo.username);
-      // await new Promise(resolve => setTimeout(resolve, 500));
-      // setUser(response.data);
-
-        // 注意 从platform到profile不需要再请求，再login的时候就已经拿到这个用户的基本信息。然后存在了本地。
-      history.push(`/profile`); // modified line
+      let id;
+      id = localStorage.getItem('id')
+      history.push(`/profile/${id}`);
     } catch (error) {
       history.push('/');
     }

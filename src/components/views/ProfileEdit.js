@@ -1,41 +1,45 @@
 import { useEffect, useState } from 'react';
-import { api } from 'helpers/api';
+import { api, handleError } from 'helpers/api';
 import { Spinner } from 'components/ui/Spinner';
 import { Button } from 'components/ui/Button';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Game.scss";
+import User from "../../models/User";
 
 const ProfileEdit = () => {
 
   const history = useHistory();
+  let id;
+  id = localStorage.getItem('id')
+  const [user, setUser] = useState(null);
+  const [username, setUsername] = useState(null);
 
   const back = () => {
-    history.push('/platform');
+    history.push(`/profile/${id}`);
   }
 
-  let userObj = null;
-  let userinfo = history.location.search
-  if (userinfo) {
-    userObj = JSON.parse(decodeURI(userinfo.slice(userinfo.indexOf('=') + 1)))
-  }
-
-  const [user, setUser] = useState(userObj);
-  const [username, setUsername] = useState(user.username);
-
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await api.get(`/users/${id}`);
+        setUser(response.data);
+      } catch (error) {
+        alert("Something went wrong while fetching the user! See the console for details.");
+      }
+    }
+    fetchData();
+  }, [id]);
 
   const doEdit = async () => {
     try {
-      user.username = username
-      const requestBody = JSON.stringify(user);
-      const response = await api.post('/user', requestBody);
-      if(response.data.code == 200){
-        history.push(`/profile?username=${username}`)
-      }else{
-        alert(response.data.msg);
-      }
+      const requestBody = {username};
+      const response = await api.put(`/users/` + id, requestBody);
+      const updatedUser = new User(response.data);
+      setUser(updatedUser);
+      history.push(`/profile/${id}`)
     } catch (error) {
-      alert(`edit error`);
+      alert(`Something went wrong during editing profile: \n${handleError(error)}`);
     }
   };
 
@@ -64,11 +68,6 @@ const ProfileEdit = () => {
     );
   }
 
-
-
-
-
-
   return (
     <div className="game">
       <div className="game container" style={{backgroundColor: "rgb(57, 115, 175)", position: 'absolute', top: '420px', left: '530px', transform: 'translate(-50%, -50%)', width: '450px', height: '600px'}}>
@@ -84,8 +83,6 @@ const ProfileEdit = () => {
       </div>
     </div>
   );
-
-
 }
 
 export default ProfileEdit;

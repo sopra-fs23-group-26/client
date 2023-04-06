@@ -30,14 +30,14 @@ const AppRouter = () => {
           <Platform/>
       </PlatformGuard>
         </Route>
-        <Route path="/profile">
+        <Route path="/profile/:id">
           <ProfileGuard>
-            <ProfileRouter base="/profile"/>
+            <Profile/>
           </ProfileGuard>
         </Route>
-        <Route path="/profile-edit">
+        <Route path="/profile-edit/:id">
           <ProfileEditGuard>
-            <ProfileEditRouter base="/profile-edit"/>
+            <ProfileEdit/>
           </ProfileEditGuard>
         </Route>
         <Route exact path="/register">

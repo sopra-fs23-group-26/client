@@ -72,7 +72,7 @@ const Login = props => {
             value={password}
             onChange={n => setPassword(n)}
             placeholder="password"
-            type="text"
+            type="password"
           />
 
           <div className="login button-container">
