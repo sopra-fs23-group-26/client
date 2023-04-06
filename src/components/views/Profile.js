@@ -43,8 +43,10 @@ const Profile = () => {
   }, [id]);
 
   let content = <Spinner />;
+  let score;
 
   if (user) {
+    score = user.score;
     content = (
       <div className="game">
         <ul className="game user-list" style={{color: 'white', fontWeight: 'bold'}}>
@@ -101,7 +103,7 @@ const Profile = () => {
         <div style={{ backgroundColor: 'white', width: '410px', height: '2px', position: 'absolute', top: '140px', left: '20px' }}></div>
         <div style={{ backgroundColor: 'white', width: '410px', height: '2px', position: 'absolute', top: '510px', left: '20px' }}></div>
         <ul className="game user-list" style={{color: 'white', position: 'absolute', top: '530px', left: '30px', fontWeight: 'bold'}}>
-           SCORE: 0
+           SCORE: {score}
         </ul>
       </div>
 
