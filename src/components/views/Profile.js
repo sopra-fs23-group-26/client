@@ -12,7 +12,7 @@ const Profile = () => {
   let userinfo = JSON.parse(localStorage.getItem('userinfo'))
   const history = useHistory();
   const [user, setUser] = useState(null);
-  const [imageFile, setImageFile] = useState(null);
+  const [profileImage, setProfileImage] = useState(null);
 
   const back = () => {
     history.push('/platform');
@@ -32,11 +32,14 @@ const Profile = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await api.get('/users/' + id);
-        await new Promise(resolve => setTimeout(resolve, 500));
+        const response = await api.get(`/users/${id}`);
         setUser(response.data);
+        if (response.data.image) {
+          const imageResponse = await api.get(`/users/${id}/image`, { responseType: 'arraybuffer' });
+          setProfileImage(`data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`);
+        }
       } catch (error) {
-        history.push('/');
+        alert("Something went wrong while fetching the user! See the console for details.");
       }
     }
     fetchData();
@@ -91,12 +94,11 @@ const Profile = () => {
   return (
     <div className="game">
       <div className="game container" style={{backgroundColor: "rgb(57, 115, 175)", position: 'absolute', top: '420px', left: '530px', transform: 'translate(-50%, -50%)', width: '450px', height: '600px'}}>
-        <Button style={{"width": "80px", "height": "80px", "border-radius": "50px",
+        {profileImage && <img style={{"width": "80px", "height": "80px", "border-radius": "50px",
           "background-color": "rgb(214, 222, 235)",
           "box-shadow": "0px 3px 0px rgba(0, 0, 0, 0.2), 0px 5px 10px rgba(0, 0, 0, 0.2)",
-          "position": "absolute", "top": "65px", "left": "80px", "transform": "translate(-50%, -50%)"}}>
-          Image
-        </Button>
+          "position": "absolute", "top": "65px", "left": "80px", "transform": "translate(-50%, -50%)"}} src={profileImage} alt="Profile" />}
+
         <div className="game-content" style={{position: 'absolute', top: '60px', left: '250px', transform: 'translate(-50%, -50%)'}}>
             {content}
         </div>

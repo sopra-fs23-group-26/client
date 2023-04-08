@@ -9,6 +9,7 @@ class User {
     this.token = null;
     this.status = null;
     this.score = null;
+    this.image=null;
     this.globalRanking = null;
     this.communityRanking = null;
     Object.assign(this, data);
