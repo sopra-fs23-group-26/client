@@ -12,7 +12,7 @@ import {ProfileEditGuard} from "components/routing/routeProtectors/ProfileEditGu
 import ProfileEdit from "components/views/ProfileEdit";
 import ProfileEditRouter from "components/routing/routers/ProfileEditRouter";
 import Select from "components/views/Select";
-import Room from "components/views/Room";
+import Rooms from "components/views/Room";
 import Start from "components/views/Start";
 
 /**
@@ -58,7 +58,7 @@ const AppRouter = () => {
           <Select/>
         </Route>
         <Route exact path="/room">
-          <Room/>
+          <Rooms/>
         </Route>
         <Route exact path="/start">
           <Start/>
