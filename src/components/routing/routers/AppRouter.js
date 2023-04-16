@@ -11,6 +11,9 @@ import ProfileRouter from "components/routing/routers/ProfileRouter";
 import {ProfileEditGuard} from "components/routing/routeProtectors/ProfileEditGuard";
 import ProfileEdit from "components/views/ProfileEdit";
 import ProfileEditRouter from "components/routing/routers/ProfileEditRouter";
+import Select from "components/views/Select";
+import Room from "components/views/Room";
+import Start from "components/views/Start";
 
 /**
  * Main router of your application.
@@ -50,6 +53,15 @@ const AppRouter = () => {
         </Route>
         <Route exact path="/login">
           <Login/>
+        </Route>
+        <Route exact path="/select">
+          <Select/>
+        </Route>
+        <Route exact path="/room">
+          <Room/>
+        </Route>
+        <Route exact path="/start">
+          <Start/>
         </Route>
       </Switch>
     </BrowserRouter>

@@ -1,0 +1,75 @@
+@import 'styles/theme';
+
+
+.room-button{
+
+  &.button {
+
+
+    &:disabled {
+      cursor: default;
+      opacity: 0.4;
+
+      &:hover {
+        transform: none;
+      }
+    }
+
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    top: 0em;
+    left: 15em;
+
+    //padding: 6px;
+    //font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1vw;
+    height: 2vw;
+    width: 5vw;
+    border: none;
+    border-radius: $borderRadius2;
+    cursor: pointer;
+    opacity: 1;
+    color: white;
+    background-color: rgb(57, 102, 161);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.8em;
+    content: "join";
+    margin: 2em;
+    justify-content: space-between;
+  }
+
+
+}
+
+.room-button-background{
+  position: relative;
+  background: white;
+  height: 4vw;
+  width: 22.5vw;
+  align-items: center;
+  //text-align: right;
+  border-radius: $borderRadius2;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: space-between;
+  margin: 1vw;
+
+}
+
+.room-button-background-txt{
+  color: black;
+  position: absolute;
+  font-size: 1vw;
+  left: 5%;
+  top: 28%;
+  font-weight: bold;
+}
+
+
+

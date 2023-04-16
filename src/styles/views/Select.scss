@@ -1,0 +1,139 @@
+@import 'styles/theme';
+
+.select{
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: -2em;
+  //background: rgb(248, 246, 246);
+  //height: 100vh;
+
+  &.title{
+    font-weight: bold;
+    color: rgb(57, 102, 161);
+    text-align: center;
+    position: relative;
+    top: 0em;
+    left: -5em;
+    font-size: 3vw;
+    font-weight: bold;
+  }
+
+  &.button{
+    //&:hover {
+    //  transform: translateY(-2px);
+    //}
+    &:disabled {
+      cursor: default;
+      opacity: 0.4;
+      &:hover {
+        transform: none;
+      }
+    }
+    text-align: center;
+    position: relative;
+    top: 4em;
+    left: 9.5em;
+
+    //padding: 6px;
+    //font-weight: 700;
+    text-transform: uppercase;
+    font-size: 2.8vw;
+    height: 4.8vw;
+    width: 14vw;
+    border: none;
+    border-radius: $borderRadius2;
+    cursor: pointer;
+    opacity: 1;
+    color: rgb(57, 102, 161);
+    background-color: rgb(214, 222, 235);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.8em;
+
+  }
+
+  &.box{
+    position: relative;
+    top: -5em;
+    left: 25em;
+    font-size: 2vw;
+    height: 30vw;
+    width: 28vw;
+    border: none;
+    border-radius: 1.5vw;
+    background-color: rgb(19, 40, 67);
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+
+    line-height: 2vw;
+    word-break: break-all;
+    padding: 1em;
+
+  }
+  &.input{
+    position: relative;
+    top: -20.3vw;
+    left:25vw;
+    height: 3vw;
+    width: 12vw;
+    border-radius: 0.5vw;
+    color: rgb(57, 102, 161);
+    border-color: rgb(57, 102, 161);
+    border: solid;
+
+    //border-width: 3px;
+
+  }
+
+  &.container{
+
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: -1em;
+
+    position: relative;
+    top: -17em;
+    left: 12em;
+    font-size: 2vw;
+    height: 10vw;
+    width: 22vw;
+    border: none;
+    border-radius: 1.5vw;
+    background-color: white;
+    color: white;
+    //box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+
+    line-height: 2vw;
+    word-break: break-all;
+    padding: 0.5em;
+    overflow-y: auto;
+
+  }
+  &.display{
+    position: relative;
+    top: 0vm;
+    left: 0vw;
+    width: 4vw;
+    height: 4vw;
+    border-radius: 50px;
+    background: white;
+    border-color: rgb(214, 222, 235);
+    border-width: 0.2vw;
+    border-style: solid;
+    box-shadow: 0 8px 8px -8px rgba(0, 0, 0, 0.5);
+  }
+
+
+
+}
+
+
+
+
+
+
+
+
