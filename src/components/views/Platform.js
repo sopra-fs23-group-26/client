@@ -59,70 +59,78 @@ const Platform = () => {
     return (
         <div style={{display: 'flex'}}>
             <h1 style={{
-                "position": "absolute", "top": "30px", "left": "48%",
+                "position": "relative", "top": "-3vw", "left": "47vw",
                 "color": "rgb(57,102, 161)",
-                "font-size": "85px"
+                "font-size": "4.5vw"
             }}>
                 WeGame
             </h1>
 
-            <PlatformContainer className="single game container" style={{
-                "top": "300px", "left": "650px",
+            <PlatformContainer  style={{
+                "top": "13vw", "left": "19vw", "height": "23vw", "width": "20vw",
                 "background-color": "rgb(214, 222, 235)",
                 "box-shadow": "0 5px 5px -5px rgba(0, 0, 0, 1)"
             }}>
                 <h2 style={{
-                    "position": "absolute", "top": "-80px", "left": "50%",
+                    "position": "relative", "top": "-4vw", "left": "10vw",
                     "transform": "translateX(-50%)",
                     "text-align": "center",
                     "text-transform": "capitalize",
-                    "font-size": "20px",
+                    "font-size": "1vw",
                     "color": "rgb(19,40, 67)"
                 }}>single-player games</h2>
                 <Button style={{
-                    "width": "120px", "height": "120px", "border-radius": "10px",
+                    "width": "7vw", "height": "7vw", "border-radius": "10px",
                     "color": "rgb(57,102, 161)",
                     "background-color": "white",
                     "box-shadow": "0px 3px 0px rgba(0, 0, 0, 0.2), 0px 5px 10px rgba(0, 0, 0, 0.2)",
-                    "position": "absolute", "top": "50px", "left": "50px"
+                    "position": "relative", "top": "-1vw", "left": "2vw",
+                    "font-size": "1vw",
+                    "text-align": "center"
                 }}>
                     Sudoku
                 </Button>
             </PlatformContainer>
-            <PlatformContainer className="multi game container" style={{
+            <PlatformContainer style={{
                 "background-color": "rgb(19, 40, 67)",
-                "box-shadow": "0 5px 5px -5px rgba(0, 0, 0, 1)"
+                "box-shadow": "0 5px 5px -5px rgba(0, 0, 0, 1)",
+                "top": "13vw", "left": "20vw", "height": "23vw", "width": "20vw",
             }}>
                 <h2 style={{
-                    "position": "absolute", "top": "-80px", "left": "50%",
+                    "position": "relative", "top": "-4vw", "left": "10vw",
                     "transform": "translateX(-50%)",
                     "text-align": "center",
                     "text-transform": "capitalize",
-                    "font-size": "20px",
+                    "font-size": "1vw",
                     "color": "rgb(57,102, 161)"
                 }}>multi-player games</h2>
                 <Button style={{
-                    "width": "120px", "height": "120px", "border-radius": "10px",
+                    "width": "7vw", "height": "7vw", "border-radius": "10px",
                     "color": "white",
                     "background-color": "rgb(57,102, 161)",
                     "box-shadow": "0px 3px 0px rgba(0, 0, 0, 0.2), 0px 5px 10px rgba(0, 0, 0, 0.2)",
-                    "position": "absolute", "top": "50px", "left": "50px"
+                    "position": "relative", "top": "-1.5vw", "left": "2vw",
+                    "font-size": "1vw",
+                    "text-align": "center"
                 }}>
                     Draw& <br/>Guess
                 </Button>
                 <Button style={{
-                    "width": "120px", "height": "120px", "border-radius": "10px",
+                    "width": "7vw", "height": "7vw", "border-radius": "10px",
                     "color": "white",
                     "background-color": "rgb(57,102, 161)",
                     "box-shadow": "0px 3px 0px rgba(0, 0, 0, 0.2), 0px 5px 10px rgba(0, 0, 0, 0.2)",
-                    "position": "absolute", "top": "50px", "left": "220px"
-                }}>
+                    "position": "relative", "top": "-0.8vw", "left": "4.5vw",
+                    "font-size": "1vw",
+                    "text-align": "center"
+                }} onClick={() => history.push('/select')}>
                     Undercover
                 </Button>
             </PlatformContainer>
             <PlatformContainer className="user information" style={{
-                "top": "100px", "left": "400px",
-                "width": "200px", "height": "650px",
+                "position": "relative",
+                "top": "0vw", "left": "-32vw",
+                "width": "10vw", "height": "36vw",
                 "background-color": "rgb(57, 102, 161)",
                 "box-shadow": "4px 4px 4px rgba(0, 0, 0, 1)"
             }}>
@@ -134,54 +142,68 @@ const Platform = () => {
                 }} src={profileImage} alt="Profile"/>}
 
                 <Button style={{
-                    "width": "140px", "height": "40px", "border-radius": "10px",
+
                     "color": "rgb(19,40, 67)",
                     "text-transform": "uppercase",
                     "background-color": "rgb(214, 222, 235)",
                     "box-shadow": "0px 3px 0px rgba(0, 0, 0, 0.2), 0px 5px 10px rgba(0, 0, 0, 0.2)",
-                    "position": "absolute", "top": "32%", "left": "50%", "transform": "translate(-50%, -50%)"
+                    "position": "relative", "top": "11vw", "left": "50%", "transform": "translate(-50%, -50%)",
+                    "font-size": "1vw",
+                    "width": "7.5vw", "height": "2.5vw", "border-radius": "10px",
                 }}
                         onClick={() => gotoProfile()}
                 >
                     Profile
                 </Button>
                 <Button style={{
-                    "width": "140px", "height": "40px", "border-radius": "10px",
+
                     "color": "rgb(19,40, 67)",
                     "text-transform": "uppercase",
                     "background-color": "rgb(214, 222, 235)",
                     "box-shadow": "0px 3px 0px rgba(0, 0, 0, 0.2), 0px 5px 10px rgba(0, 0, 0, 0.2)",
-                    "position": "absolute", "top": "47%", "left": "50%", "transform": "translate(-50%, -50%)"
+                    "position": "relative", "top": "14vw", "left": "50%", "transform": "translate(-50%, -50%)",
+                    "font-size": "1vw",
+                    "width": "7.5vw", "height": "2.5vw", "border-radius": "10px",
+                    "text-items": "center"
                 }}>
                     Chatroom
                 </Button>
                 <Button style={{
-                    "width": "140px", "height": "40px", "border-radius": "10px",
+
                     "color": "rgb(19,40, 67)",
                     "text-transform": "uppercase",
                     "background-color": "rgb(214, 222, 235)",
                     "box-shadow": "0px 3px 0px rgba(0, 0, 0, 0.2), 0px 5px 10px rgba(0, 0, 0, 0.2)",
-                    "position": "absolute", "top": "62%", "left": "50%", "transform": "translate(-50%, -50%)"
+                    "position": "relative", "top": "17vw", "left": "50%", "transform": "translate(-50%, -50%)",
+                    "font-size": "1vw",
+                    "width": "7.5vw", "height": "2.5vw", "border-radius": "10px",
+                    "text-items": "center"
                 }}>
                     Ranking
                 </Button>
                 <Button style={{
-                    "width": "140px", "height": "40px", "border-radius": "10px",
+
                     "color": "rgb(19,40, 67)",
                     "text-transform": "uppercase",
                     "background-color": "rgb(214, 222, 235)",
                     "box-shadow": "0px 3px 0px rgba(0, 0, 0, 0.2), 0px 5px 10px rgba(0, 0, 0, 0.2)",
-                    "position": "absolute", "top": "77%", "left": "50%", "transform": "translate(-50%, -50%)"
+                    "position": "relative", "top": "20vw", "left": "50%", "transform": "translate(-50%, -50%)",
+                    "font-size": "1vw",
+                    "width": "7.5vw", "height": "2.5vw", "border-radius": "10px",
+                    "text-items": "center"
                 }}>
                     History
                 </Button>
                 <Button style={{
-                    "width": "140px", "height": "40px", "border-radius": "10px",
+
                     "color": "white",
                     "text-transform": "uppercase",
                     "background-color": "rgb(19, 40, 67)",
                     "box-shadow": "0px 3px 0px rgba(0, 0, 0, 0.2), 0px 5px 10px rgba(0, 0, 0, 0.2)",
-                    "position": "absolute", "top": "92%", "left": "50%", "transform": "translate(-50%, -50%)"
+                    "position": "relative", "top": "23vw", "left": "50%", "transform": "translate(-50%, -50%)",
+                    "font-size": "1vw",
+                    "width": "7.5vw", "height": "2.5vw", "border-radius": "10px",
+                    "text-items": "center"
                 }}
                         onClick={() => logout()}
                 >

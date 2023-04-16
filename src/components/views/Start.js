@@ -3,8 +3,12 @@ import {RoomButton} from "components/ui/RoomButton";
 import {LoginButton} from 'components/ui/LoginButton';
 import "styles/ui/RoomButton.scss"
 import "styles/views/Select.scss";
+import {useHistory, useParams} from 'react-router-dom';
 
 const Start = () =>{
+
+
+    const history = useHistory();
 
 
 
@@ -47,7 +51,9 @@ const Start = () =>{
                 "color": "rgb(214, 222, 235)",
                 "top": "8em"
 
-            }}>Back
+            }}
+                    onClick={() => history.push('/room')}
+            >Back
             </button>
 
             <p className="select box" style={{"top": "-1em",

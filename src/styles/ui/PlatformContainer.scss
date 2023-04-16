@@ -1,13 +1,13 @@
 @import 'styles/theme';
 
-$container-top: 300px;
-$container-left: 1100px;
-$container-width: 400px;
-$container-height: 450px;
+$container-top: 0vw;
+$container-left: 0vwpx;
+$container-width: 23vw;
+$container-height: 20vw;
 $container-bg-color: red;
 
 .platform-container {
-  position: absolute;
+  position: relative;
   border-radius: 10px;
   top: $container-top;
   left: $container-left;

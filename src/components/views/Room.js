@@ -2,8 +2,14 @@ import RoomListContainer from "components/ui/RoomListContainer";
 import {RoomButton} from "components/ui/RoomButton";
 import {LoginButton} from 'components/ui/LoginButton';
 import "styles/ui/RoomButton.scss"
+import {useHistory, useParams} from 'react-router-dom';
 
 const Room = () =>{
+
+    const history = useHistory();
+
+
+
     return(
         <div>
             <h2 className="select title">Undercover</h2>
@@ -17,6 +23,7 @@ const Room = () =>{
                         "top": "12em"
 
                     }}
+                    onClick={() => history.push('/start')}
             >Create a Room</button>
             <button className="select button"
                     style={{
@@ -30,6 +37,7 @@ const Room = () =>{
                         "color": "rgb(214, 222, 235)",
 
                     }}
+                    onClick={() => history.push('/select')}
             >Back</button>
 
             <RoomListContainer>
