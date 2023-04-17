@@ -97,49 +97,42 @@ const UndercoverGamePage = props => {
 
 
 
-  return (
-      <div className="chat-container">
-          {elements}
-          <div style={{"font-weight":"normal",
-          "margin-top":"-36vw",
-              "margin-left":"5vw",
-              "display":"inline-block",
-              "font-size":"2vw",
-          }}>
-              Your Word:
-          </div>
-          <div style={{"font-weight":"bold", "margin-top":"-36vw",
-              "margin-left":"1vw",
-              "display":"inline-block",
-              "font-size":"2vw",
-          "color":"#123597"}}>
-              MILK
-          </div>
-          <div style={{display: "inline-block"}}>
-              <FormField
-                  value={message}
-                  onChange={un => setMessage(un)}
-                  placeholder="type..."
-                  type="text"
-              />
-              <div style={{ justifyContent: "center" }}>
-                  <button className="undercovergame button"
-                          // style={{
-                          //     "display":"inline-block",
-                          //     "font-size": "20px",
-                          //     "text-transform": "none",
-                          //     "font-weight": "bold",
-                          //     "width": "100px",
-                          //     "background-color": "rgb(57, 102, 161)",
-                          //     "color": "rgb(1000,1000,1000)",
-                          // }}
-                          onClick={() => sendMessage()}
-                  >Send</button>
-              </div>
-          </div>
+    return (
+        <div className="chat-container">
+            {elements}
+            <div style={{display: "inline-block",fontWeight: "normal", margin: "-20vw 0 0 5vw", fontSize: "2vw"}}>
+                Your Word:
+            </div>
+            <div style={{display: "inline-block",fontWeight: "bold", margin: "-20vw 0 0 1vw", fontSize: "2vw", color: "#123597"}}>
+                MILK
+            </div>
+            <div style={{display: "inline-block"}}>
+                <FormField
+                    value={message}
+                    onChange={un => setMessage(un)}
+                    placeholder="type..."
+                    type="text"
+                />
+            </div>
+            <div style={{display: "inline-block", marginLeft: "10px"}}>
+                <button
+                    className="undercovergame button"
+                    style={{
+                        fontSize: "20px",
+                        textTransform: "none",
+                        fontWeight: "bold",
+                        width: "100px",
+                        backgroundColor: "rgb(57, 102, 161)",
+                        color: "rgb(255, 255, 255)"
+                    }}
+                    onClick={() => sendMessage()}
+                >
+                    Send
+                </button>
+            </div>
+        </div>
+    );
 
-      </div>
-  );
 };
 
 /**
