@@ -1,0 +1,98 @@
+@import 'styles/theme';
+
+
+
+.result {
+  align-items: center;
+
+  &.container {
+    margin-top: 2em;
+    min-height: 300px;
+    /* we include the center mixin defined in _theme.scss and save three duplicate lines :) */
+    @include center;
+    flex-direction: column;
+  }
+  &.title{
+    min-width: 392px;
+    font-family: Inter;
+    font-size: 80px;
+    color: #3f72afff;
+    text-align: left;
+    vertical-align: top;
+    font-weight: 900;
+  }
+
+  .rectangle {
+    width: 934px;
+    height: 100px;
+    background: #ffffffff;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    border-radius: 20px;
+  }
+
+
+  .time,
+  .r
+  .score{
+    display: inline-block;
+    position:relative;
+    top: 38px;
+    min-width: 199px;
+    font-family: Inter;
+    font-size: 20px;
+    color: #112d4eff;
+    text-align: center;
+    vertical-align: top;
+    font-weight: 500;
+  }
+
+  .time {
+    left: 197px;
+  }
+  .r {
+    display: inline-block;
+    position:relative;
+    top: 38px;
+    left: 257px;
+
+    min-width: 199px;
+    font-family: Inter;
+    font-size: 20px;
+    color: #112d4eff;
+    text-align: center;
+    vertical-align: top;
+    font-weight: 520;
+  }
+
+  .score {
+    display: inline-block;
+    position:relative;
+    top: 38px;
+    left: 277px;
+    min-width: 199px;
+    font-family: Inter;
+    font-size: 20px;
+    color: #112d4eff;
+    text-align: center;
+    vertical-align: top;
+    font-weight: 500;
+  }
+
+  &.label {
+    color: white;
+    margin-bottom: 10px;
+    text-transform: lowercase;
+    font-weight: 300;
+  }
+
+  &.button-container {
+    display: flex;
+    color: $loginTextbox;
+    justify-content: center;
+    width: 300px;
+    margin-top: 1em;
+    //button{
+    //  margin: 0px 5px;
+    //}
+  }
+}

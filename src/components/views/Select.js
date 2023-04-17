@@ -5,9 +5,6 @@ import {useHistory, useParams} from 'react-router-dom';
 const Select = () =>{
     const history = useHistory();
 
-
-
-
     return(
         <div class="select">
             <h2 class="select title">Undercover</h2>

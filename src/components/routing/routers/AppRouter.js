@@ -14,6 +14,9 @@ import ProfileEditRouter from "components/routing/routers/ProfileEditRouter";
 import Select from "components/views/Select";
 import Rooms from "components/views/Room";
 import Start from "components/views/Start";
+import UndercoverGameWinPage from "components/views/UndercoverGameWinPage"
+import UndercoverGamePage from "components/views/UndercoverGamePage"
+
 
 /**
  * Main router of your application.
@@ -62,6 +65,12 @@ const AppRouter = () => {
         </Route>
         <Route exact path="/start">
           <Start/>
+        </Route>
+        <Route exact path="/UndercoverGameWinPage">
+          <UndercoverGameWinPage/>
+        </Route>
+        <Route exact path="/UndercoverGamePage">
+          <UndercoverGamePage/>
         </Route>
       </Switch>
     </BrowserRouter>

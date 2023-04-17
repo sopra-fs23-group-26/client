@@ -5,11 +5,10 @@ import "styles/ui/RoomButton.scss"
 import "styles/views/Select.scss";
 import {useHistory, useParams} from 'react-router-dom';
 
-const Start = () =>{
+const Start = () => {
 
 
     const history = useHistory();
-
 
 
     const num = 8;
@@ -25,7 +24,7 @@ const Start = () =>{
 
     ]
     const elements = []
-    for(let i = 0; i<num; i++){
+    for (let i = 0; i < num; i++) {
 
         elements.push(<div className="select display" style={{
             "left": styles[i].left,
@@ -34,17 +33,16 @@ const Start = () =>{
     }
 
 
-
-
-
-
-    return(
-        <div className="select" >
+    return (
+        <div className="select">
             <h2 className="select title">Undercover</h2>
 
             <button className="select button"
-            style={{"top": "8em"}}
-            >Start!</button>
+                    style={{"top": "8em"}}
+                    onClick={() => history.push('/UndercoverGamePage')}
+
+            >Start!
+            </button>
 
             <button className="select button" style={{
                 "background-color": "rgb(57, 102, 161)",
@@ -56,11 +54,12 @@ const Start = () =>{
             >Back
             </button>
 
-            <p className="select box" style={{"top": "-1em",
-            "height": "24vw"}}>game rules:<br/>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/><br/>
+            <p className="select box" style={{
+                "top": "-1em",
+                "height": "24vw"
+            }}>game rules:<br/>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/><br/>
                 score rules:<br/>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
             </p>
-
 
 
             <button className="select button" style={{
@@ -75,7 +74,7 @@ const Start = () =>{
             }}>
                 invite
             </button>
-            <div> <input className="select input"
+            <div><input className="select input"
             /></div>
 
             <div className="select container">
@@ -83,19 +82,19 @@ const Start = () =>{
                 {/*<div className="select display" >111111</div>*/}
             </div>
 
-            <div> <input className="select input"
-                         style={{
-                             "top":"-40.5vw",
-                             "left": "50vw",
-                             "width": "20vw",
-                             "height": "3.5vw",
-                             "font-size": "2em" ,
-                             "border-color": "rgb(214, 222, 235)",
-                             "font-weight": "bold",
-                             "color": "rgb(19, 40, 67)",
-                             "border-radius": "1.3vw"
+            <div><input className="select input"
+                        style={{
+                            "top": "-40.5vw",
+                            "left": "50vw",
+                            "width": "20vw",
+                            "height": "3.5vw",
+                            "font-size": "2em",
+                            "border-color": "rgb(214, 222, 235)",
+                            "font-weight": "bold",
+                            "color": "rgb(19, 40, 67)",
+                            "border-radius": "1.3vw"
 
-            }}
+                        }}
             /></div>
 
             <button className="select button" style={{
@@ -110,12 +109,6 @@ const Start = () =>{
             }}>
                 do edit
             </button>
-
-
-
-
-
-
 
 
         </div>
