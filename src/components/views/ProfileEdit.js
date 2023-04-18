@@ -76,7 +76,7 @@ const ProfileEdit = () => {
             </label>
               <input
                   className="login input"
-                  placeholder="enter here..."
+                  placeholder= {user.username}
                   value={username}
                   type={'text'}
                   onChange={e => setUsername(e.target.value)}
