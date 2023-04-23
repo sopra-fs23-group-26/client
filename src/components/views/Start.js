@@ -4,11 +4,33 @@ import {LoginButton} from 'components/ui/LoginButton';
 import "styles/ui/RoomButton.scss"
 import "styles/views/Select.scss";
 import {useHistory, useParams} from 'react-router-dom';
+import {api, handleError} from "../../helpers/api";
+import {useState} from "react";
+import GameUndercover from "../../models/GameUndercover";
 
 const Start = () => {
 
 
     const history = useHistory();
+    const [gameId, setGameId] = useState(null);
+
+
+    const handleStartGame = async () => {
+        try {
+            const roomId = localStorage.getItem("roomId")
+            const response = await api.post('/undercover/rooms/'+ roomId);
+
+            // store the gameId to the local storage
+            const game = new GameUndercover(response.data);
+            localStorage.setItem("gameId", game.id);
+            setGameId(game.id);
+
+            // Login successfully worked --> navigate to the route /undercover/${gameId}
+            history.push(`/undercover/${gameId}`);
+        } catch (error) {
+            alert(`Something went wrong during start the undercover game: \n${handleError(error)}`);
+        }
+    };
 
 
     const num = 8;
@@ -39,7 +61,7 @@ const Start = () => {
 
             <button className="select button"
                     style={{"top": "8em"}}
-                    onClick={() => history.push('/UndercoverGamePage')}
+                    onClick={() => handleStartGame()}
 
             >Start!
             </button>

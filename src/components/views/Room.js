@@ -27,6 +27,10 @@ const Rooms = () =>{
             const requestBody = JSON.stringify({ownerId, gameName});
             const response = await api.post('/undercover/rooms', requestBody);
 
+            // store the roomId to the local storage
+            const room = new Room(response.data);
+            localStorage.setItem("roomId", room.id);
+
             if (response.data){
                 const room = new Room(response.data)
                 localStorage.setItem("roomId", room.id)

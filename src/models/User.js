@@ -12,6 +12,7 @@ class User {
     this.image=null;
     this.globalRanking = null;
     this.communityRanking = null;
+    this.word = null;
     Object.assign(this, data);
   }
 }
