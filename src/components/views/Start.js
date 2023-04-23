@@ -4,8 +4,11 @@ import {LoginButton} from 'components/ui/LoginButton';
 import "styles/ui/RoomButton.scss"
 import "styles/views/Select.scss";
 import {useHistory, useParams} from 'react-router-dom';
+import { getDomain } from 'helpers/getDomain';
 
 const Start = () => {
+
+
 
 
     const history = useHistory();
