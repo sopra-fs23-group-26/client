@@ -69,7 +69,7 @@ const AppRouter = () => {
         <Route exact path="/UndercoverGameWinPage">
           <UndercoverGameWinPage/>
         </Route>
-        <Route exact path="/UndercoverGamePage">
+        <Route exact path="/undercover/:gameId">
           <UndercoverGamePage/>
         </Route>
       </Switch>
