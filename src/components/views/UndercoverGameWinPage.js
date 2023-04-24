@@ -1,8 +1,6 @@
-import React, {useState} from 'react';
-import styles from 'styles/views/GameResults.scss';
+import React from 'react';
 import 'styles/views/GameResults.scss';
 import BaseContainer from "../ui/BaseContainer";
-import {LoginButton} from "../ui/LoginButton";
 import {Button} from "../ui/Button";
 import {useHistory} from "react-router-dom";
 
