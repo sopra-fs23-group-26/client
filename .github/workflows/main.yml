@@ -25,6 +25,8 @@ jobs:
   deploy:
     name: Deploying to Google Cloud
     runs-on: ubuntu-latest
+    env:
+      CI: false
 
     steps:
       - name: Checkout
