@@ -1,16 +1,13 @@
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import {PlatformGuard} from "components/routing/routeProtectors/PlatformGuard";
 import Platform from "components/views/Platform";
-import PlatformRouter from "components/routing/routers/PlatformRouter";
 import Login from "components/views/Login";
 import {RegisterGuard} from "components/routing/routeProtectors/RegisterGuard";
 import Register from "components/views/Register";
 import {ProfileGuard} from "components/routing/routeProtectors/ProfileGuard";
 import Profile from "components/views/Profile";
-import ProfileRouter from "components/routing/routers/ProfileRouter";
 import {ProfileEditGuard} from "components/routing/routeProtectors/ProfileEditGuard";
 import ProfileEdit from "components/views/ProfileEdit";
-import ProfileEditRouter from "components/routing/routers/ProfileEditRouter";
 import Select from "components/views/Select";
 import Rooms from "components/views/Room";
 import Start from "components/views/Start";

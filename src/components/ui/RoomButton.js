@@ -1,5 +1,4 @@
 import 'styles/ui/RoomButton.scss';
-import PropTypes from "prop-types";
 
 
 export const RoomButton = props => (

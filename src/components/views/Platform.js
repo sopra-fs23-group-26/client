@@ -1,10 +1,8 @@
 import {useEffect, useState} from 'react';
-import {api, handleError} from 'helpers/api';
-import {Spinner} from 'components/ui/Spinner';
+import {api} from 'helpers/api';
 import {Button} from 'components/ui/Button';
-import {useHistory, useParams} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import PlatformContainer from "components/ui/PlatformContainer";
-import PropTypes from "prop-types";
 import "styles/views/Platform.scss";
 
 const Platform = () => {

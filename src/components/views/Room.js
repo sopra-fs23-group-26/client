@@ -1,11 +1,8 @@
 import RoomListContainer from "components/ui/RoomListContainer";
-import {RoomButton} from "components/ui/RoomButton";
-import {LoginButton} from 'components/ui/LoginButton';
 import "styles/ui/RoomButton.scss"
-import {useHistory, useParams} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import React, {useState, useEffect} from 'react';
 import {api, handleError} from 'helpers/api';
-import User from 'models/User';
 import Room from 'models/Room';
 
 const Rooms = () =>{
