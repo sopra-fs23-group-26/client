@@ -4,6 +4,7 @@ import {useHistory} from 'react-router-dom';
 import {api, handleError} from "../../helpers/api";
 import GameUndercover from "../../models/GameUndercover";
 import React, { useState, useEffect } from 'react';
+import { getDomain } from 'helpers/getDomain';
 
 const Start = () => {
     const history = useHistory();
@@ -52,6 +53,9 @@ const Start = () => {
 
     // 创建WebSocket连接
     useEffect(() => {
+        const url = "ws"+getDomain().toString().substring(4, getDomain().toString().length)+"/websocket"
+        console.log("ws url");
+        console.log(url);
         const ws = new WebSocket("ws://localhost:8080/websocket");
         console.log("ws masssss");
         console.log(ws);
