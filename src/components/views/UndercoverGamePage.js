@@ -56,11 +56,12 @@ const UndercoverGamePage = props => {
                 const updatedPlayers = {};
                 if(players) {
                     for (let i = 0; i <= 8; i++) {
-                        if (players[i]) {
+                        if (players[i]&&(players[i].image!=null)) {
                             const imageResponse = await api.get(`/users/${players[i].id}/image`, {responseType: 'arraybuffer'});
                             players[i].profileImage = `data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`;
-                            updatedPlayers[i] = players[i];
+
                         }
+                        updatedPlayers[i] = players[i];
                     }
                     setPlayers(updatedPlayers);
                 }
@@ -109,7 +110,7 @@ const UndercoverGamePage = props => {
             const id = localStorage.getItem("id")
             const requestBody = JSON.stringify(message);
             const response = await api.put('/undercover/' + gameId + '/users/' + id + '/description', requestBody);
-
+            await new Promise(resolve => setTimeout(resolve, 1000));
             //check if the game status is voting
             setGame(new GameUndercover(response.data));
             if (game.gameStatus === "voting") {
