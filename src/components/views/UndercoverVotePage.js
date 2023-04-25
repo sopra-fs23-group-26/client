@@ -7,35 +7,14 @@ import PropTypes from "prop-types";
 import Room from "../../models/Room";
 import GameUndercover from "../../models/GameUndercover";
 
-const FormField = props => {
-    return (
-        <div className="undercovergame field">
-            <input
-                className="undercovergame input"
-                placeholder={props.placeholder}
-                value={props.value}
-                type={props.type ? props.type : 'text'}
-                onChange={e => props.onChange(e.target.value)}
-            />
-        </div>
-    );
-};
 
-
-FormField.propTypes = {
-    label: PropTypes.string,
-    value: PropTypes.string,
-    onChange: PropTypes.func,
-    placeholder: PropTypes.string,
-    type: PropTypes.string.isRequired
-};
-const UndercoverGamePage = props => {
-    const history = useHistory();
-    const {gameId} = useParams();
-    const [game, setGame] = useState(null);
-    const [message, setMessage] = useState(null);
-    let [players, setPlayers] = useState(null);
-    const [me, setMe] = useState(null);
+const UndercoverVotePage = props => {
+  const history = useHistory();
+  const {gameId} = useParams();
+  const [game, setGame] = useState(null);
+  const [message, setMessage] = useState(null);
+  let [players, setPlayers] = useState(null);
+  const [me, setMe] = useState(null);
 
 
     useEffect(() => {
@@ -71,16 +50,14 @@ const UndercoverGamePage = props => {
                 console.error("Details:", error);
                 alert("Something went wrong while fetching the game! See the console for details.");
             }
+
             try {
                 const id = localStorage.getItem("id");
-                const response = await api.get('/users/' + id);
-
+                const response = await api.get('/users/'+id);
                 // Get the returned users and update the state.
                 const me = new User(response.data);
-
                 //set the local player
                 setMe(me);
-
                 // See here to get more data.
                 console.log(response);
             } catch (error) {
@@ -88,39 +65,42 @@ const UndercoverGamePage = props => {
                 console.error("Details:", error);
                 alert("Something went wrong while fetching the local player! See the console for details.");
             }
+
         }
+
 
         fetchData();
     }, [gameId]);
 
-    let word, username;
-    if (me) {
-        word = me.word;
-        username = me.username;
+    let word,username;
+    if(me){
+        word=me.word;
+        username=me.username;
     }
     let currentPlayerUsername;
-    if (game) {
-        currentPlayerUsername = game.currentPlayerUsername;
+    if(game){
+        currentPlayerUsername=game.currentPlayerUsername;
     }
 
 
-    const sendMessage = async () => {
-        try {
-            const id = localStorage.getItem("id")
-            const requestBody = JSON.stringify(message);
-            const response = await api.put('/undercover/' + gameId + '/users/' + id + '/description', requestBody);
 
+    const handleImageClick = async (player) => {
+        try {
+            const requestBody = JSON.stringify(player);
+            const response = await api.put('/undercover/' + gameId + '/votes/', requestBody);
             //check if the game status is voting
             setGame(new GameUndercover(response.data));
-            if (game.gameStatus === "voting") {
-                history.push(`/undercover/${gameId}/voting`);
+            if (game.gameStatus === "describing") {
+                history.push(`/undercover/${gameId}`);
+            }
+            else if (game.gameStatus === "end") {
+                history.push(`/UndercoverGameWinPage`);
             }
         } catch (error) {
             console.error(`Something went wrong while updating the description: \n${handleError(error)}`);
             console.error("Details:", error);
             alert("Something went wrong while updating the description! See the console for details.");
         }
-
     }
 
     const num = 8;
@@ -137,7 +117,7 @@ const UndercoverGamePage = props => {
     ]
     const elements = [];
 
-    if (players) {
+    if(players) {
         for (let i = 0; i < 8; i += 2) {
             elements.push(
                 <div>
@@ -159,11 +139,12 @@ const UndercoverGamePage = props => {
                                 }}
                                 src={players[i].profileImage}
                                 alt={" "}
+                                onClick={() => handleImageClick(players[i])}
                             />
                         )}
                         <div className="undercovergame chat-bubble-left">
                             <div style={{"font-weight": "bold", "display": "inline-block"}}>
-                                {players[i] != null ? players[i].username + " : " : ''}
+                                {players[i] != null ? players[i].username+" : " : ''}
                             </div>
                             {players[i] != null ? players[i].description : ''}
                         </div>
@@ -175,7 +156,7 @@ const UndercoverGamePage = props => {
                         "display": "inline-block",
                         "float": "right"
                     }}>
-                        {players[i + 1] && (
+                        {players[i+1] && (
                             <img
                                 style={{
                                     "width": "5.5vw",
@@ -186,15 +167,16 @@ const UndercoverGamePage = props => {
                                     "left": "50%",
                                     "transform": "translate(-50%, -50%)"
                                 }}
-                                src={players[i + 1].profileImage}
+                                src={players[i+1].profileImage}
                                 alt={" "}
+                                onClick={() => handleImageClick(players[i+1])}
                             />
                         )}
                         <div className="undercovergame chat-bubble-right">
                             <div style={{"font-weight": "bold", "display": "inline-block"}}>
-                                {players[i + 1] != null ? players[i + 1].username + " : " : ''}
+                                {players[i+1] != null ? players[i+1].username+" : " : ''}
                             </div>
-                            {players[i + 1] != null ? players[i + 1].username : ''}
+                            {players[i+1] != null ? players[i+1].username : ''}
                         </div>
                     </div>
                 </div>
@@ -205,42 +187,14 @@ const UndercoverGamePage = props => {
     return (
         <div className="chat-container">
             {elements}
-            <div style={{display: "inline-block", fontWeight: "normal", margin: "-40vw 0 0 5vw", fontSize: "2vw"}}>
+            <div style={{display: "inline-block",fontWeight: "normal", margin: "-40vw 0 0 5vw", fontSize: "2vw"}}>
                 Your Word:
             </div>
-            <div style={{
-                display: "inline-block",
-                fontWeight: "bold",
-                margin: "-40vw 0 0 1vw",
-                fontSize: "2vw",
-                color: "#123597"
-            }}>
+            <div style={{display: "inline-block",fontWeight: "bold", margin: "-40vw 0 0 1vw", fontSize: "2vw", color: "#123597"}}>
                 {word}
             </div>
-            <div style={{display: "inline-block"}}>
-                <FormField
-                    value={message}
-                    onChange={un => setMessage(un)}
-                    placeholder="type..."
-                    type="text"
-                />
-            </div>
-            <div style={{display: "inline-block", marginLeft: "10px"}}>
-                <button
-                    className="undercovergame button"
-                    style={{
-                        fontSize: "20px",
-                        textTransform: "none",
-                        fontWeight: "bold",
-                        width: "100px",
-                        backgroundColor: "rgb(57, 102, 161)",
-                        color: "rgb(255, 255, 255)"
-                    }}
-                    onClick={() => sendMessage()}
-                    disabled={currentPlayerUsername !== username}
-                >
-                    Send
-                </button>
+            <div style={{display: "inline-block",fontWeight: "normal", margin: "-40vw 0 0 2vw", fontSize: "2vw"}}>
+                Click on the profile picture to select who you think is the undercover agent.
             </div>
         </div>
     );
@@ -251,4 +205,4 @@ const UndercoverGamePage = props => {
  * You can get access to the history object's properties via the withRouter.
  * withRouter will pass updated match, location, and history props to the wrapped component whenever it renders.
  */
-export default UndercoverGamePage;
+export default UndercoverVotePage;
