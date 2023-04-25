@@ -40,12 +40,16 @@ const Rooms = () =>{
 
             // store the roomId to the local storage
             const room = new Room(response.data);
-            localStorage.setItem("roomId", room.id);
+            // localStorage.setItem("roomId", room.id);
 
             if (response.data){
                 const room = new Room(response.data)
                 localStorage.setItem("roomId", room.id)
                 localStorage.setItem("roomName", room.name)
+                localStorage.setItem("ownerId", ownerId)
+
+
+                console.log("response.data: "+room)
                 console.log("roomId: "+String(room.id))
                 console.log("roomName: "+room.name)
                 console.log("roomPlayers: "+room.players)
@@ -81,13 +85,11 @@ const Rooms = () =>{
 
             const requestBody = JSON.stringify({userId});
             const response = await api.put('/undercover/rooms/'+String(id), formData, config);
-            console.log("new room information 11111 ------------------------")
-            console.log(response)
-            const response_2 = await api.get('/undercover/rooms/');
-            console.log("new room information ------------------------")
-            console.log(response_2)
+
 
             if (response.status==200){
+                localStorage.setItem("roomId", id)
+                localStorage.setItem("ownerId", 999999)// fake owner id
                 history.push('/start')
             }else {
                 alert("Error: joined a room failed");
@@ -107,6 +109,8 @@ const Rooms = () =>{
         useEffect(() => {
             async function fetchRoomList() {
                 const response = await api.get('/undercover/rooms');
+                console.log("room list")
+                console.log(response.data)
                 setRoomList(response.data);
             }
             fetchRoomList();

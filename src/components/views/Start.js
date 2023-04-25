@@ -3,13 +3,10 @@ import "styles/views/Select.scss";
 import {useHistory} from 'react-router-dom';
 import {api, handleError} from "../../helpers/api";
 import GameUndercover from "../../models/GameUndercover";
+import React, { useState, useEffect } from 'react';
 
 const Start = () => {
-
-
     const history = useHistory();
-
-
     const handleStartGame = async () => {
         try {
             const roomId = localStorage.getItem("roomId")
@@ -25,6 +22,7 @@ const Start = () => {
             alert(`Something went wrong during start the undercover game: \n${handleError(error)}`);
         }
     };
+
 
 
     const num = 8;
@@ -49,13 +47,61 @@ const Start = () => {
     }
 
 
+    const [socket, setSocket] = useState(null);
+    const [message, setMessage] = useState('start');
+
+    // 创建WebSocket连接
+    useEffect(() => {
+        const ws = new WebSocket("ws://localhost:8080/websocket");
+        console.log("ws masssss");
+        console.log(ws);
+        setSocket(ws);
+
+        // 关闭WebSocket连接时清理副作用
+        return () => {
+            ws.close();
+        };
+    }, []);
+
+    // 发送消息
+    const sendMessage = () => {
+        if (socket) {
+            // setMessage('start');
+            socket.send(message);
+            history.push('/platform')
+        }
+    };
+
+    // 处理消息接收
+    useEffect(() => {
+        if (socket) {
+            socket.onmessage = (event) => {
+                if(event.data=="start"){
+                    history.push("/platform")
+                }
+                console.log('WebSocket message received:', event.data);
+            };
+        }
+    }, [socket]);
+
+
+
+
+
+
+
+
+
+
+
+
     return (
         <div className="select">
             <h2 className="select title">Undercover</h2>
 
             <button className="select button"
                     style={{"top": "8em"}}
-                    onClick={() => handleStartGame()}
+                    onClick={() => sendMessage()}
 
             >Start!
             </button>
