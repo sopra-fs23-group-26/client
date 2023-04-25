@@ -13,6 +13,8 @@ import Rooms from "components/views/Room";
 import Start from "components/views/Start";
 import UndercoverGameWinPage from "components/views/UndercoverGameWinPage"
 import UndercoverGamePage from "components/views/UndercoverGamePage"
+import UndercoverVotePage from "components/views/UndercoverVotePage"
+
 
 
 /**
@@ -68,6 +70,9 @@ const AppRouter = () => {
         </Route>
         <Route exact path="/undercover/:gameId">
           <UndercoverGamePage/>
+        </Route>
+        <Route exact path="/undercover/:gameId/voting">
+          <UndercoverVotePage/>
         </Route>
       </Switch>
     </BrowserRouter>
