@@ -56,7 +56,7 @@ const Start = () => {
         const url = "ws"+getDomain().toString().substring(4, getDomain().toString().length)+"/websocket"
         console.log("ws url");
         console.log(url);
-        const ws = new WebSocket("ws://localhost:8080/websocket");
+        const ws = new WebSocket(url);
         console.log("ws masssss");
         console.log(ws);
         setSocket(ws);
