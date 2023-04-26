@@ -94,7 +94,7 @@ const Start = () => {
 // 处理消息接收
     useEffect(() => {
         if (socket) {
-            socket.onmessage = (event) => {
+            socket.onmessage = async (event) => {
                 console.log('WebSocket message received:', event.data);
                 if (event.data === 'start') {
                     // Check if gameId exists in localStorage
@@ -104,6 +104,8 @@ const Start = () => {
                     } else {
                         // If gameId doesn't exist, create a new game and store the gameId in localStorage
                         const roomId = localStorage.getItem('roomId');
+                        await new Promise(resolve => setTimeout(resolve, 1000));
+                        //alert(roomId);
                         api.post(`/undercover/rooms/${roomId}`).then((response) => {
                             const game = new GameUndercover(response.data);
                             localStorage.setItem('gameId', game.id);
