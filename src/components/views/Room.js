@@ -69,26 +69,12 @@ const Rooms = () =>{
 
     }
 
-    const joinRoom = async (userId, id) =>{
+    const joinRoom = async (userId, roomId) =>{
         try{
-            // setOwnerId(localStorage.getItem("id"))
-            // setGameName("undercover")
-            console.log("OwnerId: "+String(ownerId))
-            console.log("gameName: "+String(gameName))
-
-            const formData = new FormData();
-            formData.append("userId", userId)
-
-            const config = { headers: { "Content-Type": "multipart/form-data" } };
-
-
-
-            const requestBody = JSON.stringify({userId});
-            const response = await api.put('/undercover/rooms/'+String(id), formData, config);
-
+            const response = await api.put(`/undercover/rooms/${roomId}/${userId}`);
 
             if (response.status==200){
-                localStorage.setItem("roomId", id)
+                localStorage.setItem("roomId", roomId)
                 localStorage.setItem("ownerId", 999999)// fake owner id
                 history.push('/start')
             }else {

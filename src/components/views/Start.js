@@ -8,7 +8,8 @@ import { getDomain } from 'helpers/getDomain';
 
 const Start = () => {
     const history = useHistory();
-    const handleStartGame = async () => {
+    const [gameId, setGameId] = useState(null);
+/*    const handleStartGame = async () => {
         try {
             const roomId = localStorage.getItem("roomId")
             const response = await api.post('/undercover/rooms/'+ roomId);
@@ -22,7 +23,7 @@ const Start = () => {
         } catch (error) {
             alert(`Something went wrong during start the undercover game: \n${handleError(error)}`);
         }
-    };
+    };*/
 
 
 
@@ -68,35 +69,53 @@ const Start = () => {
     }, []);
 
     // 发送消息
-    const sendMessage = () => {
+    const sendMessage = async () => {
         if (socket) {
             // setMessage('start');
             socket.send(message);
-            history.push('/platform')
+            try {
+                const roomId = localStorage.getItem("roomId")
+                const response = await api.post('/undercover/rooms/' + roomId);
+
+                // store the gameId to the local storage
+                const game = new GameUndercover(response.data);
+                localStorage.setItem("gameId", game.id);
+                setGameId(game.id);
+
+                // Login successfully worked --> navigate to the route /undercover/${gameId}
+                history.push(`/undercover/${game.id}`);
+            } catch (error) {
+                alert(`Something went wrong during start the undercover game: \n${handleError(error)}`);
+            }
         }
     };
 
     // 处理消息接收
+// 处理消息接收
     useEffect(() => {
         if (socket) {
             socket.onmessage = (event) => {
-                if(event.data=="start"){
-                    history.push("/platform")
-                }
                 console.log('WebSocket message received:', event.data);
+                if (event.data === 'start') {
+                    // Check if gameId exists in localStorage
+                    if (gameId) {
+                        // If gameId exists, navigate to the route /undercover/${gameId}
+                        history.push(`/undercover/${gameId}`);
+                    } else {
+                        // If gameId doesn't exist, create a new game and store the gameId in localStorage
+                        const roomId = localStorage.getItem('roomId');
+                        api.post(`/undercover/rooms/${roomId}`).then((response) => {
+                            const game = new GameUndercover(response.data);
+                            localStorage.setItem('gameId', game.id);
+                            history.push(`/undercover/${game.id}`);
+                        }).catch((error) => {
+                            alert(`Something went wrong during start the undercover game: \n${handleError(error)}`);
+                        });
+                    }
+                }
             };
         }
-    }, [socket]);
-
-
-
-
-
-
-
-
-
-
+    }, [socket, history]);
 
 
     return (
