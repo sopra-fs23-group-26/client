@@ -35,17 +35,18 @@ const Start = (url, config) => {
 
 
     const doBack = async() =>{
-        if(localStorage.getItem("id")!=localStorage.getItem("ownerId")){
-            console.log("id != ownerId")
-            const formData = new FormData();
-            formData.append("userId", localStorage.getItem("id"))
-            const config = { headers: { "Content-Type": "multipart/form-data" } };
-            const response = await api.delete('/undercover/rooms/'+String(localStorage.getItem("roomId")), formData, config);
+        const url = "/undercover/rooms/" + localStorage.getItem("roomId") + "/" + localStorage.getItem("id")
+        const response = await api.delete(url)
+
+        if (response.status==200){
+            console.log("leave a room")
             history.push('/room')
-        } else {
-            console.log("id == ownerId")
-            history.push('/room')
+        }else {
+            console.log("leave a room failed")
+            alert("Error: joined a room failed");
         }
+
+
     }
 
 
@@ -162,7 +163,7 @@ const Start = (url, config) => {
                 "top": "9.5em"
 
             }}
-                    onClick={() =>history.push("/room")}
+                    onClick={() =>doBack()}
             >Back
             </button>
 
