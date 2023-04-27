@@ -14,4 +14,4 @@ class GameHistory {
         Object.assign(this, data);
     }
 }
-export default GameUndercover;
+export default GameHistory;
