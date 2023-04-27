@@ -11,6 +11,8 @@ const Start = (url, config) => {
     const [gameId, setGameId] = useState(null);
     const [profileImageList, setProfileImageList] = useState([]);
     const [roomName, setRoomName] = useState(null);
+    const [generalMessage, setGeneralMessage] = useState(null);
+    const [roomRemoved] = useState("roomNotExist");
 
 /*    const handleStartGame = async () => {
         try {
@@ -37,18 +39,49 @@ const Start = (url, config) => {
     }, []);
 
 
-    const doBack = async() =>{
-        const url = "/undercover/rooms/" + localStorage.getItem("roomId") + "/" + localStorage.getItem("id")
-        const response = await api.delete(url)
 
-        if (response.status==200){
-            console.log("leave a room")
-            localStorage.removeItem("roomId")
-            localStorage.removeItem("ownerId")
-            history.push('/room')
-        }else {
-            console.log("leave a room failed")
-            alert("Error: joined a room failed");
+
+
+    const sendRoomRemovedMessage = async () => {
+        if (socket) {
+            try{socket.send(roomRemoved);}
+            catch(error){
+                alert(`Something went wrong during sending message: \n${handleError(error)}`);
+            }
+        }
+    }
+
+
+
+
+
+
+    const doBack = async() =>{
+
+
+
+        if(localStorage.getItem("id")==localStorage.getItem("ownerId")){
+            console.log("room id")
+            console.log(localStorage.getItem("roomId"))
+            const url = "/undercover/rooms/" + localStorage.getItem("roomId")
+            const response = await api.delete(url)
+            await sendRoomRemovedMessage()
+            history.push("/room")
+
+        }
+        else {
+            const url = "/undercover/rooms/" + localStorage.getItem("roomId") + "/" + localStorage.getItem("id")
+            const response = await api.delete(url)
+
+            if (response.status == 200) {
+                console.log("leave a room")
+                localStorage.removeItem("roomId")
+                localStorage.removeItem("ownerId")
+                history.push('/room')
+            } else {
+                console.log("leave a room failed")
+                alert("Error: joined a room failed");
+            }
         }
     }
 
@@ -148,6 +181,9 @@ const Start = (url, config) => {
         }
     };
 
+
+
+
     // 处理消息接收
 // 处理消息接收
     useEffect(() => {
@@ -173,6 +209,18 @@ const Start = (url, config) => {
                         });
                     }
                 }
+
+
+                if (event.data == "roomNotExist"){
+                    console.log("leave a room because the room is not existed")
+                    localStorage.removeItem("roomId")
+                    localStorage.removeItem("ownerId")
+                    history.push('/room')
+                }
+
+
+
+
             };
         }
     }, [socket, history]);
