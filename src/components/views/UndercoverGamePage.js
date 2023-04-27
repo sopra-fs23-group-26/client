@@ -54,14 +54,14 @@ const UndercoverGamePage = props => {
                 history.push(`/undercover/${gameId}/voting`);
             }
             const sortedPlayers = response.data.users.sort((a, b) => a.id - b.id);
-            setPlayers(sortedPlayers.map(player => ({ ...player, profileImage: null })));
-            for (let i = 0; i < sortedPlayers.length; i++) {
-                if (sortedPlayers[i].image) {
-                    const imageResponse = await api.get(`/users/${sortedPlayers[i].id}/image`, { responseType: 'arraybuffer' });
-                    const profileImage = `data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`;
-                    setPlayers(prevPlayers => prevPlayers.map((player, index) => (index === i ? { ...player, profileImage } : player)));
-                }
-            }
+            setPlayers(sortedPlayers.map(player => ({ ...player, description: player.description })));
+            // for (let i = 0; i < sortedPlayers.length; i++) {
+            //     if (sortedPlayers[i].image) {
+            //         const imageResponse = await api.get(`/users/${sortedPlayers[i].id}/image`, { responseType: 'arraybuffer' });
+            //         const profileImage = `data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`;
+            //         setPlayers(prevPlayers => prevPlayers.map((player, index) => (index === i ? { ...player, profileImage } : player)));
+            //     }
+            // }
         } catch (error) {
             console.error(`Something went wrong while fetching the game: \n${handleError(error)}`);
             console.error("Details:", error);
@@ -86,7 +86,7 @@ const UndercoverGamePage = props => {
     useEffect(() => {
         if (players) {
             for (let i = 0; i < players.length; i++) {
-                if (players[i].image) {
+                if (players[i].image&&(players[i].profileImage==null)) {
                     api.get(`/users/${players[i].id}/image`, { responseType: 'arraybuffer' })
                         .then((imageResponse) => {
                             const profileImage = `data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`;
@@ -125,14 +125,14 @@ const UndercoverGamePage = props => {
                         history.push(`/undercover/${gameId}/voting`);
                     }
                     const sortedPlayers = response.data.users.sort((a, b) => a.id - b.id);
-                    setPlayers(sortedPlayers.map(player => ({ ...player, profileImage: null })));
-                    for (let i = 0; i < sortedPlayers.length; i++) {
-                        if (sortedPlayers[i].image) {
-                            const imageResponse = await api.get(`/users/${sortedPlayers[i].id}/image`, { responseType: 'arraybuffer' });
-                            const profileImage = `data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`;
-                            setPlayers(prevPlayers => prevPlayers.map((player, index) => (index === i ? { ...player, profileImage } : player)));
-                        }
-                    }
+                    setPlayers(sortedPlayers.map(player => ({ ...player, description: player.description })));
+                    // for (let i = 0; i < sortedPlayers.length; i++) {
+                    //     if (sortedPlayers[i].image) {
+                    //         const imageResponse = await api.get(`/users/${sortedPlayers[i].id}/image`, { responseType: 'arraybuffer' });
+                    //         const profileImage = `data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`;
+                    //         setPlayers(prevPlayers => prevPlayers.map((player, index) => (index === i ? { ...player, profileImage } : player)));
+                    //     }
+                    // }
                 } catch (error) {
                     console.error(`Something went wrong while fetching the game: \n${handleError(error)}`);
                     console.error("Details:", error);
