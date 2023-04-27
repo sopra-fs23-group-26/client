@@ -87,11 +87,11 @@ const UndercoverVotePage = props => {
 
     const handleImageClick = async (player) => {
         try {
-            const requestBody = JSON.stringify(player);
-            const response = await api.put('/undercover/' + gameId + '/votes', requestBody);
+            const response = await api.put('/undercover/' + gameId + '/votes/'+me.id+'/'+player.id);
             await new Promise(resolve => setTimeout(resolve, 1000));
+            alert("You voted for "+player.username);
             //check if the game status is voting
-            setGame(new GameUndercover(response.data));
+            setGame(response.data);
             if (game.gameStatus === "describing") {
                 history.push(`/undercover/${gameId}`);
             }
