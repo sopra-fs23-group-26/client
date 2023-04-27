@@ -25,7 +25,19 @@ const Select = () =>{
                 "color": "rgb(214, 222, 235)",
             }} onClick={() => history.push('/platform')}>Back</button>
 
-            <p class="select box">{text}
+            <p class="select box">
+                Game rules:<br/><br/>
+                1. The game starts with each player receiving a word, but one player is the "undercover" and has a different word than the other players, who are the "detectives."
+                <br/><br/>
+                2. At the start of each round, every player describes their word using one sentence without saying the actual word.
+                <br/><br/>
+                3. After all players have described their word in a round, players must vote for who they think is the undercover, and the player who receives the most votes in this round is voted out.
+                <br/><br/>
+                4. If the undercover is correctly voted out, the detectives win the game and each get 2 points.
+                <br/><br/>
+                5. If the undercover is not voted out, the game continues until only two players are left and one of them is the undercover.
+                <br/><br/>
+                6. If the remaining players include the undercover and one detective, the undercover wins the game and gets 5 points.
             </p>
 
 

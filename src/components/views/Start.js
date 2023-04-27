@@ -9,6 +9,9 @@ import { getDomain } from 'helpers/getDomain';
 const Start = (url, config) => {
     const history = useHistory();
     const [gameId, setGameId] = useState(null);
+    const [profileImageList, setProfileImageList] = useState([]);
+    const [roomName, setRoomName] = useState(null);
+
 /*    const handleStartGame = async () => {
         try {
             const roomId = localStorage.getItem("roomId")
@@ -40,39 +43,68 @@ const Start = (url, config) => {
 
         if (response.status==200){
             console.log("leave a room")
+            localStorage.removeItem("roomId")
+            localStorage.removeItem("ownerId")
             history.push('/room')
         }else {
             console.log("leave a room failed")
             alert("Error: joined a room failed");
         }
-
-
     }
 
 
-
-
-
-    const num = 8;
-    const styles = [
-        {left: "0vw", "top": "0em"},
-        {left: "5vw", "top": "0em"},
-        {left: "10vw", "top": "0em"},
-        {left: "15vw", "top": "0em"},
-        {left: "0vw", "top": "2.3em"},
-        {left: "5vw", "top": "2.3em"},
-        {left: "10vw", "top": "2.3em"},
-        {left: "15vw", "top": "2.3em"},
-
-    ]
     const elements = []
-    for (let i = 0; i < num; i++) {
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await api.get(`/undercover/rooms/`+localStorage.getItem("roomId"))
+                setRoomName(response.data.name)//获取房间名称，get room's name
+                let images = []
+                for(let i = 0; i<response.data.players.length; i++){
+                    if (response.data.players[i].image) {
+                        let url = "/users/" + response.data.players[i].id + "/image"
+                        console.log("image info")
+                        const imageResponse = await api.get(url, {responseType: 'arraybuffer'});
+                        console.log("imageResponse")
+                        console.log(imageResponse)
+                        images.push(`data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`);
+                    }
+                }
+                setProfileImageList(images)
 
-        elements.push(<div className="select display" style={{
-            "left": styles[i].left,
-            "top": styles[i].top
-        }}></div>)
-    }
+            } catch (error) {
+                alert("Something went wrong while fetching the user! See the console for details.");
+            }
+        }
+
+        fetchData();
+    }, []);
+
+
+    console.log("image list")
+    console.log(profileImageList)
+
+
+    // const num = 8;
+    // const styles = [
+    //     {left: "0vw", "top": "0em"},
+    //     {left: "5vw", "top": "0em"},
+    //     {left: "10vw", "top": "0em"},
+    //     {left: "15vw", "top": "0em"},
+    //     {left: "0vw", "top": "2.3em"},
+    //     {left: "5vw", "top": "2.3em"},
+    //     {left: "10vw", "top": "2.3em"},
+    //     {left: "15vw", "top": "2.3em"},
+    //
+    // ]
+    //
+    // for (let i = elements.length; i < num; i++) {
+    //
+    //     elements.push(<div className="select display" style={{
+    //         "left": styles[i].left,
+    //         "top": styles[i].top
+    //     }}></div>)
+    // }
 
 
     const [socket, setSocket] = useState(null);
@@ -171,7 +203,18 @@ const Start = (url, config) => {
                 "top": "1.5em",
                 "left": "50em",
                 "height": "24vw"
-            }}>{text}
+            }}> Game rules:<br/><br/>
+                1. The game starts with each player receiving a word, but one player is the "undercover" and has a different word than the other players, who are the "detectives."
+                <br/><br/>
+                2. At the start of each round, every player describes their word using one sentence without saying the actual word.
+                <br/><br/>
+                3. After all players have described their word in a round, players must vote for who they think is the undercover, and the player who receives the most votes in this round is voted out.
+                <br/><br/>
+                4. If the undercover is correctly voted out, the detectives win the game and each get 2 points.
+                <br/><br/>
+                5. If the undercover is not voted out, the game continues until only two players are left and one of them is the undercover.
+                <br/><br/>
+                6. If the remaining players include the undercover and one detective, the undercover wins the game and gets 5 points.
             </p>
 
 
@@ -190,10 +233,19 @@ const Start = (url, config) => {
             <div><input className="select input"
             /></div>
 
+            {/*<div className="select container">*/}
+            {/*    /!*{elements}*!/*/}
+            {/*    {profileImageList && <img className="select display"  src={profileImageList} alt="Profile"/>}*/}
+            {/*    /!*{profileImageList && <img className="select display"  src={profileImageList} alt="Profile"/>}*!/*/}
+            {/*</div>*/}
+
             <div className="select container">
-                {elements}
-                {/*<div className="select display" >111111</div>*/}
+                {profileImageList && profileImageList.map((image, index) => (
+                    <img key={index} className="select display" src={image} alt={`Profile ${index}`} />
+                ))}
             </div>
+
+
 
             <div><input className="select input"
                         style={{
@@ -206,8 +258,9 @@ const Start = (url, config) => {
                             "font-weight": "bold",
                             "color": "rgb(19, 40, 67)",
                             "border-radius": "1.3vw"
-
                         }}
+
+                        value={roomName}
             /></div>
 
             <button className="select button" style={{

@@ -45,7 +45,6 @@ const Rooms = () =>{
             if (response.data){
                 const room = new Room(response.data)
                 localStorage.setItem("roomId", room.id)
-                localStorage.setItem("roomName", room.name)
                 localStorage.setItem("ownerId", ownerId)
 
 
@@ -75,7 +74,7 @@ const Rooms = () =>{
 
             if (response.status==200){
                 localStorage.setItem("roomId", roomId)
-                localStorage.setItem("ownerId", 999999)// fake owner id
+                localStorage.setItem("ownerId", response.data.ownerId)// fake owner id
                 history.push('/start')
             }else {
                 alert("Error: joined a room failed");
