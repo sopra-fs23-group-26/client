@@ -41,43 +41,46 @@ const UndercoverGamePage = props => {
     const [wsmessage, setwsMessage] = useState('update');
 
     useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await api.get(`/undercover/${gameId}`);
-                setGame(response.data);
-                if (response.data.gameStatus === "voting") {
-                    history.push(`/undercover/${gameId}/voting`);
-                }
-                const sortedPlayers = response.data.users.sort((a, b) => a.id - b.id);
-                setPlayers(sortedPlayers.map(player => ({ ...player, profileImage: null })));
-                for (let i = 0; i < sortedPlayers.length; i++) {
-                    if (sortedPlayers[i].image) {
-                        const imageResponse = await api.get(`/users/${sortedPlayers[i].id}/image`, { responseType: 'arraybuffer' });
-                        const profileImage = `data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`;
-                        setPlayers(prevPlayers => prevPlayers.map((player, index) => (index === i ? { ...player, profileImage } : player)));
-                    }
-                }
-            } catch (error) {
-                console.error(`Something went wrong while fetching the game: \n${handleError(error)}`);
-                console.error("Details:", error);
-                alert("Something went wrong while fetching the game! See the console for details.");
-            }
-            try {
-                const id = localStorage.getItem("id");
-                const response = await api.get('/users/' + id);
-                // Get the returned users and update the state.
-                const me = new User(response.data);
-                //set the local player
-                setMe(me);
-            } catch (error) {
-                console.error(`Something went wrong while fetching the local player: \n${handleError(error)}`);
-                console.error("Details:", error);
-                alert("Something went wrong while fetching the local player! See the console for details.");
-            }
-        }
-        const interval = setInterval(fetchData, 1000);
-        return () => clearInterval(interval);
+        fetchData();
+        // const interval = setInterval(fetchData, 2000);
+        // return () => clearInterval(interval);
     }, [gameId]);
+
+    async function fetchData() {
+        try {
+            const response = await api.get(`/undercover/${gameId}`);
+            setGame(response.data);
+            if (response.data.gameStatus === "voting") {
+                history.push(`/undercover/${gameId}/voting`);
+            }
+            const sortedPlayers = response.data.users.sort((a, b) => a.id - b.id);
+            setPlayers(sortedPlayers.map(player => ({ ...player, profileImage: null })));
+            for (let i = 0; i < sortedPlayers.length; i++) {
+                if (sortedPlayers[i].image) {
+                    const imageResponse = await api.get(`/users/${sortedPlayers[i].id}/image`, { responseType: 'arraybuffer' });
+                    const profileImage = `data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`;
+                    setPlayers(prevPlayers => prevPlayers.map((player, index) => (index === i ? { ...player, profileImage } : player)));
+                }
+            }
+        } catch (error) {
+            console.error(`Something went wrong while fetching the game: \n${handleError(error)}`);
+            console.error("Details:", error);
+            alert("Something went wrong while fetching the game! See the console for details.");
+        }
+        try {
+            const id = localStorage.getItem("id");
+            const response = await api.get('/users/' + id);
+            // Get the returned users and update the state.
+            const me = new User(response.data);
+            //set the local player
+            setMe(me);
+        } catch (error) {
+            console.error(`Something went wrong while fetching the local player: \n${handleError(error)}`);
+            console.error("Details:", error);
+            alert("Something went wrong while fetching the local player! See the console for details.");
+        }
+    }
+
 
 // Make game and players reactive
     useEffect(() => {
@@ -106,60 +109,42 @@ const UndercoverGamePage = props => {
         return () => ws.close();
     }, []);
 
-
-
-
     useEffect(() => {
-        if (socket) {
-            socket.onmessage = async (event) => {
-                console.log("sos");
-                if (event.data === 'update') {
-                    try {
-                        const response = await api.get('/undercover/' + gameId);
-                        if (response.data.gameStatus === "voting") {
-                            history.push(`/undercover/${gameId}/voting`);
-                        }
-                        console.log(response.data);
-                        setGame(response.data);
-                        //set the players
-                        console.log(game);
-                        setPlayers(response.data.users);
-                        console.log(players);
-                        // See here to get more data.
-                        const updatedPlayers = {};
-                        if (players) {
-                            for (let i = 0; i <= 8; i++) {
-                                if (players[i] && (players[i].image != null)) {
-                                    const imageResponse = await api.get(`/users/${players[i].id}/image`, {responseType: 'arraybuffer'});
-                                    players[i].profileImage = `data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`;
+        const url = `ws${getDomain().substring(4)}/websocket`;
+        const ws = new WebSocket(url);
+        setSocket(ws);
 
-                                }
-                                updatedPlayers[i] = players[i];
-                            }
-                            setPlayers(updatedPlayers);
+        // Add event listener for incoming messages
+        ws.addEventListener('message', async (event) => {
+            console.log("WebSocket message received: ", event.data);
+            if (event.data === 'update') {
+                try {
+                    const response = await api.get(`/undercover/${gameId}`);
+                    setGame(response.data);
+                    if (response.data.gameStatus === "voting") {
+                        history.push(`/undercover/${gameId}/voting`);
+                    }
+                    const sortedPlayers = response.data.users.sort((a, b) => a.id - b.id);
+                    setPlayers(sortedPlayers.map(player => ({ ...player, profileImage: null })));
+                    for (let i = 0; i < sortedPlayers.length; i++) {
+                        if (sortedPlayers[i].image) {
+                            const imageResponse = await api.get(`/users/${sortedPlayers[i].id}/image`, { responseType: 'arraybuffer' });
+                            const profileImage = `data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`;
+                            setPlayers(prevPlayers => prevPlayers.map((player, index) => (index === i ? { ...player, profileImage } : player)));
                         }
-
-                    } catch (error) {
-                        console.error(`Something went wrong while fetching the game: \n${handleError(error)}`);
-                        console.error("Details:", error);
-                        alert("Something went wrong while fetching the game! See the console for details.");
                     }
-                    try {
-                        const id = localStorage.getItem("id");
-                        const response = await api.get('/users/' + id);
-                        // Get the returned users and update the state.
-                        const me = new User(response.data);
-                        //set the local player
-                        setMe(me);
-                    } catch (error) {
-                        console.error(`Something went wrong while fetching the local player: \n${handleError(error)}`);
-                        console.error("Details:", error);
-                        alert("Something went wrong while fetching the local player! See the console for details.");
-                    }
+                } catch (error) {
+                    console.error(`Something went wrong while fetching the game: \n${handleError(error)}`);
+                    console.error("Details:", error);
+                    alert("Something went wrong while fetching the game! See the console for details.");
                 }
+                fetchData();
             }
+        });
 
-    }}, [socket, gameId, game, players]);
+        return () => ws.close();
+    }, [gameId,game,players]);
+
 
     let word, username;
     if (me) {
@@ -174,13 +159,13 @@ const UndercoverGamePage = props => {
 
     const sendMessage = async () => {
         if (socket) {
-            // setMessage('start');
-            socket.send(wsmessage);
+
             try {
                 const id = localStorage.getItem("id")
                 const requestBody = JSON.stringify(message);
                 const response = await api.put('/undercover/' + gameId + '/users/' + id + '/description', requestBody);
                 console.log(response.data);
+                socket.send(wsmessage);
                 if (response.data.gameStatus === "voting") {
                     history.push(`/undercover/${gameId}/voting`);
                 }
