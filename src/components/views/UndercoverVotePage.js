@@ -178,7 +178,7 @@ const UndercoverVotePage = props => {
                             <div style={{"font-weight": "bold", "display": "inline-block"}}>
                                 {players[i+1] != null ? players[i+1].username+" : " : ''}
                             </div>
-                            {players[i+1] != null ? players[i+1].username : ''}
+                            {players[i+1] != null ? players[i+1].description : ''}
                         </div>
                     </div>
                 </div>
