@@ -1,19 +1,41 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import 'styles/views/GameResults.scss';
 import BaseContainer from "../ui/BaseContainer";
 import {Button} from "../ui/Button";
 import {useHistory} from "react-router-dom";
+import {api} from "../../helpers/api";
 
 const UndercoverGameWinPage = props => {
     const history = useHistory();
+    const [gameHistory, setGameHistory] = useState(null);
 
 
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const userId = localStorage.getItem("id");
+                const response = await api.get(`/gameHistory/${userId}/latestRecord`);
+                setGameHistory(response.data);
+            } catch (error) {
+                alert("Something went wrong while fetching the game history! See the console for details.");
+            }
+        }
+        fetchData();
+    }, []);
+
+    let winOrLose, time, earnedPoint
+    if(gameHistory){
+        winOrLose = gameHistory.winOrLose;
+        time = gameHistory.time.toLocaleString().replace(',', '');
+        earnedPoint = gameHistory.earnedPoint;
+    }
 
 
     return (
         <BaseContainer>
             <div className="result container">
-                <h1 className="result title">YOU WIN!</h1>
+                <h1 className="result title">YOU {winOrLose}!</h1>
                 <br/>
                 <br/>
                 <div className="result rectangle">
@@ -29,13 +51,13 @@ const UndercoverGameWinPage = props => {
                         Undercover
                     </Button>
                     <div className="result time">
-                        15/05/2023 23:00:00
+                        {time}
                     </div>
                     <div className="result r">
-                        WIN
+                        {winOrLose}
                     </div>
                     <div className="result score">
-                        +30
+                        {earnedPoint}
                     </div>
                 </div>
 
