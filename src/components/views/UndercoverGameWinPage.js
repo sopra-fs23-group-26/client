@@ -5,7 +5,7 @@ import {Button} from "../ui/Button";
 import {useHistory} from "react-router-dom";
 import {api} from "../../helpers/api";
 
-const UndercoverGameWinPage = props => {
+const UndercoverGameWinPage = () => {
     const history = useHistory();
     const [gameHistory, setGameHistory] = useState(null);
 
@@ -27,7 +27,7 @@ const UndercoverGameWinPage = props => {
     let winOrLose, time, earnedPoint
     if(gameHistory){
         winOrLose = gameHistory.winOrLose;
-        time = gameHistory.time.toLocaleString().replace(',', '');
+        time = gameHistory.time.substring(0,19).replace("T",' ');
         earnedPoint = gameHistory.earnedPoint;
     }
 
