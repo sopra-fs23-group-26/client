@@ -57,9 +57,9 @@
 
   &.box{
     position: relative;
-    top: -5em;
-    left: 25em;
-    font-size: 2vw;
+    top: -9.5em;
+    left: 46em;
+    font-size: 1vw;
     height: 30vw;
     width: 28vw;
     border: none;
@@ -71,6 +71,8 @@
     line-height: 2vw;
     word-break: break-all;
     padding: 1em;
+    overflow: auto;
+    white-space: pre-line;
 
   }
   &.input{

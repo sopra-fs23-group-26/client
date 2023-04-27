@@ -1,0 +1,13 @@
+Game rules:
+
+1. The game starts with each player receiving a word, but one player is the "undercover" and has a different word than the other players, who are the "detectives."
+
+2. At the start of each round, every player describes their word using one sentence without saying the actual word.
+
+3. After all players have described their word in a round, players must vote for who they think is the undercover, and the player who receives the most votes in this round is voted out.
+
+4. If the undercover is correctly voted out, the detectives win the game and each get 2 points.
+
+5. If the undercover is not voted out, the game continues until only two players are left and one of them is the undercover.
+
+6. If the remaining players include the undercover and one detective, the undercover wins the game and gets 5 points.
