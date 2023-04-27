@@ -6,7 +6,7 @@ import GameUndercover from "../../models/GameUndercover";
 import React, { useState, useEffect } from 'react';
 import { getDomain } from 'helpers/getDomain';
 
-const Start = () => {
+const Start = (url, config) => {
     const history = useHistory();
     const [gameId, setGameId] = useState(null);
 /*    const handleStartGame = async () => {
@@ -24,6 +24,31 @@ const Start = () => {
             alert(`Something went wrong during start the undercover game: \n${handleError(error)}`);
         }
     };*/
+
+    const [text, setText] = useState('');
+    useEffect(() => {
+        fetch('/undercover.txt')
+            .then(response => response.text())
+            .then(text => setText(text))
+            .catch(error => console.error(error));
+    }, []);
+
+
+    const doBack = async() =>{
+        if(localStorage.getItem("id")!=localStorage.getItem("ownerId")){
+            console.log("id != ownerId")
+            const formData = new FormData();
+            formData.append("userId", localStorage.getItem("id"))
+            const config = { headers: { "Content-Type": "multipart/form-data" } };
+            const response = await api.delete('/undercover/rooms/'+String(localStorage.getItem("roomId")), formData, config);
+            history.push('/room')
+        } else {
+            console.log("id == ownerId")
+            history.push('/room')
+        }
+    }
+
+
 
 
 
@@ -125,7 +150,7 @@ const Start = () => {
             <h2 className="select title">Undercover</h2>
 
             <button className="select button"
-                    style={{"top": "8em"}}
+                    style={{"top": "9.5em"}}
                     onClick={() => sendMessage()}
 
             >Start!
@@ -134,18 +159,18 @@ const Start = () => {
             <button className="select button" style={{
                 "background-color": "rgb(57, 102, 161)",
                 "color": "rgb(214, 222, 235)",
-                "top": "8em"
+                "top": "9.5em"
 
             }}
-                    onClick={() => history.push('/room')}
+                    onClick={() =>history.push("/room")}
             >Back
             </button>
 
             <p className="select box" style={{
-                "top": "-1em",
+                "top": "1.5em",
+                "left": "50em",
                 "height": "24vw"
-            }}>game rules:<br/>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/><br/>
-                score rules:<br/>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            }}>{text}
             </p>
 
 

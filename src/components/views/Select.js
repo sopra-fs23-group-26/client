@@ -1,9 +1,19 @@
 import "styles/views/Select.scss";
-
+import { useState, useEffect } from 'react';
 import {useHistory, useParams} from 'react-router-dom';
 
 const Select = () =>{
     const history = useHistory();
+    const [text, setText] = useState('');
+    useEffect(() => {
+        fetch('/undercover.txt')
+            .then(response => response.text())
+            .then(text => setText(text))
+            .catch(error => console.error(error));
+    }, []);
+
+    console.log("---------rules     text ------")
+    console.log(text)
 
     return(
         <div class="select">
@@ -15,8 +25,7 @@ const Select = () =>{
                 "color": "rgb(214, 222, 235)",
             }} onClick={() => history.push('/platform')}>Back</button>
 
-            <p class="select box">game rules:<br/>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br/><br/>
-                score rules:<br/>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            <p class="select box">{text}
             </p>
 
 
