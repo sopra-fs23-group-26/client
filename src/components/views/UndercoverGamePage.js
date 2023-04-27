@@ -1,5 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {api, handleError} from 'helpers/api';
+import { useRef } from 'react';
+
 import User from 'models/User';
 import {useHistory, useParams} from 'react-router-dom';
 import 'styles/views/UndercoverGame.scss';
@@ -35,16 +37,20 @@ const UndercoverGamePage = props => {
     const {gameId} = useParams();
     const [game, setGame] = useState(null);
     const [message, setMessage] = useState(null);
-    let [players, setPlayers] = useState(null);
+    const [players, setPlayers] = useState(null);
     const [me, setMe] = useState(null);
     const [socket, setSocket] = useState(null);
     const [wsmessage, setwsMessage] = useState('update');
+    const [profileImageList, setProfileImageList] = useState([]);
+
 
     useEffect(() => {
-        fetchData();
-        // const interval = setInterval(fetchData, 2000);
-        // return () => clearInterval(interval);
-    }, [gameId]);
+        async function fetchDataAndImage() {
+            await fetchData();
+            await fetchImage();
+        }
+        fetchDataAndImage();
+    }, []);
 
     async function fetchData() {
         try {
@@ -54,18 +60,24 @@ const UndercoverGamePage = props => {
                 history.push(`/undercover/${gameId}/voting`);
             }
             const sortedPlayers = response.data.users.sort((a, b) => a.id - b.id);
+            let images = []
             setPlayers(sortedPlayers.map(player => ({ ...player, description: player.description })));
-            // for (let i = 0; i < sortedPlayers.length; i++) {
-            //     if (sortedPlayers[i].image) {
-            //         const imageResponse = await api.get(`/users/${sortedPlayers[i].id}/image`, { responseType: 'arraybuffer' });
-            //         const profileImage = `data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`;
-            //         setPlayers(prevPlayers => prevPlayers.map((player, index) => (index === i ? { ...player, profileImage } : player)));
-            //     }
-            // }
+            for(let i = 0; i<response.data.users.length; i++){
+                if (response.data.users[i].image) {
+                    let url = "/users/" + response.data.users[i].id + "/image"
+                    console.log("image info")
+                    const imageResponse = await api.get(url, {responseType: 'arraybuffer'});
+                    console.log("imageResponse")
+                    console.log(imageResponse)
+                    images.push(`data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`);
+                }
+            }
+            setProfileImageList(images)
         } catch (error) {
             console.error(`Something went wrong while fetching the game: \n${handleError(error)}`);
             console.error("Details:", error);
-            alert("Something went wrong while fetching the game! See the console for details.");
+            // alert("Something went wrong while fetching the game! See the console for details.");
+            fetchData();
         }
         try {
             const id = localStorage.getItem("id");
@@ -82,31 +94,39 @@ const UndercoverGamePage = props => {
     }
 
 
-// Make game and players reactive
-    useEffect(() => {
-        if (players) {
-            for (let i = 0; i < players.length; i++) {
-                if (players[i].image&&(players[i].profileImage==null)) {
-                    api.get(`/users/${players[i].id}/image`, { responseType: 'arraybuffer' })
-                        .then((imageResponse) => {
-                            const profileImage = `data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`;
-                            setPlayers(prevPlayers => prevPlayers.map((player, index) => (index === i ? { ...player, profileImage } : player)));
-                        })
-                        .catch((error) => {
-                            console.error(`Something went wrong while fetching the player image: \n${handleError(error)}`);
-                            console.error("Details:", error);
-                            alert("Something went wrong while fetching the player image! See the console for details.");
-                        });
+    const fetchedPlayers = useRef([]);
+            async function fetchImage() {
+                if (players) {
+                    const updatedPlayers = [];
+                    for (let i = 0; i < players.length; i++) {
+                        const player = players[i];
+                        if (player.image && !player.profileImage) {
+                            try {
+                                const imageResponse = await api.get(`/users/${player.id}/image`, { responseType: 'arraybuffer' });
+                                const profileImage = `data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`;
+                                const updatedPlayer = { ...player, profileImage };
+                                updatedPlayers.push(updatedPlayer);
+                                fetchedPlayers.current.push(updatedPlayer);
+                            } catch (error) {
+                                console.error(`Something went wrong while fetching the player image: \n${handleError(error)}`);
+                                console.error("Details:", error);
+                                fetchImage();
+                            }
+                        } else {
+                            updatedPlayers.push(player);
+                        }
+                    }
+                    setPlayers(updatedPlayers);
                 }
             }
-        }
-    }, [players]);
+
+
+
 
     useEffect(() => {
         const url = `ws${getDomain().substring(4)}/websocket`;
         const ws = new WebSocket(url);
         setSocket(ws);
-        return () => ws.close();
     }, []);
 
     useEffect(() => {
@@ -125,7 +145,10 @@ const UndercoverGamePage = props => {
                         history.push(`/undercover/${gameId}/voting`);
                     }
                     const sortedPlayers = response.data.users.sort((a, b) => a.id - b.id);
+                    console.log(players);
                     setPlayers(sortedPlayers.map(player => ({ ...player, description: player.description })));
+                    console.log(players);
+
                     // for (let i = 0; i < sortedPlayers.length; i++) {
                     //     if (sortedPlayers[i].image) {
                     //         const imageResponse = await api.get(`/users/${sortedPlayers[i].id}/image`, { responseType: 'arraybuffer' });
@@ -213,7 +236,7 @@ const UndercoverGamePage = props => {
                                     "left": "50%",
                                     "transform": "translate(-50%, -50%)"
                                 }}
-                                src={players[i].profileImage}
+                                src={profileImageList[i]}
                                 alt={" "}
                             />
                         )}
@@ -242,7 +265,7 @@ const UndercoverGamePage = props => {
                                     "left": "50%",
                                     "transform": "translate(-50%, -50%)"
                                 }}
-                                src={players[i + 1].profileImage}
+                                src={profileImageList[i+1]}
                                 alt={" "}
                             />
                         )}
