@@ -85,9 +85,13 @@
     color: rgb(57, 102, 161);
     border-color: rgb(57, 102, 161);
     border: solid;
+    border-width: 3px;
 
-    //border-width: 3px;
+  }
 
+  &.input::placeholder {
+    font-size: 1.3vw;
+    align-content: center;
   }
 
   &.container{

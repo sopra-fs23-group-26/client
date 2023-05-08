@@ -13,6 +13,7 @@ const Start = (url, config) => {
     const [roomName, setRoomName] = useState(null);
     const [generalMessage, setGeneralMessage] = useState(null);
     const [roomRemoved] = useState("roomNotExist");
+    const [userName, setUserName] = useState("")// invited user name
 
 /*    const handleStartGame = async () => {
         try {
@@ -52,13 +53,23 @@ const Start = (url, config) => {
     }
 
 
+    const sendLeaveRoomMessage = async () => {
+        if (socket) {
+            try{socket.send("APlayerLeft");}
+            catch(error){
+                alert(`Something went wrong during sending message: \n${handleError(error)}`);
+            }
+        }
+    }
+
+
+
+
 
 
 
 
     const doBack = async() =>{
-
-
 
         if(localStorage.getItem("id")==localStorage.getItem("ownerId")){
             console.log("room id")
@@ -70,13 +81,16 @@ const Start = (url, config) => {
 
         }
         else {
+
             const url = "/undercover/rooms/" + localStorage.getItem("roomId") + "/" + localStorage.getItem("id")
             const response = await api.delete(url)
+
 
             if (response.status == 200) {
                 console.log("leave a room")
                 localStorage.removeItem("roomId")
                 localStorage.removeItem("ownerId")
+                await sendLeaveRoomMessage()
                 history.push('/room')
             } else {
                 console.log("leave a room failed")
@@ -118,26 +132,7 @@ const Start = (url, config) => {
     console.log(profileImageList)
 
 
-    // const num = 8;
-    // const styles = [
-    //     {left: "0vw", "top": "0em"},
-    //     {left: "5vw", "top": "0em"},
-    //     {left: "10vw", "top": "0em"},
-    //     {left: "15vw", "top": "0em"},
-    //     {left: "0vw", "top": "2.3em"},
-    //     {left: "5vw", "top": "2.3em"},
-    //     {left: "10vw", "top": "2.3em"},
-    //     {left: "15vw", "top": "2.3em"},
-    //
-    // ]
-    //
-    // for (let i = elements.length; i < num; i++) {
-    //
-    //     elements.push(<div className="select display" style={{
-    //         "left": styles[i].left,
-    //         "top": styles[i].top
-    //     }}></div>)
-    // }
+
 
 
     const [socket, setSocket] = useState(null);
@@ -182,6 +177,27 @@ const Start = (url, config) => {
     };
 
 
+    const invite = async () => {
+        try{
+        const response = await api.post("/users/"+userName)
+        console.log("inviting")
+        console.log(response.data)}
+        catch (error) {
+            alert(`Something went wrong during validating invited user: \n${handleError(error)}`);
+        }
+
+        if (socket) {
+            try{socket.send("invite"+localStorage.getItem("roomId").toString());}
+            catch(error){
+                alert(`Something went wrong during sending message: \n${handleError(error)}`);
+            }
+        }
+    }
+
+
+
+
+
 
 
     // 处理消息接收
@@ -216,6 +232,16 @@ const Start = (url, config) => {
                     localStorage.removeItem("roomId")
                     localStorage.removeItem("ownerId")
                     history.push('/room')
+                }
+
+                if(event.data=="ANewPlayerJoined"){
+                    console.log("a new player joined")
+                    window.location.reload();
+                }
+
+                if (event.data=="APlayerLeft"){
+                    console.log("a player left")
+                    window.location.reload();
                 }
 
 
@@ -275,10 +301,16 @@ const Start = (url, config) => {
                 "text-transform": "capitalize",
                 "background": "rgb(19, 40, 67)",
                 "color": "white"
-            }}>
+            }}
+                    disabled={userName==""}
+                    onClick={() => invite()}
+            >
                 invite
             </button>
             <div><input className="select input"
+                        value={userName}
+                        placeholder={"player name"}
+                        onChange={(event) => setUserName(event.target.value)}
             /></div>
 
             {/*<div className="select container">*/}
@@ -299,7 +331,7 @@ const Start = (url, config) => {
                         style={{
                             "top": "-40.5vw",
                             "left": "50vw",
-                            "width": "20vw",
+                            "width": "16vw",
                             "height": "3.5vw",
                             "font-size": "2em",
                             "border-color": "rgb(214, 222, 235)",
@@ -313,15 +345,15 @@ const Start = (url, config) => {
 
             <button className="select button" style={{
                 "height": "3vw",
-                "width": "6vw",
+                "width": "9.5vw",
                 "font-size": "1.2vw",
                 "top": "-35.8em",
-                "left": "59em",
+                "left": "56em",
                 "text-transform": "capitalize",
                 "background": "rgb(19, 40, 67)",
                 "color": "white"
             }}>
-                do edit
+                Room name
             </button>
 
 

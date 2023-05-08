@@ -1,10 +1,21 @@
 import "styles/views/Select.scss";
 import { useState, useEffect } from 'react';
 import {useHistory, useParams} from 'react-router-dom';
+import Invitation from './Invitation';
+
 
 const Select = () =>{
     const history = useHistory();
     const [text, setText] = useState('');
+
+
+
+
+
+
+
+
+
     useEffect(() => {
         fetch('/undercover.txt')
             .then(response => response.text())
@@ -39,6 +50,14 @@ const Select = () =>{
                 <br/><br/>
                 6. If the remaining players include the undercover and one detective, the undercover wins the game and gets 5 points.
             </p>
+
+
+            <Invitation
+            />
+
+
+
+
 
 
         </div>
