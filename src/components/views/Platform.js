@@ -137,7 +137,8 @@ const Platform = () => {
                     "background-color": "rgb(214, 222, 235)",
                     "box-shadow": "0px 3px 0px rgba(0, 0, 0, 0.2), 0px 5px 10px rgba(0, 0, 0, 0.2)",
                     "position": "absolute", "top": "12%", "left": "50%", "transform": "translate(-50%, -50%)"
-                }} src={profileImage} alt="Profile"/>}
+                }} src={profileImage} alt="Profile"  onClick={() => history.push(`/profile/${id}`)}/>
+                }
 
                 <Button style={{
 
@@ -176,7 +177,9 @@ const Platform = () => {
                     "font-size": "1vw",
                     "width": "7.5vw", "height": "2.5vw", "border-radius": "10px",
                     "text-items": "center"
-                }}>
+                }}
+                onClick={() => history.push(`/ranking/${id}`)}
+                >
                     Ranking
                 </Button>
                 <Button style={{

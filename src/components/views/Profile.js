@@ -22,7 +22,7 @@ const Profile = () => {
 
   const WaitList = ({friend}) => {
     return (
-      <div class="room-button-background" style={{width: '17vw', height:'3.5vw'}}>
+      <div class="room-button-background" style={{width: '17vw', height:'3.5vw', top: '-3vw'}}>
         <div class="room-button button"
           style={{width: '5vw', height:'1.6vw',position: 'relative', top: '0vw', left: '5vw', "font-size":"0.85vw"}}
           onClick={() => {acceptFriend(friend); window.location.reload();}}>Accept</div>
@@ -50,7 +50,7 @@ const Profile = () => {
     }, [friend.id]);
 
     return (
-      <div class="room-button-background" style={{width: '17vw', height:'3.5vw'}}>
+      <div class="room-button-background" style={{width: '17vw', height:'3.5vw', top:'-3vw'}}>
         <div class="room-button-background-txt"  style={{top:'1vw', left: '2.6vw', "font-size": "0.85vw"}}>
           {friend.username}</div>
         {tempImage && <img style={{
@@ -77,11 +77,13 @@ const Profile = () => {
   const edit = () => {
     history.push(`/profile-edit/${id}`);
   }
-  const gotoCommunityRanking = () => {
-    history.push('/communityranking')
-  }
-  const gotoGlobalRanking = () => {
-    history.push('/globalranking')
+
+  const gotoRanking = () => {
+    try {
+      history.push(`/ranking/${id}`);
+    } catch (error) {
+      history.push('/');
+    }
   }
 
   const sendFriendRequest  = async () => {
@@ -149,7 +151,7 @@ const Profile = () => {
 
   if (user) {
     content = (
-      <div className="game" style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', "marginTop": '0vw'}}>
+      <div className="game" style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginTop: '0vw', width: '20vw', justifyContent: 'space-between'}}>
         <ul className="game user-list" style={{color: 'white', fontWeight: 'bold', "font-size": "0.85vw"}}>
           USER:  {user.username}
         </ul>
@@ -170,13 +172,13 @@ const Profile = () => {
         <div style={{display: 'flex'}}>
           <Button width="50%" style={{ marginRight: '0.5vw', backgroundColor: "rgb(218, 227, 238)", border:'none',
             color: 'darkblue', fontWeight: 'bold', "font-size":"0.9vw"}}
-            onClick={() => gotoCommunityRanking()}
+            onClick={() => gotoRanking()}
           >
             COMMUNITY RANKING
           </Button>
           <Button width="40%" style={{  backgroundColor: "rgb(218, 227, 238)", border:'none',
             color: 'darkblue', fontWeight: 'bold', "font-size":"0.9vw"}}
-            onClick={() => gotoGlobalRanking()}
+            onClick={() => gotoRanking()}
           >
             GLOBAL RANKING
           </Button>
@@ -259,7 +261,7 @@ const Profile = () => {
           "position": "absolute", "top": "3.2vw", "left": "5vw", "transform": "translate(-50%, -50%)"}}
           src={profileImage} alt="Profile" />}
 
-        <div className="game-content" style={{position: 'relative', top: '1vw', left: '3.5vw', transform: 'translate(-50%, -50%)'}}>
+        <div className="game-content" style={{position: 'relative', top: '1vw', left: '19vw', transform: 'translate(-50%, -50%)'}}>
           {content}
         </div>
         <div style={{ backgroundColor: 'white', width: '23vw', height: '0.14vw', position: 'relative', top: '0vw', left: '0.2vw' }}></div>
@@ -309,7 +311,7 @@ const Profile = () => {
       <div className="button-container" style={{ position: 'relative', top: '-21vw', left: '108vw', transform: 'translate(-50%, -50%)' }}>
         <Button style={{ marginRight: '1vw', backgroundColor: "rgb(16, 46, 78)", color: 'white',fontWeight: 'bold',
           width: '5vw', height: '2vw', "font-size": "0.85vw"}}
-          onClick={() => history.push(`/platform`)}
+          onClick={() => back()}
         >
           back
         </Button>

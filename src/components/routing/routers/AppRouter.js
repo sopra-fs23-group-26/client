@@ -8,6 +8,8 @@ import {ProfileGuard} from "components/routing/routeProtectors/ProfileGuard";
 import Profile from "components/views/Profile";
 import {ProfileEditGuard} from "components/routing/routeProtectors/ProfileEditGuard";
 import ProfileEdit from "components/views/ProfileEdit";
+import {RankingGuard} from "components/routing/routeProtectors/RankingGuard";
+import Ranking from "components/views/Ranking";
 import Select from "components/views/Select";
 import Rooms from "components/views/Room";
 import Start from "components/views/Start";
@@ -44,6 +46,11 @@ const AppRouter = () => {
           <ProfileEditGuard>
             <ProfileEdit/>
           </ProfileEditGuard>
+        </Route>
+        <Route path="/ranking/:id">
+          <RankingGuard>
+            <Ranking/>
+          </RankingGuard>
         </Route>
         <Route exact path="/register">
           <RegisterGuard>
