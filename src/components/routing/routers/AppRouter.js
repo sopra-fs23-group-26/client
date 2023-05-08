@@ -16,6 +16,7 @@ import Start from "components/views/Start";
 import UndercoverGameWinPage from "components/views/UndercoverGameWinPage"
 import UndercoverGamePage from "components/views/UndercoverGamePage"
 import UndercoverVotePage from "components/views/UndercoverVotePage"
+import SudokuGamePage from "../../views/SudokuGamePage";
 
 
 
@@ -71,6 +72,11 @@ const AppRouter = () => {
         </Route>
         <Route exact path="/start">
           <Start/>
+        </Route>
+        <Route exact path={"/SudokuGame"}>
+          <PlatformGuard>
+            <SudokuGamePage/>
+          </PlatformGuard>
         </Route>
         <Route exact path="/UndercoverGameWinPage">
           <UndercoverGameWinPage/>
