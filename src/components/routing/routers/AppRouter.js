@@ -16,6 +16,7 @@ import Start from "components/views/Start";
 import UndercoverGameWinPage from "components/views/UndercoverGameWinPage"
 import UndercoverGamePage from "components/views/UndercoverGamePage"
 import UndercoverVotePage from "components/views/UndercoverVotePage"
+import SudokuGamePage from "../../views/SudokuGamePage";
 import History from "components/views/History"
 
 
@@ -66,39 +67,27 @@ const AppRouter = () => {
           <Login/>
         </Route>
         <Route exact path="/select">
-          <PlatformGuard>
           <Select/>
-          </PlatformGuard>
         </Route>
         <Route exact path="/room">
-          <PlatformGuard>
           <Rooms/>
-          </PlatformGuard>
         </Route>
         <Route exact path="/start">
-          <PlatformGuard>
           <Start/>
+        </Route>
+        <Route exact path={"/SudokuGame"}>
+          <PlatformGuard>
+            <SudokuGamePage/>
           </PlatformGuard>
         </Route>
         <Route exact path="/UndercoverGameWinPage">
-          <PlatformGuard>
           <UndercoverGameWinPage/>
-          </PlatformGuard>
         </Route>
         <Route exact path="/undercover/:gameId">
-          <PlatformGuard>
           <UndercoverGamePage/>
-          </PlatformGuard>
         </Route>
         <Route exact path="/undercover/:gameId/voting">
-          <PlatformGuard>
           <UndercoverVotePage/>
-          </PlatformGuard>
-        </Route>
-        <Route exact path="/history/:id">
-          <PlatformGuard>
-          <History/>
-          </PlatformGuard>
         </Route>
       </Switch>
     </BrowserRouter>
