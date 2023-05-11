@@ -21,13 +21,19 @@ const UndercoverVotePage = props => {
     const [profileImageList, setProfileImageList] = useState([]);
 
 
-
     useEffect(() => {
         async function fetchDataAndImage() {
             await fetchData();
             await fetchImage();
         }
         fetchDataAndImage();
+
+        const timeoutId = setTimeout(async () => {
+            await fetchData();
+        }, 122000);
+
+        //
+        return () => clearTimeout(timeoutId);
     }, []);
 
     async function fetchData() {
@@ -36,6 +42,9 @@ const UndercoverVotePage = props => {
             setGame(response.data);
             if (response.data.gameStatus === "voting") {
                 history.push(`/undercover/${gameId}/voting`);
+            }
+            if (response.data.gameStatus === "gameEnd") {
+                history.push(`/UndercoverGameWinPage`);
             }
             const sortedPlayers = response.data.users.sort((a, b) => a.id - b.id);
             let images = []
@@ -267,21 +276,26 @@ const UndercoverVotePage = props => {
     return (
         <div className="chat-container">
             {elements}
-            <div style={{display: "inline-block", fontWeight: "normal", margin: "-40vw 0 0 5vw", fontSize: "2vw"}}>
+            <div style={{display: "inline-block", fontWeight: "normal", margin: "-40vw 0 0 3vw", fontSize: "2vw"}}>
                 Your Word:
             </div>
             <div style={{
                 display: "inline-block",
                 fontWeight: "bold",
-                margin: "-40vw 0 0 1vw",
+                margin: "-40vw 0 0 0.3vw",
                 fontSize: "2vw",
                 color: "#123597"
             }}>
                 {word}
             </div>
-            <div style={{display: "inline-block", fontWeight: "normal", margin: "-40vw 0 0 2vw", fontSize: "2vw"}}>
+            <div style={{display: "inline-block", fontWeight: "normal", margin: "-40vw 0 0 1vw", fontSize: "2vw"}}>
                 Click on the profile picture to select who you think is the undercover agent.
             </div>
+
+            <div style={{ fontWeight: "normal", margin: "2vw 0 0 3vw", fontSize: "2vw",color: "#123597"}}>
+                You have two minutes.
+            </div>
+
         </div>
     );
 

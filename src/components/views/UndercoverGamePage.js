@@ -43,6 +43,21 @@ const UndercoverGamePage = props => {
     const [wsmessage, setwsMessage] = useState('update');
     const [profileImageList, setProfileImageList] = useState([]);
 
+    const [countdown, setCountdown] = useState(60);
+    //
+    // useEffect(() => {
+    //     if (currentPlayerUsername === username) {
+    //         const timer = setInterval(() => {
+    //             setCountdown((prevCountdown) => prevCountdown - 1);
+    //         }, 1000);
+    //
+    //         setTimeout(() => {
+    //             sendMessage();
+    //         }, countdown * 1000 + 100);
+    //
+    //         return () => clearInterval(timer);
+    //     }
+    // }, [currentPlayerUsername, username, history, countdown,game]);
 
     useEffect(() => {
         async function fetchDataAndImage() {
@@ -50,6 +65,12 @@ const UndercoverGamePage = props => {
             await fetchImage();
         }
         fetchDataAndImage();
+
+        const intervalId = setInterval(async () => {
+            await fetchData();
+        }, 32000);
+
+        return () => clearInterval(intervalId);
     }, []);
 
     async function fetchData() {
@@ -93,9 +114,8 @@ const UndercoverGamePage = props => {
         }
     }
 
-
     const fetchedPlayers = useRef([]);
-            async function fetchImage() {
+    async function fetchImage() {
                 if (players) {
                     const updatedPlayers = [];
                     for (let i = 0; i < players.length; i++) {
@@ -120,14 +140,6 @@ const UndercoverGamePage = props => {
                 }
             }
 
-
-
-
-    useEffect(() => {
-        const url = `ws${getDomain().substring(4)}/websocket`;
-        const ws = new WebSocket(url);
-        setSocket(ws);
-    }, []);
 
     useEffect(() => {
         const url = `ws${getDomain().substring(4)}/websocket`;
@@ -182,7 +194,6 @@ const UndercoverGamePage = props => {
 
     const sendMessage = async () => {
         if (socket) {
-
             try {
                 const id = localStorage.getItem("id")
                 const requestBody = JSON.stringify(message);
@@ -283,7 +294,9 @@ const UndercoverGamePage = props => {
 
     return (
         <div className="chat-container">
+
             {elements}
+
             <div style={{display: "inline-block", fontWeight: "normal", margin: "-40vw 0 0 5vw", fontSize: "2vw"}}>
                 It's
             </div>
@@ -298,6 +311,12 @@ const UndercoverGamePage = props => {
             </div>
             <div style={{display: "inline-block", fontWeight: "normal", margin: "-40vw 0 0 0vw", fontSize: "2vw"}}>
                 's turn to describe...
+
+            </div>
+
+            <div style={{display: "inline-block", fontWeight: "normal", margin: "-40vw 0 0 0vw", fontSize: "2vw"}}>
+                {/*{currentPlayerUsername === username && `Time left: ${countdown}s`}*/}
+                You have one minute to describe.
             </div>
             <br/>
             <br/>

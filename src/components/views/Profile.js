@@ -96,7 +96,7 @@ const Profile = () => {
       console.log(response.data);
       alert(`You hava sent the friend request!`);
     } catch (error) {
-      alert(`Something went wrong during adding friends: \n${handleError(error)}`);
+      alert(`${error.response.data.message} You cannot add friends.`);
     }
   }
 
@@ -108,7 +108,7 @@ const Profile = () => {
       const response = await api.put(`/users/${user.id}/friends`, formData);
       alert(`You hava accepted the friend!`);
     } catch (error) {
-      alert(`Something went wrong during accepting friends: \n${handleError(error)}`);
+      alert(`${error.response.data.message} You cannot accept friends.`);
     }
   }
 
@@ -121,7 +121,7 @@ const Profile = () => {
       console.log(response.data);
       alert(`You hava rejected the friend request!`);
     } catch (error) {
-      alert(`Something went wrong during deleting friends: \n${handleError(error)}`);
+      alert(`${error.response.data.message} You cannot delete friends.`);
     }
   }
 

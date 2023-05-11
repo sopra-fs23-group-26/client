@@ -5,7 +5,7 @@ export const RankingGuard = props => {
   if (localStorage.getItem("token")) {
     return props.children;
   }
-  return <Redirect to="/ranking"/>;
+  return <Redirect to="/login"/>;
 };
 
 RankingGuard.propTypes = {

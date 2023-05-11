@@ -56,7 +56,7 @@ const Rooms = () =>{
 
         }
         catch (error) {
-            alert(`Something went wrong during the login: \n${handleError(error)}`);
+            alert(`${error.response.data.message} You cannot create the game.`);
         }
 
     }
@@ -76,7 +76,7 @@ const Rooms = () =>{
 
         }
         catch (error) {
-            alert(`Something went wrong during the login: \n${handleError(error)}`);
+            alert(`${error.response.data.message} You cannot join the game.`);
         }
     }
 

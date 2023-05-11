@@ -58,7 +58,7 @@ const Register = props => {
 
       history.push(`/platform`);
     } catch (error) {
-      alert(`Something went wrong during the register: \n${handleError(error)}`);
+      alert(`${error.response.data.message} You cannot register.`);
     }
   };
 

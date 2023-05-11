@@ -53,6 +53,16 @@ const Platform = () => {
         }
     }
 
+    const gotoHistory = () => {
+        try {
+            let id;
+            id = localStorage.getItem('id')
+            history.push(`/history/${id}`);
+        } catch (error) {
+            history.push('/');
+        }
+    }
+
 
     return (
         <div style={{display: 'flex'}}>
@@ -191,8 +201,10 @@ const Platform = () => {
                     "position": "relative", "top": "20vw", "left": "50%", "transform": "translate(-50%, -50%)",
                     "font-size": "1vw",
                     "width": "7.5vw", "height": "2.5vw", "border-radius": "10px",
-                    "text-items": "center"
-                }}>
+                    "text-items": "center",
+                }}
+                        onClick={() => gotoHistory()}
+                >
                     History
                 </Button>
                 <Button style={{

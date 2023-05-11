@@ -73,7 +73,7 @@ const ProfileEdit = () => {
       await api.put(`/users/${id}`, formData, config);
       history.push(`/profile/${id}`)
     } catch (error) {
-      alert(`Something went wrong during editing profile: \n${handleError(error)}`);
+      alert(`${error.response.data.message} You cannot edit the profile.`);
     }
   };
 

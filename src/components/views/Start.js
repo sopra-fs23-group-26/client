@@ -47,7 +47,7 @@ const Start = (url, config) => {
         if (socket) {
             try{socket.send(roomRemoved);}
             catch(error){
-                alert(`Something went wrong during sending message: \n${handleError(error)}`);
+                alert(`${error.response.data.message} You cannot send the message.`);
             }
         }
     }
@@ -57,7 +57,7 @@ const Start = (url, config) => {
         if (socket) {
             try{socket.send("APlayerLeft");}
             catch(error){
-                alert(`Something went wrong during sending message: \n${handleError(error)}`);
+                alert(`${error.response.data.message} You cannot send the message.`);
             }
         }
     }
@@ -171,7 +171,7 @@ const Start = (url, config) => {
                 // Login successfully worked --> navigate to the route /undercover/${gameId}
                 history.push(`/undercover/${game.id}`);
             } catch (error) {
-                alert(`Something went wrong during start the undercover game: \n${handleError(error)}`);
+                alert(`${error.response.data.message} You cannot start the game.`);
             }
         }
     };
@@ -183,13 +183,13 @@ const Start = (url, config) => {
         console.log("inviting")
         console.log(response.data)}
         catch (error) {
-            alert(`Something went wrong during validating invited user: \n${handleError(error)}`);
+            alert(`${error.response.data.message}`);
         }
 
         if (socket) {
             try{socket.send("invite"+localStorage.getItem("roomId").toString());}
             catch(error){
-                alert(`Something went wrong during sending message: \n${handleError(error)}`);
+                alert(`${error.response.data.message} You cannot send the message.`);
             }
         }
     }
@@ -216,12 +216,12 @@ const Start = (url, config) => {
                         const roomId = localStorage.getItem('roomId');
                         await new Promise(resolve => setTimeout(resolve, 1000));
                         //alert(roomId);
-                        api.post(`/undercover/rooms/${roomId}`).then((response) => {
+                        api.get(`/undercover/rooms/${roomId}`).then((response) => {
                             const game = new GameUndercover(response.data);
                             localStorage.setItem('gameId', game.id);
                             history.push(`/undercover/${game.id}`);
                         }).catch((error) => {
-                            alert(`Something went wrong during start the undercover game: \n${handleError(error)}`);
+                            alert(`${error.response.data.message} You cannot start the game.`);
                         });
                     }
                 }

@@ -16,6 +16,42 @@ export const PlatformGuard = props => {
   }
   return <Redirect to="/login"/>;
 };
+// export const PlatformGuard = props => {
+//   if (localStorage.getItem("token")) {
+//     return props.children;
+//   }
+//   return <Redirect to="/login"/>;
+// };
+// export const PlatformGuard = props => {
+//   if (localStorage.getItem("token")) {
+//     return props.children;
+//   }
+//   return <Redirect to="/login"/>;
+// };
+// export const PlatformGuard = props => {
+//   if (localStorage.getItem("token")) {
+//     return props.children;
+//   }
+//   return <Redirect to="/login"/>;
+// };
+// export const PlatformGuard = props => {
+//   if (localStorage.getItem("token")) {
+//     return props.children;
+//   }
+//   return <Redirect to="/login"/>;
+// };
+// export const PlatformGuard = props => {
+//   if (localStorage.getItem("token")) {
+//     return props.children;
+//   }
+//   return <Redirect to="/login"/>;
+// };
+// export const PlatformGuard = props => {
+//   if (localStorage.getItem("token")) {
+//     return props.children;
+//   }
+//   return <Redirect to="/login"/>;
+// };
 
 PlatformGuard.propTypes = {
   children: PropTypes.node

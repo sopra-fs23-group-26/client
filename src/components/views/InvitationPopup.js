@@ -44,7 +44,7 @@ function InvitationPopup(props) {
             }
 
         } catch (error) {
-            console.log(`Something went wrong entering a room through invitation: ${handleError(error)}`);
+            alert(`${error.response.data.message} You cannot join the game.`);
         }
     };
 

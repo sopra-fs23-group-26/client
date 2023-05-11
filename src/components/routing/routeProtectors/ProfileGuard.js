@@ -14,7 +14,7 @@ export const ProfileGuard = props => {
   if (localStorage.getItem("token")) {
     return props.children;
   }
-  return <Redirect to="/register"/>;
+  return <Redirect to="/login"/>;
 };
 
 ProfileGuard.propTypes = {

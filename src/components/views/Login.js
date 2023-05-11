@@ -53,7 +53,7 @@ const Login = props => {
         alert("Error: Wrong user name or password");
       }
     } catch (error) {
-      alert(`Something went wrong during the login: \n${handleError(error)}`);
+      alert(`${error.response.data.message} You cannot login.`);
     }
   };
 
