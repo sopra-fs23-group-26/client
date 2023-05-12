@@ -95,7 +95,7 @@ const Platform = () => {
                     "position": "relative", "top": "-1vw", "left": "2vw",
                     "font-size": "1vw",
                     "text-align": "center"
-                }} onClick={() => history.push('/SudokuGame')}>
+                }} onClick={() => history.push('/SudokuSelect')}>
                     Sudoku
                 </Button>
             </PlatformContainer>

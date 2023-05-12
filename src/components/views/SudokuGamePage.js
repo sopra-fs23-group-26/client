@@ -1,31 +1,85 @@
-import {useHistory} from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { api, handleError } from 'helpers/api';
+import { Spinner } from 'components/ui/Spinner';
+import { Button } from 'components/ui/Button';
+import { useHistory, useParams } from 'react-router-dom';
+import "styles/views/GameSudoku.scss";
 
 const SudokuGamePage = () => {
-    const history = useHistory();
-    return(
-        <div className="select">
-            <h2 className="select title">Sudoku</h2>
+  let id = localStorage.getItem('id')
+  const history = useHistory();
+  const [puzzleArray, setPuzzleArray] = useState([]);
+  const [edit, setEdit] = useState(false);
+  const [requiredDifficulty, setRequiredDifficulty] = useState("Medium");
 
-            <button className="select button" >Play!</button>
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await api.get(`/sudoku/create/${requiredDifficulty}`);
+        const puzzle = response.data;
+        console.log(puzzle.type)
+        setPuzzleArray(puzzle.map(row => row.map(cell => cell === "0" ? "" : cell)));
+      } catch (error) {
+        alert("Something went wrong while fetching the Sudoku Question! See the console for details.");
+      }
+    }
+    fetchData();
+  }, []);
 
-            <button className="select button" style={{"background-color": "rgb(57, 102, 161)",
-                "color": "rgb(214, 222, 235)",
-            }} onClick={() => history.push('/platform')}>Back</button>
+  const submit = async () => {
+    const requestBody = puzzleArray
+    const formData = new FormData();
+    formData.append("difficulty", requiredDifficulty);
+    const response2 = await api.put(`/sudoku/validation/${id}`, requestBody, formData);
+    history.push(`/SudokuGameWinPage`);
+  }
 
-            <p className="select box">
-                Game rules:<br/><br/>
-                1. A 9×9 square must be filled in with numbers from 1-9 with no repeated numbers in each line, horizontally or vertically. And there are 3×3 squares marked out in the grid, and each of these squares can't have any repeat numbers either.
-                <br/><br/>
-                2. You could choose difficulty for the game, the score you gain are also different.
-                <br></br>
-                Easy - 2 point
-                <br></br>
-                Medium - 4 point
-                <br></br>
-                Hard - 6 point
-            </p>
+  let content = (
+      puzzleArray.length === 0 ? (
+        <Spinner />
+      ) : (
+        <div className="sudoku-grid" style={{left:'5vw', top:'5vw'}}>
+          {puzzleArray.map((row, rowIndex) => (
+            <div className="row" key={rowIndex}>
+              {row.map((cellValue, colIndex) => (
+                <input
+                  type="text"
+                  className="cell"
+                  key={colIndex}
+                  value={cellValue}
+                  readOnly={cellValue !== "" }
+                  onChange={(event) => {
+                    const updatedPuzzleArray = [...puzzleArray];
+                    updatedPuzzleArray[rowIndex][colIndex] = event.target.value;
+                    setPuzzleArray(updatedPuzzleArray);
+                  }}
+                />
+              ))}
+            </div>
+          ))}
         </div>
-    );
+      )
+  );
+
+  return(
+    <>
+      <div>
+        {content}
+      </div>
+      <button
+        className="select button"
+        style={{ backgroundColor: "rgb(57, 102, 161)", color: "rgb(214, 222, 235)", left: "60vw", top: "-26vw" }}
+          onClick={() => submit()}>
+        Submit
+      </button>
+      <button
+        className="select button"
+        style={{ backgroundColor: "rgb(57, 102, 161)", color: "rgb(214, 222, 235)", left: "60vw", top: "-20vw" }}
+        onClick={() => history.push('/platform')}>
+        Back
+      </button>
+    </>
+  );
 }
 
 export default SudokuGamePage;

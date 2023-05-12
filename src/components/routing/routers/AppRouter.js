@@ -16,6 +16,9 @@ import Start from "components/views/Start";
 import UndercoverGameWinPage from "components/views/UndercoverGameWinPage"
 import UndercoverGamePage from "components/views/UndercoverGamePage"
 import UndercoverVotePage from "components/views/UndercoverVotePage"
+import SudokuGameWinPage from "components/views/SudokuGameWinPage"
+import SudokuSelectPage from "../../views/SudokuSelectPage";
+import {SudokuGameGuard} from "components/routing/routeProtectors/SudokuGameGuard";
 import SudokuGamePage from "../../views/SudokuGamePage";
 import History from "components/views/History"
 
@@ -75,10 +78,18 @@ const AppRouter = () => {
         <Route exact path="/start">
           <Start/>
         </Route>
-        <Route exact path={"/SudokuGame"}>
+        <Route exact path={"/SudokuSelect"}>
           <PlatformGuard>
-            <SudokuGamePage/>
+            <SudokuSelectPage/>
           </PlatformGuard>
+        </Route>
+        <Route exact path="/SudokuGame/:id">
+          <SudokuGameGuard>
+            <SudokuGamePage/>
+          </SudokuGameGuard>
+        </Route>
+        <Route exact path="/SudokuGameWinPage">
+          <SudokuGameWinPage/>
         </Route>
         <Route exact path="/UndercoverGameWinPage">
           <UndercoverGameWinPage/>
