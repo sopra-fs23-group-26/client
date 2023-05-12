@@ -63,6 +63,7 @@ const SudokuGamePage = () => {
 
   return(
     <>
+      <h2 className="select title" style={{left: 0}}>Sudoku Game</h2>
       <div>
         {content}
       </div>
