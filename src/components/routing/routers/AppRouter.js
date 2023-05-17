@@ -94,10 +94,19 @@ const AppRouter = () => {
               <UndercoverGameWinPage/>
             </PlatformGuard>
         </Route>
+          <Route exact path="/SudokuGame/:id">
+            <PlatformGuard>
+              <SudokuGamePage/>
+            </PlatformGuard>
 
+          </Route>
+          <Route exact path="/SudokuGameWinPage">
+            <PlatformGuard>
 
+            <SudokuGameWinPage/>
+            </PlatformGuard>
 
-
+          </Route>
 
         <Route exact path="/undercover/:gameId">
           <PlatformGuard>
