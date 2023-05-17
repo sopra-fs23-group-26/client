@@ -5,6 +5,7 @@ import React, {useState, useEffect} from 'react';
 import {api, handleError} from 'helpers/api';
 import Room from 'models/Room';
 import {getDomain} from "../../helpers/getDomain";
+import Invitation from './Invitation';
 
 const Rooms = () =>{
 
@@ -192,7 +193,8 @@ const Rooms = () =>{
             <RoomListContainer>
                 {room_list}
             </RoomListContainer>
-
+            <Invitation
+            />
         </div>
 
     );

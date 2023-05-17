@@ -7,6 +7,8 @@ import React, { useState, useEffect } from 'react';
 import { getDomain } from 'helpers/getDomain';
 
 const Start = (url, config) => {
+    console.log("--------ownerId-------")
+    console.log(localStorage.getItem("ownerId"))
     const history = useHistory();
     const [gameId, setGameId] = useState(null);
     const [profileImageList, setProfileImageList] = useState([]);
@@ -136,7 +138,7 @@ const Start = (url, config) => {
 
 
     const [socket, setSocket] = useState(null);
-    const [message, setMessage] = useState('start');
+    const [message, setMessage] = useState('start'+localStorage.getItem("ownerId"));
 
     // 创建WebSocket连接
     useEffect(() => {
@@ -158,6 +160,7 @@ const Start = (url, config) => {
     const sendMessage = async () => {
         if (socket) {
             // setMessage('start');
+
             socket.send(message);
             try {
                 const roomId = localStorage.getItem("roomId")
@@ -206,7 +209,7 @@ const Start = (url, config) => {
         if (socket) {
             socket.onmessage = async (event) => {
                 console.log('WebSocket message received:', event.data);
-                if (event.data === 'start') {
+                if (event.data.startsWith("start") && event.data.substring(5)==localStorage.getItem("ownerId")) {
                     // Check if gameId exists in localStorage
                     if (gameId) {
                         // If gameId exists, navigate to the route /undercover/${gameId}
@@ -259,6 +262,7 @@ const Start = (url, config) => {
             <button className="select button"
                     style={{"top": "9.5em"}}
                     onClick={() => sendMessage()}
+                    disabled={localStorage.getItem("id")!=localStorage.getItem("ownerId")}
 
             >Start!
             </button>

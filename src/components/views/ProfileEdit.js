@@ -8,6 +8,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Game.scss";
 import User from "../../models/User";
 import RoomListContainer from "components/ui/RoomListContainer";
+import Invitation from './Invitation';
 
 const ProfileEdit = () => {
 
@@ -288,7 +289,8 @@ const WaitList = ({friend}) => {
               back
             </Button>
         </div>
-
+        <Invitation
+        />
       </div>
   );
 }

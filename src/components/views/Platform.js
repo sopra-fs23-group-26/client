@@ -4,6 +4,7 @@ import {Button} from 'components/ui/Button';
 import {useHistory} from 'react-router-dom';
 import PlatformContainer from "components/ui/PlatformContainer";
 import "styles/views/Platform.scss";
+import Invitation from './Invitation';
 
 const Platform = () => {
     // use react-router-dom's hook to access the history
@@ -223,6 +224,10 @@ const Platform = () => {
                     logout
                 </Button>
             </PlatformContainer>
+
+
+            <Invitation
+            />
         </div>
 
     );

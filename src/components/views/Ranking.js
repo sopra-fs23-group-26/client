@@ -7,6 +7,7 @@ import BaseContainer from "components/ui/BaseContainer";
 import "styles/views/Game.scss";
 import PropTypes from "prop-types";
 import RoomListContainer from "components/ui/RoomListContainer";
+import Invitation from './Invitation';
 
 const Ranking = () => {
   let id, username2;
@@ -146,7 +147,8 @@ const Ranking = () => {
           back
         </Button>
       </div>
-
+      <Invitation
+      />
     </div>
   );
 }
