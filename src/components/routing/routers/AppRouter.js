@@ -36,69 +36,83 @@ import History from "components/views/History"
  */
 const AppRouter = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/platform">
-          <PlatformGuard>
-          <Platform/>
-      </PlatformGuard>
-        </Route>
-        <Route path="/profile/:id">
-          <ProfileGuard>
-            <Profile/>
-          </ProfileGuard>
-        </Route>
-        <Route path="/profile-edit/:id">
-          <ProfileEditGuard>
-            <ProfileEdit/>
-          </ProfileEditGuard>
-        </Route>
-        <Route path="/ranking/:id">
-          <RankingGuard>
-            <Ranking/>
-          </RankingGuard>
-        </Route>
-        <Route exact path="/register">
-          <RegisterGuard>
-            <Register/>
-          </RegisterGuard>
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/login"/>
-        </Route>
-        <Route exact path="/login">
-          <Login/>
-        </Route>
-        <Route exact path="/select">
-          <Select/>
-        </Route>
-        <Route exact path="/room">
-          <Rooms/>
-        </Route>
-        <Route exact path="/start">
-          <Start/>
-        </Route>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/platform">
+            <PlatformGuard>
+              <Platform/>
+            </PlatformGuard>
+          </Route>
+          <Route path="/profile/:id">
+            <ProfileGuard>
+              <Profile/>
+            </ProfileGuard>
+          </Route>
+          <Route path="/profile-edit/:id">
+            <ProfileEditGuard>
+              <ProfileEdit/>
+            </ProfileEditGuard>
+          </Route>
+          <Route path="/ranking/:id">
+            <RankingGuard>
+              <Ranking/>
+            </RankingGuard>
+          </Route>
+          <Route exact path="/register">
+            <RegisterGuard>
+              <Register/>
+            </RegisterGuard>
+          </Route>
+          <Route exact path="/">
+            <Redirect to="/login"/>
+          </Route>
+          <Route exact path="/login">
+            <Login/>
+          </Route>
+          <Route exact path="/select">
+            <PlatformGuard>
+              <Select/>
+            </PlatformGuard>
+          </Route>
+          <Route exact path="/room">
+            <PlatformGuard>
+              <Rooms/>
+            </PlatformGuard>
+          </Route>
+          <Route exact path="/start">
+            <PlatformGuard>
+              <Start/>
+            </PlatformGuard>
+          </Route>
         <Route exact path={"/SudokuSelect"}>
           <PlatformGuard>
             <SudokuSelectPage/>
           </PlatformGuard>
         </Route>
-        <Route exact path="/SudokuGame/:id">
-          <SudokuGameGuard>
-            <SudokuGamePage/>
-          </SudokuGameGuard>
-        </Route>
-        <Route exact path="/SudokuGameWinPage">
-          <SudokuGameWinPage/>
-        </Route>
         <Route exact path="/UndercoverGameWinPage">
-          <UndercoverGameWinPage/>
+          <PlatformGuard>
+              <UndercoverGameWinPage/>
+            </PlatformGuard>
         </Route>
+
+
+
+
+
         <Route exact path="/undercover/:gameId">
-          <UndercoverGamePage/>
+          <PlatformGuard>
+            <UndercoverGamePage/>
+          </PlatformGuard>
         </Route>
         <Route exact path="/undercover/:gameId/voting">
-          <UndercoverVotePage/>
+          <PlatformGuard>
+            <UndercoverVotePage/>
+          </PlatformGuard>
+        </Route>
+        <Route exact path="/history/:id">
+          <PlatformGuard>
+            <History/>
+          </PlatformGuard>
         </Route>
       </Switch>
     </BrowserRouter>
