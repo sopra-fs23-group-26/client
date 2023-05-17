@@ -9,6 +9,7 @@ const SudokuGamePage = () => {
   let id = localStorage.getItem('id')
   const history = useHistory();
   const [puzzleArray, setPuzzleArray] = useState([]);
+  const [copyArray, setCopyArray] = useState([]);
   const [edit, setEdit] = useState(false);
   const [requiredDifficulty, setRequiredDifficulty] = useState("Medium");
 
@@ -17,8 +18,12 @@ const SudokuGamePage = () => {
       try {
         const response = await api.get(`/sudoku/create/${requiredDifficulty}`);
         const puzzle = response.data;
-        console.log(puzzle.type)
         setPuzzleArray(puzzle.map(row => row.map(cell => cell === "0" ? "" : cell)));
+        console.log("11111111111111111");
+        console.log(puzzleArray);
+        setCopyArray(puzzle.map(row => row.map(cell => cell === "0" ? "" : cell)));
+        console.log("22222222222222222");
+        console.log(copyArray);
       } catch (error) {
         alert("Something went wrong while fetching the Sudoku Question! See the console for details.");
       }
@@ -31,7 +36,13 @@ const SudokuGamePage = () => {
     const formData = new FormData();
     formData.append("difficulty", requiredDifficulty);
     const response2 = await api.put(`/sudoku/validation/${id}`, requestBody, formData);
-    history.push(`/SudokuGameWinPage`);
+    console.log(response2.data)
+    console.log(typeof response2.data === 'boolean')
+    if(response2.data === false){
+      alert("The answer is not correct, please modify it");
+    } else {
+      history.push(`/SudokuGameWinPage`);
+    }
   }
 
   let content = (
@@ -44,10 +55,10 @@ const SudokuGamePage = () => {
               {row.map((cellValue, colIndex) => (
                 <input
                   type="text"
-                  className="cell"
+                  className={`cell${copyArray[rowIndex][colIndex] !== "" ? " black-text" : " blue-text"}`}
                   key={colIndex}
                   value={cellValue}
-                  readOnly={cellValue !== "" }
+                  readOnly={copyArray[rowIndex][colIndex] !== ""}
                   onChange={(event) => {
                     const updatedPuzzleArray = [...puzzleArray];
                     updatedPuzzleArray[rowIndex][colIndex] = event.target.value;
