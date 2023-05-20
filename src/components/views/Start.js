@@ -222,10 +222,10 @@ const Start = (url, config) => {
                         const roomId = localStorage.getItem('roomId');
                         await new Promise(resolve => setTimeout(resolve, 1000));
                         //alert(roomId);
-                        api.get(`/undercover/rooms/${roomId}`).then((response) => {
-                            const game = new GameUndercover(response.data);
-                            localStorage.setItem('gameId', game.id);
-                            history.push(`/undercover/${game.id}`);
+                        api.get(`/undercover/getGameId/${roomId}`).then((response) => {
+                            const gameId=response.data;
+                            localStorage.setItem('gameId', gameId);
+                            history.push(`/undercover/${gameId}`);
                         }).catch((error) => {
                             alert(`${error.response.data.message} You cannot start the game.`);
                         });
