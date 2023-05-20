@@ -153,6 +153,7 @@ const UndercoverVotePage = props => {
                     console.log(gameresponse);
                     setGame(gameresponse.data);
                     if (gameresponse.data.gameStatus === "describing") {
+                        socket.send(message);
                         history.push(`/undercover/${gameId}`);
                     } else if (gameresponse.data.gameStatus === "gameEnd") {
                         socket.send(message);
