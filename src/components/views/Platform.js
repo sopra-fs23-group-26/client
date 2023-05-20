@@ -121,17 +121,6 @@ const Platform = () => {
                     "position": "relative", "top": "-1.5vw", "left": "2vw",
                     "font-size": "1vw",
                     "text-align": "center"
-                }}>
-                    Draw& <br/>Guess
-                </Button>
-                <Button style={{
-                    "width": "7vw", "height": "7vw", "border-radius": "10px",
-                    "color": "white",
-                    "background-color": "rgb(57,102, 161)",
-                    "box-shadow": "0px 3px 0px rgba(0, 0, 0, 0.2), 0px 5px 10px rgba(0, 0, 0, 0.2)",
-                    "position": "relative", "top": "-0.8vw", "left": "4.5vw",
-                    "font-size": "1vw",
-                    "text-align": "center"
                 }} onClick={() => history.push('/select')}>
                     Undercover
                 </Button>
@@ -157,26 +146,13 @@ const Platform = () => {
                     "text-transform": "uppercase",
                     "background-color": "rgb(214, 222, 235)",
                     "box-shadow": "0px 3px 0px rgba(0, 0, 0, 0.2), 0px 5px 10px rgba(0, 0, 0, 0.2)",
-                    "position": "relative", "top": "11vw", "left": "50%", "transform": "translate(-50%, -50%)",
+                    "position": "relative", "top": "14vw", "left": "50%", "transform": "translate(-50%, -50%)",
                     "font-size": "1vw",
                     "width": "7.5vw", "height": "2.5vw", "border-radius": "10px",
                 }}
                         onClick={() => gotoProfile()}
                 >
                     Profile
-                </Button>
-                <Button style={{
-
-                    "color": "rgb(19,40, 67)",
-                    "text-transform": "uppercase",
-                    "background-color": "rgb(214, 222, 235)",
-                    "box-shadow": "0px 3px 0px rgba(0, 0, 0, 0.2), 0px 5px 10px rgba(0, 0, 0, 0.2)",
-                    "position": "relative", "top": "14vw", "left": "50%", "transform": "translate(-50%, -50%)",
-                    "font-size": "1vw",
-                    "width": "7.5vw", "height": "2.5vw", "border-radius": "10px",
-                    "text-items": "center"
-                }}>
-                    Chatroom
                 </Button>
                 <Button style={{
 
