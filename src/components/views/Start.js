@@ -125,7 +125,8 @@ const Start = (url, config) => {
                 setProfileImageList(images)
 
             } catch (error) {
-                alert("Something went wrong while fetching the user! See the console for details.");
+                window.location.reload();
+                // alert("Something went wrong while fetching the user! See the console for details.");
             }
         }
 
