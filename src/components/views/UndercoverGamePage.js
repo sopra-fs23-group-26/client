@@ -52,7 +52,7 @@ const UndercoverGamePage = props => {
         fetchDataAndImage();
     }, []);
 
-    async function fetchData() {
+    async function fetchData(retry = 0) {
         try {
             const response = await api.get(`/undercover/${gameId}`);
             setGame(response.data);
@@ -71,14 +71,21 @@ const UndercoverGamePage = props => {
                     console.log(imageResponse)
                     images.push(`data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`);
                 }
+                else images.push(null);
             }
             setProfileImageList(images)
         } catch (error) {
             console.error(`Something went wrong while fetching the game: \n${handleError(error)}`);
             console.error("Details:", error);
             // alert("Something went wrong while fetching the game! See the console for details.");
-            fetchData();
+            if (retry < 3) {
+                // 最多重试3次
+                fetchData(retry + 1);
+            } else {
+                console.error("Max retry limit reached. Unable to fetch game data.");
+            }
         }
+
         try {
             const id = localStorage.getItem("id");
             const response = await api.get('/users/' + id);
@@ -133,6 +140,7 @@ const UndercoverGamePage = props => {
         const url = `ws${getDomain().substring(4)}/websocket`;
         const ws = new WebSocket(url);
         setSocket(ws);
+        const retry=0;
 
         // Add event listener for incoming messages
         ws.addEventListener('message', async (event) => {
@@ -159,9 +167,15 @@ const UndercoverGamePage = props => {
                 } catch (error) {
                     console.error(`Something went wrong while fetching the game: \n${handleError(error)}`);
                     console.error("Details:", error);
-                    alert("Something went wrong while fetching the game! See the console for details.");
+                    // alert("Something went wrong while fetching the game! See the console for details.");
+                    if (retry < 3) {
+                        // 最多重试3次
+                        fetchData(retry + 1);
+                    } else {
+                        console.error("Max retry limit reached. Unable to fetch game data.");
+                    }
                 }
-                fetchData();
+
             }
         });
 

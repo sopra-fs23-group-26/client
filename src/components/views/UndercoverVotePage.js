@@ -30,7 +30,7 @@ const UndercoverVotePage = props => {
         fetchDataAndImage();
     }, []);
 
-    async function fetchData() {
+    async function fetchData(retry=0) {
         try {
             const response = await api.get(`/undercover/${gameId}`);
             setGame(response.data);
@@ -49,13 +49,19 @@ const UndercoverVotePage = props => {
                     console.log(imageResponse)
                     images.push(`data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`);
                 }
+                else images.push(null);
             }
             setProfileImageList(images)
         } catch (error) {
             console.error(`Something went wrong while fetching the game: \n${handleError(error)}`);
             console.error("Details:", error);
             // alert("Something went wrong while fetching the game! See the console for details.");
-            fetchData();
+            if (retry < 3) {
+                // 最多重试3次
+                fetchData(retry + 1);
+            } else {
+                console.error("Max retry limit reached. Unable to fetch game data.");
+            }
         }
         try {
             const id = localStorage.getItem("id");
@@ -72,7 +78,7 @@ const UndercoverVotePage = props => {
     }
     const fetchedPlayers = useRef([]);
 
-    async function fetchImage() {
+    async function fetchImage(retry=0) {
         if (players) {
             const updatedPlayers = [];
             for (let i = 0; i < players.length; i++) {
@@ -85,10 +91,17 @@ const UndercoverVotePage = props => {
                         updatedPlayers.push(updatedPlayer);
                         fetchedPlayers.current.push(updatedPlayer);
                     } catch (error) {
-                        console.error(`Something went wrong while fetching the player image: \n${handleError(error)}`);
+                        console.error(`Something went wrong while fetching the game: \n${handleError(error)}`);
                         console.error("Details:", error);
-                        fetchImage();
+                        // alert("Something went wrong while fetching the game! See the console for details.");
+                        if (retry < 3) {
+                            // 最多重试3次
+                            fetchImage(retry + 1);
+                        } else {
+                            console.error("Max retry limit reached. Unable to fetch game data.");
+                        }
                     }
+
                 } else {
                     updatedPlayers.push(player);
                 }
@@ -168,6 +181,7 @@ const UndercoverVotePage = props => {
                     setGame(game);
                     // Check if gameId exists in localStorage
                     if (game.gameStatus === "describing") {
+                        socket.send(message);
                         history.push(`/undercover/${gameId}`);
                     } else if (game.gameStatus === "gameEnd") {
                         socket.send(message);
