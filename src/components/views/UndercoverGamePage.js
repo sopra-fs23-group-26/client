@@ -43,21 +43,6 @@ const UndercoverGamePage = props => {
     const [wsmessage, setwsMessage] = useState('update');
     const [profileImageList, setProfileImageList] = useState([]);
 
-    const [countdown, setCountdown] = useState(60);
-    //
-    // useEffect(() => {
-    //     if (currentPlayerUsername === username) {
-    //         const timer = setInterval(() => {
-    //             setCountdown((prevCountdown) => prevCountdown - 1);
-    //         }, 1000);
-    //
-    //         setTimeout(() => {
-    //             sendMessage();
-    //         }, countdown * 1000 + 100);
-    //
-    //         return () => clearInterval(timer);
-    //     }
-    // }, [currentPlayerUsername, username, history, countdown,game]);
 
     useEffect(() => {
         async function fetchDataAndImage() {
@@ -65,12 +50,6 @@ const UndercoverGamePage = props => {
             await fetchImage();
         }
         fetchDataAndImage();
-
-        const intervalId = setInterval(async () => {
-            await fetchData();
-        }, 32000);
-
-        return () => clearInterval(intervalId);
     }, []);
 
     async function fetchData() {
@@ -114,32 +93,41 @@ const UndercoverGamePage = props => {
         }
     }
 
+
     const fetchedPlayers = useRef([]);
     async function fetchImage() {
-                if (players) {
-                    const updatedPlayers = [];
-                    for (let i = 0; i < players.length; i++) {
-                        const player = players[i];
-                        if (player.image && !player.profileImage) {
-                            try {
-                                const imageResponse = await api.get(`/users/${player.id}/image`, { responseType: 'arraybuffer' });
-                                const profileImage = `data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`;
-                                const updatedPlayer = { ...player, profileImage };
-                                updatedPlayers.push(updatedPlayer);
-                                fetchedPlayers.current.push(updatedPlayer);
-                            } catch (error) {
-                                console.error(`Something went wrong while fetching the player image: \n${handleError(error)}`);
-                                console.error("Details:", error);
-                                fetchImage();
-                            }
-                        } else {
-                            updatedPlayers.push(player);
-                        }
+        if (players) {
+            const updatedPlayers = [];
+            for (let i = 0; i < players.length; i++) {
+                const player = players[i];
+                if (player.image && !player.profileImage) {
+                    try {
+                        const imageResponse = await api.get(`/users/${player.id}/image`, { responseType: 'arraybuffer' });
+                        const profileImage = `data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`;
+                        const updatedPlayer = { ...player, profileImage };
+                        updatedPlayers.push(updatedPlayer);
+                        fetchedPlayers.current.push(updatedPlayer);
+                    } catch (error) {
+                        console.error(`Something went wrong while fetching the player image: \n${handleError(error)}`);
+                        console.error("Details:", error);
+                        fetchImage();
                     }
-                    setPlayers(updatedPlayers);
+                } else {
+                    updatedPlayers.push(player);
                 }
             }
+            setPlayers(updatedPlayers);
+        }
+    }
 
+
+
+
+    useEffect(() => {
+        const url = `ws${getDomain().substring(4)}/websocket`;
+        const ws = new WebSocket(url);
+        setSocket(ws);
+    }, []);
 
     useEffect(() => {
         const url = `ws${getDomain().substring(4)}/websocket`;
@@ -194,6 +182,7 @@ const UndercoverGamePage = props => {
 
     const sendMessage = async () => {
         if (socket) {
+
             try {
                 const id = localStorage.getItem("id")
                 const requestBody = JSON.stringify(message);
@@ -294,9 +283,7 @@ const UndercoverGamePage = props => {
 
     return (
         <div className="chat-container">
-
             {elements}
-
             <div style={{display: "inline-block", fontWeight: "normal", margin: "-40vw 0 0 5vw", fontSize: "2vw"}}>
                 It's
             </div>
@@ -311,12 +298,6 @@ const UndercoverGamePage = props => {
             </div>
             <div style={{display: "inline-block", fontWeight: "normal", margin: "-40vw 0 0 0vw", fontSize: "2vw"}}>
                 's turn to describe...
-
-            </div>
-
-            <div style={{display: "inline-block", fontWeight: "normal", margin: "-40vw 0 0 0vw", fontSize: "2vw"}}>
-                {/*{currentPlayerUsername === username && `Time left: ${countdown}s`}*/}
-                You have one minute to describe.
             </div>
             <br/>
             <br/>
