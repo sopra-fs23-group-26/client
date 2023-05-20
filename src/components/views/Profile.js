@@ -40,9 +40,12 @@ const Profile = () => {
     useEffect(() => {
         async function fetchData() {
           try {
-              const imageResponse = await api.get(`/users/${friend.id}/image`, { responseType: 'arraybuffer' });
-              setTempImage(`data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) =>
+              const response3 = await api.get(`/users/${friend.id}`);
+              if (response3.data.image) {
+                const imageResponse = await api.get(`/users/${friend.id}/image`, { responseType: 'arraybuffer' });
+                setTempImage(`data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) =>
                 data + String.fromCharCode(byte), ''))}`);
+              }
           } catch (error) {
             alert("Something went wrong while fetching the user! See the console for details.");
           }
