@@ -118,6 +118,9 @@ const Start = (url, config) => {
                         console.log(imageResponse)
                         images.push(`data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`);
                     }
+                    else {
+                        images.push(null)
+                    }
                 }
                 setProfileImageList(images)
 
@@ -325,7 +328,9 @@ const Start = (url, config) => {
 
             <div className="select container">
                 {profileImageList && profileImageList.map((image, index) => (
-                    <img key={index} className="select display" src={image} alt={`Profile ${index}`} />
+                    <img key={index}
+                         className={`select display ${image ? "" : "select display"}`}
+                         src={image} alt={""} />
                 ))}
             </div>
 
