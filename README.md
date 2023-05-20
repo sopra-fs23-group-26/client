@@ -1,19 +1,27 @@
-# SoPra FS23 - Client Template with build pack
+<div align="center">
+    <h2>SoPra FS23 - Group 26 Client</h2>
+</div>
 
-## Getting started
+# WeGame - Game Platform
+## Introduction
 
-Read and go through these Tutorials. It will make your life easier:)
+## Technologies
+- React: CSS, SCSS, JavaScript, HTML
+- GitHub (Actions)
+- REST API
 
-- Read the React [Docs](https://reactjs.org/docs/getting-started.html)
-- Do this React [Getting Started](https://reactjs.org/tutorial/tutorial.html) Tutorial (it doesn’t assume any existing React knowledge)
-- Get an Understanding of [CSS](https://www.w3schools.com/Css/), [SCSS](https://sass-lang.com/documentation/syntax), and [HTML](https://www.w3schools.com/html/html_intro.asp)!
+## High-Level Components
+The most important components are:
+- [Platform](src/components/views/Platform.js)
+- [Profile](src/components/views/Profile.js)
+- [Room](src/components/views/Room.js)
+- [SudokuGamePage](src/components/views/SudokuGamePage.js)
+- [UndercoverGamePage](src/components/views/UndercoverGamePage.js)
 
-Next, there are two other technologies that you should look at:
+After successful login, the user would enter the [platform](src/components/views/Platform.js) where user could choose what game to play or edit their profile. On [profile](src/components/views/Profile.js) page, the user can add their friends and see their rankings. If users want to play games, they first enter a [room](src/components/views/Room.js), and then they will be redirected to the [undercoverGamePage](src/components/views/UndercoverGamePage.js) or [sudokuGamePage](src/components/views/SudokuGamePage.js).
 
-* [react-router-dom](https://reacttraining.com/react-router/web/guides/quick-start) offers declarative routing for React. It is a collection of navigational components that fit nicely with the application. 
-* [react-hooks](https://reactrouter.com/web/api/Hooks) let you access the router's state and perform navigation from inside your components.
 
-## Prerequisites and Installation
+## Launch & Deployment
 For your local development environment, you will need Node.js. You can download it [here](https://nodejs.org). All other dependencies, including React, get installed with:
 
 ```npm install```
@@ -38,9 +46,20 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## Learn More
+## Illustrations
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Roadmap
+Potential improvements or extensions in the future may include:
 
+- create chat room for the platform
+- introduce more game based on our game platform
 
-> Thanks to Lucas Pelloni and Kyrill Hux for working on the template.
+## Authors & Acknowledement
+>Jiewen Luo, Ruirui Wang, Heqing Ren & Jiajian Zhu
+
+>SoPra Team for the template and our TA Valentin Hollenstein
+
+## License
+
+Licensed under GNU General Public License v3.0
+- See [License](LICENSE)
