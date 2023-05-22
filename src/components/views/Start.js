@@ -130,6 +130,8 @@ const Start = (url, config) => {
 
             } catch (error) {
                 // window.location.reload();
+                console.log("Something went wrong while fetching the user! See the console for details.")
+                console.log(error)
                 alert("Something went wrong while fetching the user! See the console for details.");
             }
         }
