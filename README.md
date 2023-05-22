@@ -52,11 +52,20 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ### Main platform
 When a user is logged in, they will enter the main platform.
 
+
+![platform](src/images/platform.png)
+
 ### User profile
 On profile page, a user could add friends, upload their image and see their rankings.
 
+
+![profile](src/images/profile.png)
+
 ### Room
 Users could see who is in the room, and when everyone is here, the room creator could start the game.
+
+
+![room](src/images/room.png)
 
 ## Roadmap
 Potential improvements or extensions in the future may include:
