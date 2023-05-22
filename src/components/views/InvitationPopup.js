@@ -20,10 +20,10 @@ function InvitationPopup(props) {
         };
     }, []);
 
-    const sendMessage = async () => {
+    const sendMessage = async (msg) => {
         if (socket) {
             // setMessage('start');
-            socket.send(message);
+            socket.send(msg);
         }
     };
 
@@ -37,7 +37,7 @@ function InvitationPopup(props) {
             if (response.status==200){
                 localStorage.setItem("roomId", props.roomId)
                 localStorage.setItem("ownerId", response.data.ownerId)// fake owner id
-                await sendMessage()
+                await sendMessage("ANewPlayerJoined"+props.roomId)
                 history.push('/start')
             }else {
                 alert("Error: joined a room failed");

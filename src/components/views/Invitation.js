@@ -43,11 +43,21 @@ function Invitation() {
             socket.onmessage = async (event) => {
                 console.log('WebSocket message received:', event.data);
                 if (event.data.slice(0, 6) === 'invite') {
-                    console.log("invite message")
-                    console.log(event.data)
-                    setRoomId(Number(event.data.slice(6)))
+                    const msg = event.data.split(",")
+                    console.log("msg")
+                    console.log(msg)
+                    if(msg[2]==localStorage.getItem("id")){
+                        console.log("invite message")
+                        console.log(event.data)
+                        setRoomId(Number(msg[1]))
+                        handleShowInvitationPopup();
 
-                    handleShowInvitationPopup();
+                    }
+                    // console.log("invite message")
+                    // console.log(event.data)
+                    // setRoomId(Number(event.data.slice(6)))
+                    //
+                    // handleShowInvitationPopup();
                     // history.push('/room')
                 }
             };
