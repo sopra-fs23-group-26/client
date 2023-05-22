@@ -63,7 +63,7 @@ const ProfileEdit = () => {
         const response5 = await api.get(`/mycommunityranking/${id}`);
         setMyCommunityRanking(response5.data);
       } catch (error) {
-        alert("There is a delay when fetching images, please refresh the page");
+        alert("There is a delay when fetching images, please refresh the page.");
       }
     }
     fetchData();
@@ -142,7 +142,7 @@ const WaitList = ({friend}) => {
                 data + String.fromCharCode(byte), ''))}`);
               }
           } catch (error) {
-            alert("There is a delay when fetching images, please refresh the page");
+            alert("There is a delay when fetching images, please refresh the page.");
           }
         }
         fetchData();

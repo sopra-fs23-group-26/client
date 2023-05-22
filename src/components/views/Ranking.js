@@ -31,7 +31,7 @@ const Ranking = () => {
                 data + String.fromCharCode(byte), ''))}`);
             }
           } catch (error) {
-            alert("Something went wrong while fetching the user! See the console for details.");
+            alert("There is a delay when fetching images, please refresh the page.");
           }
         }
         fetchData();
@@ -85,7 +85,7 @@ const Ranking = () => {
         const response2 = await api.get(`/communityranking/${id}`);
         setCommunityRankingList(response2.data);
       } catch (error) {
-        alert("Something went wrong while fetching the user! See the console for details.");
+        alert("There is a delay when fetching images, please refresh the page.");
       }
     }
     fetchData();
