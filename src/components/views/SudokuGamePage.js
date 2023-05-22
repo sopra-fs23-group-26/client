@@ -22,7 +22,7 @@ const SudokuGamePage = () => {
         setPuzzleArray(JSON.parse(JSON.stringify(puzzle)));
         setCopyArray(JSON.parse(JSON.stringify(puzzle)));
       } catch (error) {
-        alert("Something went wrong while fetching the Sudoku Question! See the console for details.");
+        alert("There is a delay when fetching the Sudoku Question! Please refresh the page.");
       }
     }
     fetchData();
