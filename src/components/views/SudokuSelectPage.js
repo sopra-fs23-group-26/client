@@ -18,13 +18,7 @@ const SudokuSelectPage = () => {
                 Game rules:<br/><br/>
                 1. A 9×9 square must be filled in with numbers from 1-9 with no repeated numbers in each line, horizontally or vertically. And there are 3×3 squares marked out in the grid, and each of these squares can't have any repeat numbers either.
                 <br/><br/>
-                2. You could choose difficulty for the game, the score you gain are also different.
-                <br></br>
-                Easy - 2 point
-                <br></br>
-                Medium - 4 point
-                <br></br>
-                Hard - 6 point
+                2. When you solve the puzzle, you would gain 4 points.
             </p>
         </div>
     );

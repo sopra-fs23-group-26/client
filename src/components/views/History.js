@@ -76,7 +76,7 @@ const History = () =>{
                             "font-size": "10px",
                             "text-align": "center",
                         }}>
-                            {game.gameName === "undercover" ? "Undercover" : "Sudoku Game"}
+                            {game.gameName === "undercover" ? "Undercover" : "Sudoku"}
                         </Button>
                         <div className="result time">
                             {game.time.substring(0,19).replace("T",' ')}
