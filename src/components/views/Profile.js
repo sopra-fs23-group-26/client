@@ -18,6 +18,8 @@ const Profile = () => {
   const [friend, setFriend] = useState(null);
   const [waitFriends, setWaitFriends] = useState(null);
   const [realFriends, setRealFriends] = useState(null);
+  const [myCommunityRanking, setMyCommunityRanking] = useState(null);
+  const [myGlobalRanking, setMyGlobalRanking] = useState(null);
   const [profileImage, setProfileImage] = useState(null);
   const [friendName, setFriendName] = useState(null);
 
@@ -143,6 +145,10 @@ const Profile = () => {
         setWaitFriends(response2.data);
         const response3 = await api.get(`/users/${id}/friends`);
         setRealFriends(response3.data);
+        const response4 = await api.get(`/myglobalranking/${id}`);
+        setMyGlobalRanking(response4.data);
+        const response5 = await api.get(`/mycommunityranking/${id}`);
+        setMyCommunityRanking(response5.data);
       } catch (error) {
         alert("There is a delay when fetching images, please refresh the page");
       }
@@ -188,11 +194,11 @@ const Profile = () => {
           </Button>
           <ul className="game user-list" style={{marginRight: '0.5vw', color: "rgb(16, 46, 78)", fontWeight: 'bold',
             position: 'relative', top:'4vw', left:'-14vw', "font-size":"0.9vw"}}>
-            {user.communityRanking}
+            {myCommunityRanking}
           </ul>
           <ul className="game user-list" style={{color: "rgb(16, 46, 78)", fontWeight: 'bold', position: 'relative',
             top:'4vw', left:'-5vw', "font-size":"0.9vw"}}>
-            {user.globalRanking}
+            {myGlobalRanking}
           </ul>
         </div>
       </div>

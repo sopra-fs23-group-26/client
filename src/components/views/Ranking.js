@@ -19,7 +19,7 @@ const Ranking = () => {
   const [communityRankingList, setCommunityRankingList] = useState(null);
   const [profileImage, setProfileImage] = useState(null);
 
-  const GetGlobalRankingList = ({player}) => {
+  const GetRankingList = ({player, index}) => {
     const [tempImage, setTempImage] = useState(null);
     useEffect(() => {
         async function fetchData() {
@@ -44,10 +44,17 @@ const Ranking = () => {
       tempBorder = '0.2vw solid rgb(16, 46, 78)';
     }
 
+    let myranking;
+    if(index === 1) {
+      myranking = player.communityRanking;
+    } else {
+      myranking = player.globalRanking;
+    }
+
     return (
       <div class="room-button-background" style={{width: '23vw', height:'4.5vw', left:'-2vw', top:"-3vw", backgroundColor:`${tempColor}`, border: `${tempBorder}`}}>
         <div class="room-button-background-txt"  style={{top:'1.3vw', left: '1.3vw', "font-size": "1vw", color: "rgb(57, 115, 175)"}}>
-          No.{player.globalRanking}</div>
+          No.{myranking}</div>
         <div class="room-button-background-txt"  style={{top:'1.3vw', left: '11vw', "font-size": "1vw", color: "rgb(57, 115, 175)"}}>
           {player.username}</div>
         <div class="room-button-background-txt"  style={{top:'1.3vw', left: '20vw', "font-size": "1vw", color: "rgb(16, 46, 78)"}}>
@@ -62,7 +69,7 @@ const Ranking = () => {
     )
   };
 
-  GetGlobalRankingList.propTypes = {
+  GetRankingList.propTypes = {
     user: PropTypes.object
   };
 
@@ -90,7 +97,7 @@ const Ranking = () => {
       <div className="game">
         <ul className="game user-list">
           {globalRankingList.map(player => (
-            <GetGlobalRankingList player={player} key={player.id}/>
+            <GetRankingList player={player} key={player.id} index={2}/>
           ))}
         </ul>
       </div>
@@ -103,7 +110,7 @@ const Ranking = () => {
       <div className="game">
         <ul className="game user-list">
           {communityRankingList.map(player => (
-            <GetGlobalRankingList player={player} key={player.id}/>
+            <GetRankingList player={player} key={player.id} index={1}/>
           ))}
         </ul>
       </div>
