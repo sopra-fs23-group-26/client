@@ -4,6 +4,7 @@
 
 # WeGame - Game Platform
 ## Introduction
+The idea of our project is to provide a fun and engaging platform for users to enjoy playing games and socializing with their friends. Our game platformn currently contain 1 single-player game Sudoku and 1 multi-player game Who is undercover. On our platform, the user could add friends, view game history, upload their image and also see the ranking among all users.
 
 ## Technologies
 - React: CSS, SCSS, JavaScript, HTML
@@ -47,6 +48,15 @@ It correctly bundles React in production mode and optimizes the build for the be
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ## Illustrations
+
+### Main platform
+When a user is logged in, they will enter the main platform.
+
+### User profile
+On profile page, a user could add friends, upload their image and see their rankings.
+
+### Room
+Users could see who is in the room, and when everyone is here, the room creator could start the game.
 
 ## Roadmap
 Potential improvements or extensions in the future may include:
