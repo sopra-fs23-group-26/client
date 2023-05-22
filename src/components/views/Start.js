@@ -356,7 +356,9 @@ const Start = (url, config) => {
                             "border-color": "rgb(214, 222, 235)",
                             "font-weight": "bold",
                             "color": "rgb(19, 40, 67)",
-                            "border-radius": "1.3vw"
+                            "border-radius": "1.3vw",
+                            "caret-color": "transparent",
+                            "cursor": "auto",
                         }}
 
                         value={roomName}
@@ -370,7 +372,8 @@ const Start = (url, config) => {
                 "left": "56em",
                 "text-transform": "capitalize",
                 "background": "rgb(19, 40, 67)",
-                "color": "white"
+                "color": "white",
+                "cursor": "auto"
             }}>
                 Room name
             </button>
