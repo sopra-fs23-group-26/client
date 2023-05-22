@@ -75,8 +75,8 @@ const History = () =>{
                             "position": "relative", "left": "3.5vw","top":"10px",
                             "font-size": "10px",
                             "text-align": "center",
-                        }} onClick={() => history.push('/select')}>
-                            Undercover
+                        }}>
+                            {game.gameName === "undercover" ? "Undercover" : "Sudoku Game"}
                         </Button>
                         <div className="result time">
                             {game.time.substring(0,19).replace("T",' ')}
