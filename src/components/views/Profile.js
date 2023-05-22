@@ -47,7 +47,7 @@ const Profile = () => {
                 data + String.fromCharCode(byte), ''))}`);
               }
           } catch (error) {
-            alert("Something went wrong while fetching the user! See the console for details.");
+            alert("There is a delay when fetching images, please refresh the page");
           }
         }
         fetchData();
@@ -144,7 +144,7 @@ const Profile = () => {
         const response3 = await api.get(`/users/${id}/friends`);
         setRealFriends(response3.data);
       } catch (error) {
-        alert("Something went wrong while fetching the user! See the console for details.");
+        alert("There is a delay when fetching images, please refresh the page");
       }
     }
     fetchData();

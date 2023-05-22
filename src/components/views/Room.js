@@ -69,7 +69,7 @@ const Rooms = () =>{
             if (response.status==200){
                 localStorage.setItem("roomId", roomId)
                 localStorage.setItem("ownerId", response.data.ownerId)
-                await sendMessage()
+                await sendMessage("ANewPlayerJoined"+roomId)
                 history.push('/start')
             }else {
                 alert("Error: joined a room failed");
@@ -125,10 +125,10 @@ const Rooms = () =>{
     }, []);
 
 
-    const sendMessage = async () => {
+    const sendMessage = async (msg) => {
         if (socket) {
             // setMessage('start');
-            socket.send(message);
+            socket.send(msg);
         }
     };
 

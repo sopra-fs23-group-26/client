@@ -45,9 +45,9 @@ const Start = (url, config) => {
 
 
 
-    const sendRoomRemovedMessage = async () => {
+    const sendRoomRemovedMessage = async (msg) => {
         if (socket) {
-            try{socket.send(roomRemoved);}
+            try{socket.send(msg);}
             catch(error){
                 alert(`${error.response.data.message} You cannot send the message.`);
             }
@@ -55,9 +55,9 @@ const Start = (url, config) => {
     }
 
 
-    const sendLeaveRoomMessage = async () => {
+    const sendLeaveRoomMessage = async (msg) => {
         if (socket) {
-            try{socket.send("APlayerLeft");}
+            try{socket.send(msg);}
             catch(error){
                 alert(`${error.response.data.message} You cannot send the message.`);
             }
@@ -78,7 +78,10 @@ const Start = (url, config) => {
             console.log(localStorage.getItem("roomId"))
             const url = "/undercover/rooms/" + localStorage.getItem("roomId")
             const response = await api.delete(url)
-            await sendRoomRemovedMessage()
+            const msg = "roomNotExist"+localStorage.getItem("roomId")
+            console.log("sendRoomRemovedMessage")
+            console.log(msg)
+            await sendRoomRemovedMessage(msg)
             history.push("/room")
 
         }
@@ -90,9 +93,10 @@ const Start = (url, config) => {
 
             if (response.status == 200) {
                 console.log("leave a room")
+                const msg = "APlayerLeft" + localStorage.getItem("roomId")
+                await sendLeaveRoomMessage(msg)
                 localStorage.removeItem("roomId")
                 localStorage.removeItem("ownerId")
-                await sendLeaveRoomMessage()
                 history.push('/room')
             } else {
                 console.log("leave a room failed")
@@ -125,8 +129,10 @@ const Start = (url, config) => {
                 setProfileImageList(images)
 
             } catch (error) {
-                window.location.reload();
-                // alert("Something went wrong while fetching the user! See the console for details.");
+                // window.location.reload();
+                console.log("Something went wrong while fetching the user! See the console for details.")
+                console.log(error)
+                alert("Something went wrong while fetching the user! See the console for details.");
             }
         }
 
@@ -185,16 +191,21 @@ const Start = (url, config) => {
 
 
     const invite = async () => {
+        let invitedId;
         try{
-        const response = await api.post("/users/"+userName)
+        const response = await api.get("/users/invite/"+userName)
         console.log("inviting")
-        console.log(response.data)}
+        console.log(response.data)
+            invitedId = response.data//被邀请人的id
+        }
         catch (error) {
             alert(`${error.response.data.message}`);
         }
 
+
+
         if (socket) {
-            try{socket.send("invite"+localStorage.getItem("roomId").toString());}
+            try{socket.send("invite,"+localStorage.getItem("roomId").toString()+","+invitedId);}
             catch(error){
                 alert(`${error.response.data.message} You cannot send the message.`);
             }
@@ -234,19 +245,19 @@ const Start = (url, config) => {
                 }
 
 
-                if (event.data == "roomNotExist"){
+                if (event.data.substring(0, 12) == "roomNotExist" && event.data.substring(12)==localStorage.getItem("roomId")){
                     console.log("leave a room because the room is not existed")
                     localStorage.removeItem("roomId")
                     localStorage.removeItem("ownerId")
                     history.push('/room')
                 }
 
-                if(event.data=="ANewPlayerJoined"){
+                if(event.data.substring(0, 16)=="ANewPlayerJoined"&& event.data.substring(16)==localStorage.getItem("roomId")){
                     console.log("a new player joined")
                     window.location.reload();
                 }
 
-                if (event.data=="APlayerLeft"){
+                if (event.data.substring(0,11)=="APlayerLeft"&& event.data.substring(11)==localStorage.getItem("roomId")){
                     console.log("a player left")
                     window.location.reload();
                 }
@@ -347,7 +358,9 @@ const Start = (url, config) => {
                             "border-color": "rgb(214, 222, 235)",
                             "font-weight": "bold",
                             "color": "rgb(19, 40, 67)",
-                            "border-radius": "1.3vw"
+                            "border-radius": "1.3vw",
+                            "caret-color": "transparent",
+                            "cursor": "auto",
                         }}
 
                         value={roomName}
@@ -361,7 +374,8 @@ const Start = (url, config) => {
                 "left": "56em",
                 "text-transform": "capitalize",
                 "background": "rgb(19, 40, 67)",
-                "color": "white"
+                "color": "white",
+                "cursor": "auto"
             }}>
                 Room name
             </button>
