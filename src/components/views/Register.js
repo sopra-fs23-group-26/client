@@ -42,21 +42,21 @@ const Register = props => {
 
   const doRegister = async () => {
     try {
-      const requestBody = JSON.stringify({username, password, repeatPassword});
-      const response = await api.post('/users', requestBody);
-
-      // heqing: there is another case: the password and repeatPassword are not equal
-      if(!response.data){
+      if(password === repeatPassword){
+        const requestBody = JSON.stringify({username, password});
+        const response = await api.post('/users', requestBody);
+        if(!response.data){
         alert(`register error`)
         return false;
+        }
+        const user = new User(response.data);
+        localStorage.setItem('token', user.token);
+        localStorage.setItem('id', user.id)
+        localStorage.setItem('userinfo', JSON.stringify(user));
+        history.push(`/platform`);
+      } else {
+        alert("Sorry, you input 2 different passwords, please try again.")
       }
-      const user = new User(response.data);
-
-      localStorage.setItem('token', user.token);
-      localStorage.setItem('id', user.id)
-      localStorage.setItem('userinfo', JSON.stringify(user));
-
-      history.push(`/platform`);
     } catch (error) {
       alert(`${error.response.data.message} You cannot register.`);
     }
