@@ -60,6 +60,8 @@ On profile page, a user could add friends, upload their image and see their rank
 
 
 ![profile](src/images/profile.png)
+* You could only upload pics when "choose file", because it's an image.
+* Because google cloud default time zone is utc, so the time of game history is two hours early than utc+2. We try to solve it by create an instance on google cloud, but it requires extra expanse.
 
 ### Room
 Users could see who is in the room, and when everyone is here, the room creator could start the game.
