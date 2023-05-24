@@ -19,6 +19,7 @@ const Start = (url, config) => {
     const [roomRemoved] = useState("roomNotExist");
     const [userName, setUserName] = useState("")// invited user name
     const [playersLen, setPlayersLen] = useState(null)
+    const [isClicked, setIsClicked] = useState(false);
 
 /*    const handleStartGame = async () => {
         try {
@@ -195,6 +196,8 @@ const Start = (url, config) => {
                         setGameId(game.id);
                         socket.send(message);
 
+                        setIsClicked(true);//点击开始后，设置为true，不能再点击
+
                         // Login successfully worked --> navigate to the route /undercover/${gameId}
                         history.push(`/undercover/${game.id}`);
                     } catch (error) {
@@ -309,7 +312,7 @@ const Start = (url, config) => {
             <button className="select button"
                     style={{"top": "9.5em"}}
                     onClick={() => sendMessage()}
-                    disabled={localStorage.getItem("id")!=localStorage.getItem("ownerId")}
+                    disabled={localStorage.getItem("id")!=localStorage.getItem("ownerId")||isClicked}
 
             >Start!
             </button>
