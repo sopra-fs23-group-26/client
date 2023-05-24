@@ -184,7 +184,7 @@ const Start = (url, config) => {
                 if (socket) {
                     // setMessage('start');
 
-                    socket.send(message);
+                    // socket.send(message);
                     try {
                         const roomId = localStorage.getItem("roomId")
                         const response = await api.post('/undercover/rooms/' + roomId);
@@ -193,6 +193,7 @@ const Start = (url, config) => {
                         const game = new GameUndercover(response.data);
                         localStorage.setItem("gameId", game.id);
                         setGameId(game.id);
+                        socket.send(message);
 
                         // Login successfully worked --> navigate to the route /undercover/${gameId}
                         history.push(`/undercover/${game.id}`);
@@ -263,7 +264,7 @@ const Start = (url, config) => {
                     } else {
                         // If gameId doesn't exist, create a new game and store the gameId in localStorage
                         const roomId = localStorage.getItem('roomId');
-                        await new Promise(resolve => setTimeout(resolve, 1000));
+                        await new Promise(resolve => setTimeout(resolve, 2000));
                         //alert(roomId);
                         api.get(`/undercover/getGameId/${roomId}`).then((response) => {
                             const gameId=response.data;
