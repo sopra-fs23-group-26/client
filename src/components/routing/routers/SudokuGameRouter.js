@@ -22,5 +22,4 @@ SudokuGameRouter.propTypes = {
   base: PropTypes.string
 }
 
-
 export default SudokuGameRouter;

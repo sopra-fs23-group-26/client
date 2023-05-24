@@ -1,11 +1,7 @@
 @import 'styles/theme';
 
-
 .room-button{
-
   &.button {
-
-
     &:disabled {
       cursor: default;
       opacity: 0.4;
@@ -43,8 +39,6 @@
     margin: 2em;
     justify-content: space-between;
   }
-
-
 }
 
 .room-button-background{
@@ -59,7 +53,6 @@
   display: flex;
   justify-content: space-between;
   margin: 1vw;
-
 }
 
 .room-button-background-txt{
@@ -70,6 +63,3 @@
   top: 28%;
   font-weight: bold;
 }
-
-
-

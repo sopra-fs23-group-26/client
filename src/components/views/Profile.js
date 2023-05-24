@@ -93,14 +93,12 @@ const Profile = () => {
   }
 
   const sendFriendRequest  = async () => {
-    console.log(friendName)
     try {
       const formData = new FormData();
       formData.append("friendName", friendName);
       formData.append("addFriendStatus", 1);
       const response = await api.put(`/users/${id}/friends`, formData);
-      console.log(response.data);
-      alert(`You hava sent the friend request!`);
+      alert(`You have sent the friend request!`);
     } catch (error) {
       alert(`${error.response.data.message} You cannot add friends.`);
     }
@@ -112,7 +110,7 @@ const Profile = () => {
       formData.append("friendName", friend.username);
       formData.append("addFriendStatus", 2);
       const response = await api.put(`/users/${user.id}/friends`, formData);
-      alert(`You hava accepted the friend!`);
+      alert(`You have accepted the friend!`);
     } catch (error) {
       alert(`${error.response.data.message} You cannot accept friends.`);
     }
@@ -124,8 +122,7 @@ const Profile = () => {
       formData.append("friendName", friend.username);
       formData.append("addFriendStatus", 3);
       const response = await api.put(`/users/${user.id}/friends`, formData);
-      console.log(response.data);
-      alert(`You hava rejected the friend request!`);
+      alert(`You have rejected the friend request!`);
     } catch (error) {
       alert(`${error.response.data.message} You cannot delete friends.`);
     }

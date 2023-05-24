@@ -9,8 +9,6 @@ const SudokuGameWinPage = () => {
     const history = useHistory();
     const [gameHistory, setGameHistory] = useState(null);
 
-
-
     useEffect(() => {
         async function fetchData() {
             try {
@@ -30,7 +28,6 @@ const SudokuGameWinPage = () => {
         time = gameHistory.time.substring(0,19).replace("T",' ');
         earnedPoint = gameHistory.earnedPoint;
     }
-
 
     return (
         <BaseContainer>

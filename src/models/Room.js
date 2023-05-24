@@ -1,8 +1,6 @@
 /**
  * Room model
  */
-
-
 class Room {
     constructor(data = {}) {
         this.id = null;

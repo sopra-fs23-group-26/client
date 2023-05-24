@@ -10,21 +10,16 @@ const History = () =>{
     const history = useHistory();
     const id = localStorage.getItem('id')
 
-
     const [gamehistory, setHistory] = useState([]);
-
 
     useEffect(() => {
         async function fetchHistory() {
             const userId = localStorage.getItem("id");
             const response = await api.get(`/gameHistory/${userId}`);
-            console.log(response.data)
             setHistory(response.data);
         }
         fetchHistory();
     }, []);
-
-
 
     const goback = () => {
         history.push('/platform')
@@ -90,12 +85,10 @@ const History = () =>{
                     </div>
                 ))}
                 </ul>
-
             </div>
             </div>
         </div>
         </div>
-
     );
 
 }

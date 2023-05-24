@@ -9,8 +9,6 @@ import Room from "../../models/Room";
 
 
 const Start = (url, config) => {
-    console.log("--------ownerId-------")
-    console.log(localStorage.getItem("ownerId"))
     const history = useHistory();
     const [gameId, setGameId] = useState(null);
     const [profileImageList, setProfileImageList] = useState([]);
@@ -21,22 +19,6 @@ const Start = (url, config) => {
     const [playersLen, setPlayersLen] = useState(null)
     const [isClicked, setIsClicked] = useState(false);
 
-/*    const handleStartGame = async () => {
-        try {
-            const roomId = localStorage.getItem("roomId")
-            const response = await api.post('/undercover/rooms/'+ roomId);
-
-            // store the gameId to the local storage
-            const game = new GameUndercover(response.data);
-            localStorage.setItem("gameId", game.id);
-
-            // Login successfully worked --> navigate to the route /undercover/${gameId}
-            history.push(`/undercover/${game.id}`);
-        } catch (error) {
-            alert(`Something went wrong during start the undercover game: \n${handleError(error)}`);
-        }
-    };*/
-
     const [text, setText] = useState('');
     useEffect(() => {
         fetch('/undercover.txt')
@@ -44,10 +26,6 @@ const Start = (url, config) => {
             .then(text => setText(text))
             .catch(error => console.error(error));
     }, []);
-
-
-
-
 
     const sendRoomRemovedMessage = async (msg) => {
         if (socket) {
@@ -58,7 +36,6 @@ const Start = (url, config) => {
         }
     }
 
-
     const sendLeaveRoomMessage = async (msg) => {
         if (socket) {
             try{socket.send(msg);}
@@ -68,23 +45,12 @@ const Start = (url, config) => {
         }
     }
 
-
-
-
-
-
-
-
     const doBack = async() =>{
 
         if(localStorage.getItem("id")==localStorage.getItem("ownerId")){
-            console.log("room id")
-            console.log(localStorage.getItem("roomId"))
             const url = "/undercover/rooms/" + localStorage.getItem("roomId")
             const response = await api.delete(url)
             const msg = "roomNotExist"+localStorage.getItem("roomId")
-            console.log("sendRoomRemovedMessage")
-            console.log(msg)
             await sendRoomRemovedMessage(msg)
             history.push("/room")
 
@@ -94,21 +60,17 @@ const Start = (url, config) => {
             const url = "/undercover/rooms/" + localStorage.getItem("roomId") + "/" + localStorage.getItem("id")
             const response = await api.delete(url)
 
-
             if (response.status == 200) {
-                console.log("leave a room")
                 const msg = "APlayerLeft" + localStorage.getItem("roomId")
                 await sendLeaveRoomMessage(msg)
                 localStorage.removeItem("roomId")
                 localStorage.removeItem("ownerId")
                 history.push('/room')
             } else {
-                console.log("leave a room failed")
                 alert("Error: joined a room failed");
             }
         }
     }
-
 
     const elements = []
     useEffect(() => {
@@ -120,12 +82,8 @@ const Start = (url, config) => {
                 for(let i = 0; i<response.data.players.length; i++){
                     if (response.data.players[i].image) {
                         let url = "/users/" + response.data.players[i].id + "/image"
-                        console.log("image info")
                         // await new Promise(resolve => setTimeout(resolve, 200)); // 延迟1秒钟
                         try{ const imageResponse = await api.get(url, {responseType: 'arraybuffer'});
-
-                            console.log("imageResponse")
-                            console.log(imageResponse)
                             images.push(`data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`);
                         } catch (error){
                             images.push(null)
@@ -136,20 +94,10 @@ const Start = (url, config) => {
                     }
                 }
                 setProfileImageList(images)
-
-
         }
 
         fetchData();
     }, []);
-
-
-    console.log("image list")
-    console.log(profileImageList)
-
-
-
-
 
     const [socket, setSocket] = useState(null);
     const [message, setMessage] = useState('start'+localStorage.getItem("ownerId"));
@@ -157,11 +105,7 @@ const Start = (url, config) => {
     // 创建WebSocket连接
     useEffect(() => {
         const url = "ws"+getDomain().toString().substring(4, getDomain().toString().length)+"/websocket"
-        console.log("ws url");
-        console.log(url);
         const ws = new WebSocket(url);
-        console.log("ws masssss");
-        console.log(ws);
         setSocket(ws);
 
         // 关闭WebSocket连接时清理副作用
@@ -210,16 +154,12 @@ const Start = (url, config) => {
             alert("please try START again")
         }
 
-
     };
-
 
     const invite = async () => {
         let invitedId;
         try{
         const response = await api.get("/users/invite/"+userName)
-        console.log("inviting")
-        console.log(response.data)
             invitedId = response.data//被邀请人的id
         }
         catch (error) {
@@ -247,18 +187,10 @@ const Start = (url, config) => {
         }
     }
 
-
-
-
-
-
-
     // 处理消息接收
-// 处理消息接收
     useEffect(() => {
         if (socket) {
             socket.onmessage = async (event) => {
-                console.log('WebSocket message received:', event.data);
                 if (event.data.startsWith("start") && event.data.substring(5)==localStorage.getItem("ownerId")) {
                     // Check if gameId exists in localStorage
                     if (gameId) {
@@ -279,31 +211,22 @@ const Start = (url, config) => {
                     }
                 }
 
-
                 if (event.data.substring(0, 12) == "roomNotExist" && event.data.substring(12)==localStorage.getItem("roomId")){
-                    console.log("leave a room because the room is not existed")
                     localStorage.removeItem("roomId")
                     localStorage.removeItem("ownerId")
                     history.push('/room')
                 }
 
                 if(event.data.substring(0, 16)=="ANewPlayerJoined"&& event.data.substring(16)==localStorage.getItem("roomId")){
-                    console.log("a new player joined")
                     window.location.reload();
                 }
 
                 if (event.data.substring(0,11)=="APlayerLeft"&& event.data.substring(11)==localStorage.getItem("roomId")){
-                    console.log("a player left")
                     window.location.reload();
                 }
-
-
-
-
             };
         }
     }, [socket, history]);
-
 
     return (
         <div className="select">
@@ -345,7 +268,6 @@ const Start = (url, config) => {
                 6. If the remaining players include the undercover and one detective, the undercover wins the game and gets 5 points.
             </p>
 
-
             <button className="select button" style={{
                 "height": "3vw",
                 "width": "7vw",
@@ -381,8 +303,6 @@ const Start = (url, config) => {
                 ))}
             </div>
 
-
-
             <div><input className="select input"
                         style={{
                             "top": "-40.5vw",
@@ -414,10 +334,7 @@ const Start = (url, config) => {
             }}>
                 Room name
             </button>
-
-
         </div>
-
     );
 }
 

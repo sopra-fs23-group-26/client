@@ -25,5 +25,4 @@ ProfileRouter.propTypes = {
   base: PropTypes.string
 }
 
-
 export default ProfileRouter;

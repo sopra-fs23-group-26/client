@@ -31,8 +31,6 @@ const SudokuGamePage = () => {
   const submit = async () => {
     const requestBody = puzzleArray
     const response2 = await api.put(`/sudoku/validation/${id}/${requiredDifficulty}`, requestBody);
-    console.log(response2.data)
-    console.log(typeof response2.data === 'boolean')
     if(response2.data === false){
       alert("The answer is not correct, please modify it");
     } else {
@@ -66,8 +64,6 @@ const SudokuGamePage = () => {
       </div>
     );
   }
-
-
 
   return(
     <>

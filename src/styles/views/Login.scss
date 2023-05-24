@@ -22,7 +22,6 @@
     border: 1.5px solid $loginInputFrame;
     border-radius: 0.5em;
     margin-bottom: 20px;
-    //background: transparentize(white, 0.85);
     color: $loginTextbox;
   }
   &.label {
@@ -37,8 +36,5 @@
     justify-content: center;
     width: 300px;
     margin-top: 1em;
-    //button{
-    //  margin: 0px 5px;
-    //}
   }
 }

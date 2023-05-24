@@ -7,7 +7,6 @@ import 'styles/views/Login.scss';
 import LoginContainer from "components/ui/LoginContainer";
 import PropTypes from "prop-types";
 
-
 const FormField = props => {
   return (
     <div className="login field">
@@ -38,7 +37,6 @@ const Register = props => {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [repeatPassword, setRepeatPassword] = useState(null);
-
 
   const doRegister = async () => {
     try {
@@ -101,8 +99,4 @@ const Register = props => {
   );
 };
 
-/**
- * You can get access to the history object's properties via the withRouter.
- * withRouter will pass updated match, location, and history props to the wrapped component whenever it renders.
- */
 export default Register;

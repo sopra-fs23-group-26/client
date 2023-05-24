@@ -14,7 +14,6 @@ const Platform = () => {
     const [user, setUser] = useState(null);
     const [profileImage, setProfileImage] = useState(null);
 
-
     const logout = () => {
         // let userinfo = JSON.parse(localStorage.getItem('userinfo'))
         // api.post('/logout/' + userinfo.username);
@@ -43,7 +42,6 @@ const Platform = () => {
         fetchData();
     }, [id]);
 
-
     const gotoProfile = () => {
         try {
             let id;
@@ -63,7 +61,6 @@ const Platform = () => {
             history.push('/');
         }
     }
-
 
     return (
         <div style={{display: 'flex'}}>
@@ -201,11 +198,9 @@ const Platform = () => {
                 </Button>
             </PlatformContainer>
 
-
             <Invitation
             />
         </div>
-
     );
 }
 

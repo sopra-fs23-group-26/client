@@ -20,7 +20,4 @@ Header.propTypes = {
   height: PropTypes.string
 };
 
-/**
- * Don't forget to export your component!
- */
 export default Header;

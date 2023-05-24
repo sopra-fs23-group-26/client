@@ -22,5 +22,4 @@ RankingRouter.propTypes = {
   base: PropTypes.string
 }
 
-
 export default RankingRouter;

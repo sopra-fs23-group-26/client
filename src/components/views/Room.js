@@ -10,25 +10,14 @@ import Invitation from './Invitation';
 const Rooms = () =>{
 
     const history = useHistory();
-
     const [username, setUsername] = useState(null);
     const [uerId, setUserId] = useState(null);
     const [ownerId, setOwnerId] = useState(localStorage.getItem("id"));
     const [gameName, setGameName] = useState("undercover");
     const [name, setName] = useState("");// room name
 
-
-
-
-
     const createRoom = async () =>{
         try{
-            // setOwnerId(localStorage.getItem("id"))
-            // setGameName("undercover")
-            console.log("OwnerId: "+String(ownerId))
-            console.log("gameName: "+String(gameName))
-
-
             const requestBody = JSON.stringify({ownerId, gameName, name});
             const response = await api.post('/undercover/rooms', requestBody);
 
@@ -40,26 +29,14 @@ const Rooms = () =>{
                 const room = new Room(response.data)
                 localStorage.setItem("roomId", room.id)
                 localStorage.setItem("ownerId", ownerId)
-
-
-                console.log("response.data: "+room)
-                console.log("roomId: "+String(room.id))
-                console.log("roomName: "+room.name)
-                console.log("roomPlayers: "+room.players)
-
                 history.push('/start')
-
-
             }else {
                 alert("Error: Creating a room failed");
             }
-
-
         }
         catch (error) {
             alert(`${error.response.data.message} You cannot create the game.`);
         }
-
     }
 
     const joinRoom = async (userId, roomId) =>{
@@ -81,16 +58,12 @@ const Rooms = () =>{
         }
     }
 
-
-
     function RoomList() {
         const [roomList, setRoomList] = useState([]);
 
         useEffect(() => {
             async function fetchRoomList() {
                 const response = await api.get('/undercover/rooms');
-                console.log("room list")
-                console.log(response.data)
                 setRoomList(response.data);
             }
             fetchRoomList();
@@ -109,8 +82,6 @@ const Rooms = () =>{
     }
     const room_list = RoomList();
 
-
-
     const [socket, setSocket] = useState(null);
     const [message, setMessage] = useState('ANewPlayerJoined');
     // 创建WebSocket连接
@@ -124,7 +95,6 @@ const Rooms = () =>{
         };
     }, []);
 
-
     const sendMessage = async (msg) => {
         if (socket) {
             // setMessage('start');
@@ -132,17 +102,9 @@ const Rooms = () =>{
         }
     };
 
-
-
-
-
-
-
     return(
         <div>
             <h2 className="select title">Undercover</h2>
-
-
             <div><input className="select input"
                         style={{
                             "top": "19vw",
@@ -160,7 +122,6 @@ const Rooms = () =>{
                         placeholder={"room name"}
                         onChange={(event) => setName(event.target.value)}
             /></div>
-
 
             <button className="select button"
                     style={{

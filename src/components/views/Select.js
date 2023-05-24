@@ -8,23 +8,12 @@ const Select = () =>{
     const history = useHistory();
     const [text, setText] = useState('');
 
-
-
-
-
-
-
-
-
     useEffect(() => {
         fetch('/undercover.txt')
             .then(response => response.text())
             .then(text => setText(text))
             .catch(error => console.error(error));
     }, []);
-
-    console.log("---------rules     text ------")
-    console.log(text)
 
     return(
         <div class="select">
@@ -55,14 +44,8 @@ const Select = () =>{
             <Invitation
             />
 
-
-
-
-
-
         </div>
     );
-
 }
 
 export default Select;

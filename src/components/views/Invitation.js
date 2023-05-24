@@ -30,7 +30,6 @@ function Invitation() {
         };
     }, []);
 
-
     const sendMessage = async () => {
         if (socket) {
             // setMessage('start');
@@ -41,35 +40,16 @@ function Invitation() {
     useEffect(() => {
         if (socket) {
             socket.onmessage = async (event) => {
-                console.log('WebSocket message received:', event.data);
                 if (event.data.slice(0, 6) === 'invite') {
                     const msg = event.data.split(",")
-                    console.log("msg")
-                    console.log(msg)
                     if(msg[2]==localStorage.getItem("id")){
-                        console.log("invite message")
-                        console.log(event.data)
                         setRoomId(Number(msg[1]))
                         handleShowInvitationPopup();
-
                     }
-                    // console.log("invite message")
-                    // console.log(event.data)
-                    // setRoomId(Number(event.data.slice(6)))
-                    //
-                    // handleShowInvitationPopup();
-                    // history.push('/room')
                 }
             };
         }
     }, [socket, roomId]);
-
-    console.log(roomId)
-
-
-
-
-
 
     return (
         <div>

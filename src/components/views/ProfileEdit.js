@@ -37,7 +37,6 @@ const ProfileEdit = () => {
       setImage(selectedImage);
       const reader = new FileReader();
       reader.onload = () => {
-        //setPreview(reader.result);
       };
       reader.readAsDataURL(selectedImage);
     }
@@ -177,7 +176,6 @@ const WaitList = ({friend}) => {
     }
   }
 
-
   let content2 = <Spinner />;
 
   if (user) {
@@ -236,8 +234,6 @@ const WaitList = ({friend}) => {
     )
   }
 
-
-
   return (
       <div className="game">
         <div className="game container" style={{backgroundColor: "rgb(57, 115, 175)", position: 'relative', top: '19vw', left: '28vw', width: '24.5vw', height: '35vw', transform: 'translate(-50%, -50%)'}}>
@@ -278,7 +274,6 @@ const WaitList = ({friend}) => {
             fontWeight: 'bold', "font-size": "0.85vw"}}>
             SCORE: {score}
           </ul>
-
         </div>
 
         <div className="game container"

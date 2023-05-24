@@ -27,13 +27,9 @@ function InvitationPopup(props) {
         }
     };
 
-
-
     const onAccept = async () => {
         try {
-
             const response = await api.put("/undercover/rooms/"+props.roomId.toString()+ "/"+localStorage.getItem("id"));
-            console.log(response.data);
             if (response.status==200){
                 localStorage.setItem("roomId", props.roomId)
                 localStorage.setItem("ownerId", response.data.ownerId)// fake owner id
@@ -66,4 +62,3 @@ function InvitationPopup(props) {
 }
 
 export default InvitationPopup;
-

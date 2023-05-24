@@ -1,12 +1,5 @@
 @import 'styles/theme';
 
-/* The '&' is a shorthand for the containing element,
-  so for example a '&.user-list' inside .game will compile to
-  .game.user-list
-
-  for more information visit https://sass-lang.com/guide
- */
-
 .undercovergame {
 
   &.chat-bubble-right {
@@ -58,7 +51,6 @@
     margin-left: -4px;
     border: 1.5px solid $loginInputFrame;
     border-radius: 0.5em;
-    //background: transparentize(white, 0.85);
     color: $loginTextbox;
   }
 
@@ -98,9 +90,6 @@
     box-shadow: 0 8px 8px -8px rgba(0, 0, 0, 0.5);
   }
   &.button{
-     //&:hover {
-     //  transform: translateY(-2px);
-     //}
      &:disabled {
        cursor: default;
        opacity: 0.4;
@@ -125,7 +114,6 @@
      font-weight: bold;
      display: inline-block;
      margin-bottom: 0.8em;
-
    }
   & p,h2 {
     margin: 0.5em 0;

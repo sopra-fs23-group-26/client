@@ -9,7 +9,6 @@ import Room from "../../models/Room";
 import GameUndercover from "../../models/GameUndercover";
 import {getDomain} from "../../helpers/getDomain";
 
-
 const UndercoverVotePage = props => {
     const history = useHistory();
     const {gameId} = useParams();
@@ -19,8 +18,6 @@ const UndercoverVotePage = props => {
     let [players, setPlayers] = useState(null);
     const [me, setMe] = useState(null);
     const [profileImageList, setProfileImageList] = useState([]);
-
-
 
     useEffect(() => {
         async function fetchDataAndImage() {
@@ -43,10 +40,7 @@ const UndercoverVotePage = props => {
             for(let i = 0; i<response.data.users.length; i++){
                 if (response.data.users[i].image) {
                     let url = "/users/" + response.data.users[i].id + "/image"
-                    console.log("image info")
                     const imageResponse = await api.get(url, {responseType: 'arraybuffer'});
-                    console.log("imageResponse")
-                    console.log(imageResponse)
                     images.push(`data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`);
                 }
                 else images.push(null);
@@ -110,8 +104,6 @@ const UndercoverVotePage = props => {
         }
     }
 
-
-
     let word, username;
     if (me) {
         word = me.word;
@@ -124,20 +116,14 @@ const UndercoverVotePage = props => {
 
     useEffect(() => {
         const url = "ws" + getDomain().toString().substring(4, getDomain().toString().length) + "/websocket"
-        console.log("ws url");
-        console.log(url);
         const ws = new WebSocket(url);
-        console.log("ws masssss");
-        console.log(ws);
         setSocket(ws);
-
 
         // 关闭WebSocket连接时清理副作用
         return () => {
             ws.close();
         };
     }, []);
-
 
     const isImageClickHandled = localStorage.getItem("clicked");
 
@@ -150,7 +136,6 @@ const UndercoverVotePage = props => {
                     alert("You voted for " + player.username);
                     //check if the game status is voting
                     const gameresponse = await api.get('/undercover/' + gameId);
-                    console.log(gameresponse);
                     setGame(gameresponse.data);
                     if (gameresponse.data.gameStatus === "describing") {
                         localStorage.setItem("clicked","false");
@@ -171,15 +156,12 @@ const UndercoverVotePage = props => {
         else alert("You have already voted for this round!");
     }
 
-
     useEffect(() => {
         if (socket) {
             socket.onmessage = async (event) => {
-                console.log('WebSocket message received:', event.data);
                 if (event.data === 'start') {
                     const response = await api.get('/undercover/' + gameId);
                     await new Promise(resolve => setTimeout(resolve, 1000));
-                    console.log(response);
                     // Get the returned users and update the state.
                     const game = new GameUndercover(response.data);
                     setGame(game);
@@ -201,10 +183,6 @@ const UndercoverVotePage = props => {
         }
     }, [socket, history]);
 
-
-
-
-
     const num = 8;
     const styles = [
         {left: "0vw", "top": "0vw",},
@@ -215,7 +193,6 @@ const UndercoverVotePage = props => {
         {left: "0vw", "top": "-3vw"},
         {left: "0vw", "top": "-4.5vw"},
         {left: "0vw", "top": "-4.5vw"},
-
     ]
     const elements = [];
 
@@ -309,8 +286,4 @@ const UndercoverVotePage = props => {
 
 };
 
-/**
- * You can get access to the history object's properties via the withRouter.
- * withRouter will pass updated match, location, and history props to the wrapped component whenever it renders.
- */
 export default UndercoverVotePage;

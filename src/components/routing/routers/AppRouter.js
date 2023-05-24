@@ -22,9 +22,6 @@ import {SudokuGameGuard} from "components/routing/routeProtectors/SudokuGameGuar
 import SudokuGamePage from "../../views/SudokuGamePage";
 import History from "components/views/History"
 
-
-
-
 /**
  * Main router of your application.
  * In the following class, different routes are rendered. In our case, there is a Login Route with matches the path "/login"
@@ -98,16 +95,12 @@ const AppRouter = () => {
             <PlatformGuard>
               <SudokuGamePage/>
             </PlatformGuard>
-
           </Route>
           <Route exact path="/SudokuGameWinPage">
             <PlatformGuard>
-
             <SudokuGameWinPage/>
             </PlatformGuard>
-
           </Route>
-
         <Route exact path="/undercover/:gameId">
           <PlatformGuard>
             <UndercoverGamePage/>

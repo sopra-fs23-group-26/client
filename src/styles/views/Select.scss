@@ -5,8 +5,6 @@
   position: relative;
   overflow: hidden;
   margin-bottom: -2em;
-  //background: rgb(248, 246, 246);
-  //height: 100vh;
 
   &.title{
     font-weight: bold;
@@ -20,9 +18,6 @@
   }
 
   &.button{
-    //&:hover {
-    //  transform: translateY(-2px);
-    //}
     &:disabled {
       cursor: default;
       opacity: 0.4;
@@ -35,8 +30,6 @@
     top: 4em;
     left: 9.5em;
 
-    //padding: 6px;
-    //font-weight: 700;
     text-transform: uppercase;
     font-size: 2.8vw;
     height: 4.8vw;
@@ -52,7 +45,6 @@
     font-weight: bold;
     display: block;
     margin-bottom: 0.8em;
-
   }
 
   &.box{
@@ -110,7 +102,6 @@
     border-radius: 1.5vw;
     background-color: rgb(248, 246, 246);
     color: white;
-    //box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 
     line-height: 2vw;
     word-break: break-all;
@@ -132,21 +123,4 @@
     box-shadow: 0 8px 8px -8px rgba(0, 0, 0, 0.5);
     margin: 0.5vw;
   }
-
-
-
-
-
-
-
-
-
 }
-
-
-
-
-
-
-
-

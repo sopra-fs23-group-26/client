@@ -1,8 +1,6 @@
 /**
  * Game History model
  */
-
-
 class GameHistory {
     constructor(data = {}) {
         this.id = null;

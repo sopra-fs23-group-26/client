@@ -1,8 +1,6 @@
 /**
  * Game Undercover model
  */
-
-
 class GameUndercover {
     constructor(data = {}) {
         this.id = null;

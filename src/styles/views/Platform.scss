@@ -1,9 +1,6 @@
 @import 'styles/theme';
 
 .platform {
-  //align-items: center;
-
-
   &.button-container {
     display: flex;
     color: $loginTextbox;
@@ -11,8 +8,5 @@
     width: 300px;
     margin-top: 1em;
     color: white;
-    //button{
-    //  margin: 0px 5px;
-    //}
   }
 }
