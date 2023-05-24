@@ -139,11 +139,11 @@ const UndercoverVotePage = props => {
     }, []);
 
 
-    const isImageClickHandled = useRef(false);
+    const isImageClickHandled = localStorage.getItem("clicked");
 
     const handleImageClick = async (player) => {
-        if (!isImageClickHandled.current) {
-            isImageClickHandled.current = true;
+        if (isImageClickHandled!=="true") {
+            localStorage.setItem("clicked","true");
             if (socket) {
                 try {
                     const response = await api.put('/undercover/' + gameId + '/votes/' + me.id + '/' + player.id);
@@ -153,9 +153,11 @@ const UndercoverVotePage = props => {
                     console.log(gameresponse);
                     setGame(gameresponse.data);
                     if (gameresponse.data.gameStatus === "describing") {
+                        localStorage.setItem("clicked","false");
                         socket.send(message);
                         history.push(`/undercover/${gameId}`);
                     } else if (gameresponse.data.gameStatus === "gameEnd") {
+                        localStorage.setItem("clicked","false");
                         socket.send(message);
                         history.push(`/UndercoverGameWinPage`);
                     }
@@ -166,6 +168,7 @@ const UndercoverVotePage = props => {
                 }
             }
         }
+        else alert("You have already voted for this round!");
     }
 
 
@@ -182,9 +185,13 @@ const UndercoverVotePage = props => {
                     setGame(game);
                     // Check if gameId exists in localStorage
                     if (game.gameStatus === "describing") {
+                        localStorage.setItem("clicked","false");
+
                         socket.send(message);
                         history.push(`/undercover/${gameId}`);
                     } else if (game.gameStatus === "gameEnd") {
+                        localStorage.setItem("clicked","false");
+
                         socket.send(message);
                         history.push(`/UndercoverGameWinPage`);
                     }
