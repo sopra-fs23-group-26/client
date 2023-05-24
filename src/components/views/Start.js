@@ -18,6 +18,7 @@ const Start = (url, config) => {
     const [generalMessage, setGeneralMessage] = useState(null);
     const [roomRemoved] = useState("roomNotExist");
     const [userName, setUserName] = useState("")// invited user name
+    const [playersLen, setPlayersLen] = useState(null)
 
 /*    const handleStartGame = async () => {
         try {
@@ -111,31 +112,31 @@ const Start = (url, config) => {
     const elements = []
     useEffect(() => {
         async function fetchData() {
-            try {
                 const response = await api.get(`/undercover/rooms/`+localStorage.getItem("roomId"))
                 setRoomName(response.data.name)//获取房间名称，get room's name
                 let images = []
+                setPlayersLen(response.data.players.length)
                 for(let i = 0; i<response.data.players.length; i++){
                     if (response.data.players[i].image) {
                         let url = "/users/" + response.data.players[i].id + "/image"
                         console.log("image info")
-                        const imageResponse = await api.get(url, {responseType: 'arraybuffer'});
-                        console.log("imageResponse")
-                        console.log(imageResponse)
-                        images.push(`data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`);
-                    }
+                        // await new Promise(resolve => setTimeout(resolve, 200)); // 延迟1秒钟
+                        try{ const imageResponse = await api.get(url, {responseType: 'arraybuffer'});
+
+                            console.log("imageResponse")
+                            console.log(imageResponse)
+                            images.push(`data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`);
+                        } catch (error){
+                            images.push(null)
+                        }
+                                        }
                     else {
                         images.push(null)
                     }
                 }
                 setProfileImageList(images)
 
-            } catch (error) {
-                // window.location.reload();
-                console.log("Something went wrong while fetching the user! See the console for details.")
-                console.log(error)
-                alert("Something went wrong while fetching the user! See the console for details.");
-            }
+
         }
 
         fetchData();

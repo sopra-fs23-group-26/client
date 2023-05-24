@@ -36,7 +36,7 @@ const Platform = () => {
                     setProfileImage(`data:image/jpeg;base64,${btoa(new Uint8Array(imageResponse.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))}`);
                 }
             } catch (error) {
-                alert("Something went wrong while fetching the user! See the console for details.");
+                // alert("Something went wrong while fetching the user! See the console for details.");
             }
         }
 
