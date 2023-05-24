@@ -142,7 +142,7 @@ const UndercoverVotePage = props => {
     const isImageClickHandled = localStorage.getItem("clicked");
 
     const handleImageClick = async (player) => {
-        if (isImageClickHandled==="false") {
+        if (isImageClickHandled!=="true") {
             localStorage.setItem("clicked","true");
             if (socket) {
                 try {
