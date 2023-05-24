@@ -5,6 +5,8 @@ import {api, handleError} from "../../helpers/api";
 import GameUndercover from "../../models/GameUndercover";
 import React, { useState, useEffect } from 'react';
 import { getDomain } from 'helpers/getDomain';
+import Room from "../../models/Room";
+
 
 const Start = (url, config) => {
     console.log("--------ownerId-------")
@@ -168,25 +170,42 @@ const Start = (url, config) => {
 
     // 发送消息
     const sendMessage = async () => {
-        if (socket) {
-            // setMessage('start');
 
-            socket.send(message);
-            try {
-                const roomId = localStorage.getItem("roomId")
-                const response = await api.post('/undercover/rooms/' + roomId);
+        try{
+            const response_room = await api.get("/undercover/rooms/"+localStorage.getItem("roomId"))
+            const room = new Room(response_room.data)
+            const players = room.players
 
-                // store the gameId to the local storage
-                const game = new GameUndercover(response.data);
-                localStorage.setItem("gameId", game.id);
-                setGameId(game.id);
+            if(players.length<3){
+                alert("There need to be at least 3 players to start the game")
+            }
+            else {
+                if (socket) {
+                    // setMessage('start');
 
-                // Login successfully worked --> navigate to the route /undercover/${gameId}
-                history.push(`/undercover/${game.id}`);
-            } catch (error) {
-                alert(`${error.response.data.message} You cannot start the game.`);
+                    socket.send(message);
+                    try {
+                        const roomId = localStorage.getItem("roomId")
+                        const response = await api.post('/undercover/rooms/' + roomId);
+
+                        // store the gameId to the local storage
+                        const game = new GameUndercover(response.data);
+                        localStorage.setItem("gameId", game.id);
+                        setGameId(game.id);
+
+                        // Login successfully worked --> navigate to the route /undercover/${gameId}
+                        history.push(`/undercover/${game.id}`);
+                    } catch (error) {
+                        alert(`${error.response.data.message} You cannot start the game.`);
+                    }
+                }
             }
         }
+        catch (error){
+            alert("please try START again")
+        }
+
+
     };
 
 
@@ -202,13 +221,24 @@ const Start = (url, config) => {
             alert(`${error.response.data.message}`);
         }
 
-
-
-        if (socket) {
-            try{socket.send("invite,"+localStorage.getItem("roomId").toString()+","+invitedId);}
-            catch(error){
-                alert(`${error.response.data.message} You cannot send the message.`);
+        try{
+            const response_room = await api.get("/undercover/rooms/"+localStorage.getItem("roomId"))
+            const room = new Room(response_room.data)
+            const players = room.players
+            if(players.length>=8){
+                alert("The maximum players of a game are 8")
             }
+            else {
+                if (socket) {
+                    try{socket.send("invite,"+localStorage.getItem("roomId").toString()+","+invitedId);}
+                    catch(error){
+                        alert(`${error.response.data.message} You cannot send the message.`);
+                    }
+                }
+            }
+        }
+        catch (error){
+            alert(`${error.response.data.message}`);
         }
     }
 
