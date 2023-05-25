@@ -18,6 +18,7 @@ const UndercoverVotePage = props => {
     let [players, setPlayers] = useState(null);
     const [me, setMe] = useState(null);
     const [profileImageList, setProfileImageList] = useState([]);
+    const [isClicked, setIsClicked] = useState(false);
 
     useEffect(() => {
         async function fetchDataAndImage() {
@@ -125,13 +126,14 @@ const UndercoverVotePage = props => {
         };
     }, []);
 
-    const isImageClickHandled = localStorage.getItem("clicked");
-    console.log("isImageClickHandled 1")
-    console.log(localStorage.getItem("clicked"))
+    // const isImageClickHandled = localStorage.getItem("clicked");
+    // console.log("isImageClickHandled 1")
+    // console.log(localStorage.getItem("clicked"))
 
     const handleImageClick = async (player) => {
-        if (isImageClickHandled!=="true") {
-            localStorage.setItem("clicked","true");
+        if (isClicked!==true) {
+            // localStorage.setItem("clicked","true");
+            setIsClicked(true)
             if (socket) {
                 try {
                     const response = await api.put('/undercover/' + gameId + '/votes/' + me.id + '/' + player.id);
@@ -141,11 +143,13 @@ const UndercoverVotePage = props => {
                     setGame(gameresponse.data);
                     // localStorage.setItem("clicked","true");
                     if (gameresponse.data.gameStatus === "describing") {
-                        localStorage.setItem("clicked","false");
+                        // localStorage.setItem("clicked","false");
+                        setIsClicked(false)
                         socket.send(message);
                         history.push(`/undercover/${gameId}`);
                     } else if (gameresponse.data.gameStatus === "gameEnd") {
-                        localStorage.setItem("clicked","false");
+                        // localStorage.setItem("clicked","false");
+                        setIsClicked(false)
                         socket.send(message);
                         history.push(`/UndercoverGameWinPage`);
                     }
@@ -170,12 +174,14 @@ const UndercoverVotePage = props => {
                     setGame(game);
                     // Check if gameId exists in localStorage
                     if (game.gameStatus === "describing") {
-                        localStorage.setItem("clicked","false");
+                        // localStorage.setItem("clicked","false");
+                        setIsClicked(false)
 
                         socket.send(message);
                         history.push(`/undercover/${gameId}`);
                     } else if (game.gameStatus === "gameEnd") {
-                        localStorage.setItem("clicked","false");
+                        // localStorage.setItem("clicked","false");
+                        setIsClicked(false)
 
                         socket.send(message);
                         history.push(`/UndercoverGameWinPage`);
