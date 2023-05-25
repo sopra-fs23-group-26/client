@@ -50,18 +50,17 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ## Illustrations
 
 ### Main platform
-When a user is logged in, they will enter the main platform.
+When a user is logged in, they will enter the main platform where you could navigate the game history, ranking, profile and game page.
 
 
 ![platform](src/images/platform.png)
+* Because google cloud default time zone is utc, so the time of game history is two hours early than utc+2. We try to solve it by create an instance on google cloud, but it requires extra expanse.
 
 ### User profile
 On profile page, a user could add friends, upload their image and see their rankings.
 
 
 ![profile](src/images/profile.png)
-* You could only upload pics when "choose file", because it's an image.
-* Because google cloud default time zone is utc, so the time of game history is two hours early than utc+2. We try to solve it by create an instance on google cloud, but it requires extra expanse.
 
 ### Room
 Users could see who is in the room, and when everyone is here, the room creator could start the game.
@@ -74,6 +73,7 @@ Potential improvements or extensions in the future may include:
 
 - create chat room for the platform
 - introduce more game based on our game platform
+- change the external API for generate the word set in the game undercover
 
 ## Authors & Acknowledement
 >Jiewen Luo, Ruirui Wang, Heqing Ren & Jiajian Zhu
