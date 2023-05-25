@@ -156,6 +156,7 @@ const UndercoverVotePage = props => {
                 } catch (error) {
                     console.error(`Something went wrong while voting: \n${handleError(error)}`);
                     console.error("Details:", error);
+                    setIsClicked(false)
                     alert(`${error.response.data.message} You cannot vote.`);
                 }
             }
