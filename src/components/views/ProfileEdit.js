@@ -26,6 +26,7 @@ const ProfileEdit = () => {
   const [myGlobalRanking, setMyGlobalRanking] = useState(null);
   const [friendName, setFriendName] = useState(null);
   const [score, setScore] = useState(null);
+  const [imageSelected, setImageSelected] = useState(false)
 
   const back = () => {
     history.push(`/profile/${id}`);
@@ -35,6 +36,7 @@ const ProfileEdit = () => {
     const selectedImage = e.target.files[0];
     if (selectedImage) {
       setImage(selectedImage);
+      setImageSelected(true);
       const reader = new FileReader();
       reader.onload = () => {
       };
@@ -99,10 +101,17 @@ const ProfileEdit = () => {
           type="text"
           onChange={e => setUsername(e.target.value)}
         />
-        <div>
-          <input type="file" id="file" accept="image/*" style={{width: '12vw'}}
-          onChange={handleChange}/>
-        </div>
+        {/*<div>*/}
+        {/*  <input type="file" id="file" accept="image/*" style={{width: '12vw'}}*/}
+        {/*  onChange={handleChange}/>*/}
+        {/*</div>*/}
+          <div>
+              <label htmlFor="file" style={{cursor: 'pointer', display: 'inline-block', padding: '0.1vw 0.2vw', border: '0.1vw solid #ccc', background: '#ffffff', fontSize: '1vw'}}>
+                  {imageSelected ? 'click submit to update' : 'choose your profile picture'}
+              </label>
+              <input type="file" id="file" accept="image/*" style={{width: '12vw', display: 'none'}}
+                     onChange={handleChange}/>
+          </div>
         <Button width={'40%'} style={{ marginTop: '1vw', color: "rgb(57, 115, 175)", backgroundColor: "white", border:'none',
           fontWeight: 'bold', "font-size":"0.85vw", height:"2vw"}}
           onClick={() => doEdit()} > Submit </Button>
