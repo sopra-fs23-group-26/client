@@ -282,7 +282,7 @@ const UndercoverVotePage = props => {
                 Click on the profile picture to select who you think is the undercover agent.
             </div>
 
-            <div style={{display: "inline-block", fontWeight: "normal", margin: "-38vw 0 0 2vw", fontSize: "2vw"}}>
+            <div style={{display: "inline-block", fontWeight: "normal", margin: "-37vw 0 0 5vw", fontSize: "2vw"}}>
                 Please wait for the images to load before voting.
             </div>
         </div>
