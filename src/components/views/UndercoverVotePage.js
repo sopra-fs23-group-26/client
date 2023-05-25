@@ -126,10 +126,12 @@ const UndercoverVotePage = props => {
     }, []);
 
     const isImageClickHandled = localStorage.getItem("clicked");
+    console.log("isImageClickHandled 1")
+    console.log(localStorage.getItem("clicked"))
 
     const handleImageClick = async (player) => {
         if (isImageClickHandled!=="true") {
-            // localStorage.setItem("clicked","true");
+            localStorage.setItem("clicked","true");
             if (socket) {
                 try {
                     const response = await api.put('/undercover/' + gameId + '/votes/' + me.id + '/' + player.id);
@@ -137,7 +139,7 @@ const UndercoverVotePage = props => {
                     //check if the game status is voting
                     const gameresponse = await api.get('/undercover/' + gameId);
                     setGame(gameresponse.data);
-                    localStorage.setItem("clicked","true");
+                    // localStorage.setItem("clicked","true");
                     if (gameresponse.data.gameStatus === "describing") {
                         localStorage.setItem("clicked","false");
                         socket.send(message);
